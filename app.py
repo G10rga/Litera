@@ -84,14 +84,27 @@ def aphorisms():
 
 
 
-@app.route('/vefxistyaosani')
-def vefxistyaosani():
-    """Display all Vefxistyaosani lines."""
-    page = request.args.get('page', 1, type=int)
-    per_page = 50
+from collections import defaultdict
 
-    paginated_lines = VefxistyaosaniLine.query.paginate(page=page, per_page=per_page)
-    return render_template('vefxistyaosani.html', pagination=paginated_lines)
+@app.route("/vefxistyaosani")
+def vefxistyaosani():
+
+    rows = VefxistyaosaniLine.query.order_by(
+        VefxistyaosaniLine.chapter_id,
+        VefxistyaosaniLine.strophe_id,
+        VefxistyaosaniLine.line_id
+    ).all()
+
+    stanzas = defaultdict(list)
+
+    for row in rows:
+        stanzas[(row.chapter_id, row.strophe_id)].append(row)
+
+    return render_template(
+        "vefxistyaosani.html",
+        stanzas=stanzas
+    )
+
 
 
 # Create database tables

@@ -218,165 +218,92 @@
 </div>
 </section>
 <!-- Stanza Grid -->
+<!-- Stanza Grid -->
 <section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Card 1 -->
+
+{% for strophe_number, stanza in stanzas.items() %}
+
 <div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
-<div class="stanza-card-inner">
-<!-- Front (Archaic) -->
-<div class="stanza-card-front relative overflow-hidden">
-<div class="ornament-corner ornament-tl"></div>
-<div class="ornament-corner ornament-br"></div>
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-primary">Strofi 1</span>
-<div class="swipe-hint flex items-center gap-1 text-outline">
-<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
-<span class="material-symbols-outlined text-sm">swap_horiz</span>
-</div>
-</div>
-<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
-                        {{ stanza.1.archaic_text }}<br/>
-                        "რომელმან შექმნა სამყარო ძალითა მით ძლიერითა,<br/>
-                        ზეგარდმო არსნი სულითა ყვნა ზეცით მონაბერითა,<br/>
-                        ჩვენ, კაცთა, მოგვცა ქვეყანა, გვაქვს უთვალავი ფერითა,<br/>
-                        მისგან არს ყოველი ხელმწიფე სახითა მისებრითა."
+    <div class="stanza-card-inner">
+
+        <!-- FRONT -->
+        <div class="stanza-card-front relative overflow-hidden">
+
+            <div class="ornament-corner ornament-tl"></div>
+            <div class="ornament-corner ornament-br"></div>
+
+            <div class="flex justify-between items-start mb-6">
+                <span class="font-label-caps text-label-caps text-primary">
+                    Strofi {{ strophe_number }}
+                </span>
+
+                <div class="swipe-hint flex items-center gap-1 text-outline">
+                    <span class="font-label-caps text-[10px]">
+                        FLIP
+                    </span>
+
+                    <span class="material-symbols-outlined text-sm">
+                        swap_horiz
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex-grow space-y-3">
+
+                {% for line in stanza %}
+                    <p class="font-display-lg text-headline-sm leading-relaxed">
+                        {{ line.line }}
                     </p>
-<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
-<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
-</div>
-</div>
-<!-- Back (Modern) -->
-<div class="stanza-card-back">
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-outline">Modernized</span>
-<span class="material-symbols-outlined text-outline" onclick="event.stopPropagation()">info</span>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                            {{ stanza.1.modern_text }}<br/>
-                            "The One who created the universe with that mighty power, from above gave spirits to beings with a heavenly breath. To us humans, He gave the earth, possessed of countless colors; every sovereign exists through Him, in His own image."
-                        </p>
-</div>
-<div class="mt-4 flex justify-end">
-<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
-<div class="stanza-card-inner">
-<div class="stanza-card-front relative overflow-hidden">
-<div class="ornament-corner ornament-tl"></div>
-<div class="ornament-corner ornament-br"></div>
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-primary">Strofi 2</span>
-<div class="swipe-hint flex items-center gap-1 text-outline">
-<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
-<span class="material-symbols-outlined text-sm">swap_horiz</span>
-</div>
-</div>
-<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
-                        {{ stanza.2.archaic_text }}<br/>
-                        "ჰე, ღმერთო ერთო, შენ შექმენ სახე ყოვლისა ტანისა,<br/>
-                        შენ დამიფარე, ძლევა მეცი დათრგუნვად მე სატანისა,<br/>
-                        მომეც მიჯნურთა სურვილი, სიკვდიდმდე გასატანისა,<br/>
-                        ცოდვათა ჩემთა შესუბუქება მუნ თანა-წასატანისა."
-                    </p>
-<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
-<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
-</div>
-</div>
-<div class="stanza-card-back">
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-outline">Modernized</span>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                            {{ stanza.2.modern_text }}<br/>
-                            "O One God, You created the form of every body. Protect me, give me the strength to overcome evil. Grant me the love of devotees to carry until death, and the lightening of my sins to carry into the afterlife."
-                        </p>
-</div>
-<div class="mt-4 flex justify-end">
-<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
-<div class="stanza-card-inner">
-<div class="stanza-card-front relative overflow-hidden">
-<div class="ornament-corner ornament-tl"></div>
-<div class="ornament-corner ornament-br"></div>
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-primary">Strofi 3</span>
-<div class="swipe-hint flex items-center gap-1 text-outline">
-<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
-<span class="material-symbols-outlined text-sm">swap_horiz</span>
-</div>
-</div>
-<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
-                        {{ stanza.3.archaic_text }}<br/>
-                        "ვის ჰშვენის, ლომსა, ხმარება შუბისა, ფარ-შიმშერისა,<br/>
-                        - მეფისა მზის თამარისა, ღაწვ-ბადახშ, თმა-გიშერისა,<br/>
-                        - მას, ვისა ჰმართებს ქებათა შესხმა ხოტბისა ვერისა,<br/>
-                        კვლა მასვე ვჰკადრებ, ვინცა არს ჩემი პატრონი ერისა."
-                    </p>
-<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
-<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
-</div>
-</div>
-<div class="stanza-card-back">
-<div class="flex justify-between items-start mb-6">
-<span class="font-label-caps text-label-caps text-outline">Modernized</span>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                            {{ stanza.3.modern_text }}<br/>
-                            "Whom does it suit, like a lion, to wield the spear, shield, and sword? King Tamar, the sun, with ruby cheeks and jet-black hair. To her, whom I cannot praise enough, I offer these words, for she is my lord and the lord of the people."
-                        </p>
-</div>
-<div class="mt-4 flex justify-end">
-<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Card 4 (Placeholder) -->
-<div class="stanza-card-container group">
-<div class="stanza-card-inner !cursor-default">
-<div class="stanza-card-front relative overflow-hidden bg-surface-container-low border-dashed border-2 border-outline-variant flex items-center justify-center opacity-60">
-<div class="text-center">
-<span class="material-symbols-outlined text-4xl text-outline-variant mb-2">lock</span>
-<p class="font-label-caps text-label-caps">Next Canto Locked</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Quote Spotlight Component -->
-<section class="mt-section-gap max-w-[720px] mx-auto px-margin-mobile">
-<div class="bg-parchment-deep p-12 relative overflow-hidden border border-outline-variant">
-<span class="material-symbols-outlined absolute -top-4 -left-4 text-9xl text-primary opacity-5 select-none" style="font-variation-settings: 'FILL' 1;">format_quote</span>
-<div class="relative z-10">
-<h3 class="font-label-caps text-label-caps text-primary mb-6">DAILY APHORISM</h3>
-<p class="font-quote-display text-quote-display text-on-surface italic mb-8">
-                    "ბოროტსა სძლია კეთილმან, არსება მისი გრძელია!"
+                {% endfor %}
+
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
+                <span class="font-label-caps text-label-caps text-on-surface-variant">
+                    Original
+                </span>
+
+                <span class="material-symbols-outlined"
+                      style="font-variation-settings:'FILL' 1;">
+                    history_edu
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- BACK -->
+        <div class="stanza-card-back">
+
+            <div class="flex justify-between items-start mb-6">
+                <span class="font-label-caps text-label-caps text-outline">
+                    Information
+                </span>
+            </div>
+
+            <div class="bg-surface-container-low p-4 rounded-lg flex-grow">
+
+                <p>
+                    Chapter: {{ stanza[0].chapter }}
                 </p>
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full border-2 border-tertiary overflow-hidden">
-<img alt="Shota Rustaveli stylized portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY2OV4P9DZ5C5srqnUdNF2w7mpEgSvy5ytv-C5x5NJ2W_JJnWycXF1ooUj0Dm3Qf3iEF5A_QHN8g5sPjxvPbNDSbbtXylekkw11gvO5Loj2g4q5TsXnkyjhbo02x1MCFqVpqT5EZNEKSyWXEWjCC_k_N5fwAXiPpalEUVRApkvMKWcB-0O6zNh19ke3scvZHnZBcZWXdc3bGmxiD0QZOj_59mbaZLJNEB_4VjBFShke3tiyYyOqMPTmZopSjGm7lLCqiDcUIthR65m"/>
+
+                <p>
+                    Chapter ID: {{ stanza[0].chapter_id }}
+                </p>
+
+                <p>
+                    Strophe: {{ strophe_number }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
 </div>
-<div>
-<p class="font-label-caps text-label-caps font-bold">Shota Rustaveli</p>
-<p class="font-label-caps text-[10px] text-on-surface-variant uppercase">Author of the Epic</p>
-</div>
-</div>
-</div>
-</div>
+
+{% endfor %}
+
 </section>
 </main>
 <!-- Footer -->
