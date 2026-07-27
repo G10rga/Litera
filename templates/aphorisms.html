@@ -1,126 +1,178 @@
 <!DOCTYPE html>
-<html lang="ka">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>აფორიზმები - Aphorisms</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+<html class="scroll-smooth" lang="ka"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>აფორიზმები | Litera Scholastic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#e0bfbf",
+                      "outline": "#8c7071",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "on-surface": "#1c1b1b",
+                      "surface-variant": "#e5e2e1",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#1c1b1b",
+                      "primary-container": "#800020",
+                      "crimson-dark": "#5B0016",
+                      "surface-bright": "#fcf9f8",
+                      "surface-dim": "#dcd9d9",
+                      "on-surface-variant": "#584141",
+                      "surface-container-high": "#eae7e7",
+                      "surface-container": "#f0eded",
+                      "parchment-deep": "#F5F1E6",
+                      "primary": "#800020",
+                      "background": "#fcf9f8",
+                      "surface": "#fcf9f8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "4px",
+                      "lg": "8px",
+                      "xl": "12px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "section-gap": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1120px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Hanken Grotesk", "serif"],
+                      "headline-md": ["EB Garamond", "serif"],
+                      "headline-sm": ["EB Garamond", "serif"],
+                      "display-lg": ["EB Garamond", "serif"],
+                      "body-md": ["Hanken Grotesk", "sans-serif"],
+                      "aphorism": ["EB Garamond", "serif"]
+              }
+            },
+          },
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            padding: 40px;
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+        .parchment-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
         }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+        .aphorism-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .aphorisms-count {
-            text-align: center;
-            color: #999;
-            margin-bottom: 30px;
-            font-size: 0.95em;
-        }
-
-        .aphorism-list {
-            list-style: none;
-        }
-
-        .aphorism-item {
-            background: #f9f9f9;
-            border-left: 4px solid #667eea;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            direction: rtl;
-            text-align: right;
-        }
-
-        .aphorism-item:hover {
-            background: #f0f0f0;
-            border-left-color: #764ba2;
-            transform: translateX(-5px);
-        }
-
-        .aphorism-text {
-            color: #333;
-            line-height: 1.6;
-            font-size: 1.1em;
-        }
-
-        .aphorism-number {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-left: 10px;
-            font-size: 0.85em;
-        }
-
-        .nav-link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background: #764ba2;
+        .aphorism-card:hover {
+            transform: translateY(-2px);
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px -10px rgba(128, 0, 32, 0.1);
+            border-color: #800020;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>აფორიზმები</h1>
-        <p class="subtitle">Georgian Aphorisms</p>
-        <p class="aphorisms-count">Total: {{ aphorisms|length }} aphorisms</p>
-
-        <ul class="aphorism-list">
+<body class="bg-surface font-body-md text-on-surface parchment-texture overflow-x-hidden min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline-variant h-16 transition-all duration-300">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-4">
+<img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
+<span class="font-headline-md text-2xl font-bold text-primary">Litera</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors uppercase tracking-widest" href="#">Welcome</a>
+<a class="text-xs font-bold text-primary border-b-2 border-primary py-1 uppercase tracking-widest" href="#">Aphorisms</a>
+<a class="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors uppercase tracking-widest" href="#">About Us</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-crimson-dark transition-all transform active:scale-95 shadow-lg">
+            Start Learning
+        </button>
+</div>
+</nav>
+<!-- Content -->
+<main class="flex-grow pt-32 pb-section-gap px-margin-mobile md:px-gutter">
+<div class="max-w-3xl mx-auto">
+<div class="text-center mb-16">
+<span class="inline-block px-4 py-1 rounded-full border border-primary text-primary text-[10px] uppercase tracking-[0.2em] mb-4 font-bold">Wisdom of the Ages</span>
+<h1 class="font-display-lg text-4xl md:text-5xl text-primary mb-4 leading-tight">აფორიზმები</h1>
+<p class="font-headline-sm text-xl text-on-surface-variant italic">The Collected Georgian Aphorisms</p>
+<div class="w-24 h-px bg-outline-variant mx-auto mt-8"></div>
+</div>
+<div class="space-y-6">
             {% for aphorism in aphorisms %}
-            <li class="aphorism-item">
-                <span class="aphorism-number">{{ loop.index }}</span>
-                <p class="aphorism-text">{{ aphorism.text }}</p>
-            </li>
+            <div class="aphorism-card bg-surface-container-low border border-outline-variant p-8 rounded-lg relative overflow-hidden group">
+<div class="flex flex-row-reverse items-start gap-6">
+<!-- Number Indicator -->
+<div class="flex-shrink-0">
+<div class="w-10 h-10 border border-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-sm bg-white group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            {{ loop.index }}
+                        </div>
+</div>
+<!-- Text Content (RTL) -->
+<div class="flex-grow text-right" dir="rtl">
+<p class="font-aphorism text-2xl text-on-surface leading-relaxed tracking-wide">
+                            {{ aphorism.text }}
+                        </p>
+</div>
+</div>
+<!-- Scholarly Ornament -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
+</div>
             {% endfor %}
-        </ul>
-
-        <a href="/" class="nav-link">← Back to Home</a>
-    </div>
-</body>
-</html>
-
+        </div>
+<div class="mt-16 text-center">
+<a class="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all uppercase tracking-widest text-xs" href="/">
+<span class="material-symbols-outlined">arrow_back</span>
+                Back to Home
+            </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant">
+<div class="max-w-container-max mx-auto py-12 px-margin-mobile md:px-gutter">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+<div class="space-y-4">
+<img alt="Litera Logo" class="h-10 w-10 object-contain mb-4" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
+<p class="text-on-surface-variant text-sm leading-relaxed">Dedicated to the National Georgian Curriculum. Empowering the next generation of scholars with deep literary insights.</p>
+</div>
+<div>
+<h5 class="text-xs text-primary mb-4 uppercase tracking-widest font-bold">Study Modules</h5>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Syllabus</a></li>
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Character Analysis</a></li>
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Modern Translations</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-xs text-primary mb-4 uppercase tracking-widest font-bold">Resources</h5>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Study Guides</a></li>
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Exam Prep</a></li>
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Practice Tests</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-xs text-primary mb-4 uppercase tracking-widest font-bold">Legal</h5>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary hover:underline underline-offset-4" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-on-surface-variant text-[10px] uppercase tracking-widest font-bold">© 2024 Litera. Dedicated to the National Georgian Curriculum.</p>
+<div class="flex gap-6">
+<a class="text-primary hover:opacity-70 transition-opacity" href="#"><span class="material-symbols-outlined text-xl">qr_code_2</span></a>
+<a class="text-primary hover:opacity-70 transition-opacity" href="#"><span class="material-symbols-outlined text-xl">alternate_email</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
