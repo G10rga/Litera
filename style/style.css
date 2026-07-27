@@ -1,0 +1,169 @@
+
+/* =========================================
+   Base & Document Styles
+========================================= */
+body {
+    background-color: #FDFBF7; /* Parchment Background Base */
+    color: #1c1b1b;
+    font-family: 'Hanken Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+}
+
+/* Material Design Icons configuration */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Scrollbar Customization */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #fcf9f8;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #8c7071;
+    border-radius: 10px;
+}
+
+/* Global Form Focus States */
+input:focus, textarea:focus {
+    outline: none !important;
+    border-color: #570013 !important;
+    box-shadow: 0 4px 12px -2px rgba(87, 0, 19, 0.1) !important;
+}
+
+/* =========================================
+   Textures & Backgrounds
+========================================= */
+.parchment-texture {
+    background-color: #fcf9f8;
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png"), radial-gradient(#e0bfbf 0.5px, transparent 0.5px);
+    background-size: auto, 24px 24px;
+    background-position: 0 0;
+}
+
+.hero-gradient {
+    background: linear-gradient(180deg, rgba(252,249,248,1) 0%, rgba(245,241,230,0.5) 100%);
+}
+
+/* =========================================
+   UI Elements & Components
+========================================= */
+/* Ruled Notebook Lines (merged variations) */
+.ruled-line, .ruled-lines, .ruled-effect {
+    background-image: linear-gradient(#e0dcd0 1px, transparent 1px);
+    background-size: 100% 2rem; /* Standardized to 2rem/32px */
+}
+
+/* Subtle Notebook Effect for Section Headers */
+.ruled-title {
+    position: relative;
+    padding-bottom: 8px;
+}
+.ruled-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #e0bfbf;
+}
+
+/* Reading/Scrolling Progress Bar */
+.scrolling-progress, #progress-bar {
+    height: 2px;
+    background: #570013;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    z-index: 100;
+    width: 0%;
+    transition: width 0.1s ease-out;
+}
+
+/* Dual View Text Component Grid */
+.dual-view-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background-color: #e0dcd0;
+}
+
+/* Interactive Cards */
+.bento-card, .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.bento-card:hover, .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(87, 0, 19, 0.15);
+}
+
+.character-card-hover:hover .avatar-ring {
+    transform: scale(1.05);
+    border-color: #cca730;
+}
+
+/* Sticky Navigation Items */
+.nav-item {
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+}
+.nav-item:hover {
+    color: #570013;
+    border-left: 2px solid #e0bfbf;
+}
+.sticky-nav-active {
+    color: #570013;
+    font-weight: 600;
+    border-left: 2px solid #570013;
+    padding-left: 12px;
+}
+
+/* =========================================
+   Typography (Legal / Prose Content)
+========================================= */
+.legal-content p, .prose-legal p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    color: #333333;
+}
+.prose-legal h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    color: #570013;
+    border-bottom: 1px solid #E0DCD0;
+    padding-bottom: 8px;
+}
+
+/* =========================================
+   Animations
+========================================= */
+.fade-in { 
+    animation: fadeIn 0.8s ease-out forwards; 
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skeleton Loaders */
+.skeleton-pulse, .skeleton {
+    background: linear-gradient(90deg, #f0eded 25%, #e5e2e1 50%, #f0eded 75%);
+    background-size: 200% 100%;
+    animation: pulse-bg 1.5s infinite;
+}
+@keyframes pulse-bg {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
