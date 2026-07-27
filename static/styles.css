@@ -274,3 +274,44 @@ textarea:focus {
 .stanza-card-container:hover .swipe-hint {
     opacity: 1;
 }
+
+/* Auth pages */
+.scholarly-card {
+    box-shadow: 0 10px 30px -10px rgba(87, 0, 19, 0.15);
+    border: 1px solid #E0DCD0;
+}
+
+.transition-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transition-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -12px rgba(87, 0, 19, 0.2);
+}
+
+.form-input-focus:focus {
+    border-color: #570013;
+    box-shadow: 0 0 0 2px rgba(87, 0, 19, 0.1);
+    outline: none;
+}
+
+.auth-flash {
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.auth-flash-error {
+    background: #ffdad6;
+    color: #93000a;
+    border: 1px solid #ba1a1a;
+}
+
+.auth-flash-success {
+    background: #e8f5e9;
+    color: #1b5e20;
+    border: 1px solid #2e7d32;
+}

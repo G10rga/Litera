@@ -122,11 +122,31 @@ tailwind.config = {
       <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'about' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary-fixed-dim{% endif %}" href="{{ url_for('about') }}">About Us</a>
       <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'contact' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary-fixed-dim{% endif %}" href="{{ url_for('contact') }}">Contact</a>
     </div>
-    <a href="{{ url_for('syllabus') }}" class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps uppercase tracking-widest font-bold hover:bg-crimson-dark transition-all duration-300 transform active:scale-95 shadow-lg">
-      Start Learning
-    </a>
+    <div class="flex items-center gap-3">
+      {% if current_user.is_authenticated %}
+        <span class="hidden sm:inline font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">{{ current_user.full_name }}</span>
+        <a href="{{ url_for('logout') }}" class="border border-primary text-primary px-4 py-2 rounded-full font-label-caps text-label-caps uppercase tracking-widest font-bold hover:bg-primary hover:text-on-primary transition-all duration-300">
+          Log Out
+        </a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="hidden sm:inline font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest hover:text-primary transition-colors">Log In</a>
+        <a href="{{ url_for('register') }}" class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps uppercase tracking-widest font-bold hover:bg-crimson-dark transition-all duration-300 transform active:scale-95 shadow-lg">
+          Register
+        </a>
+      {% endif %}
+    </div>
   </div>
 </nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages and request.endpoint not in ['login', 'register'] %}
+    <div class="fixed top-20 left-1/2 -translate-x-1/2 z-[60] w-[min(92vw,28rem)] space-y-2">
+      {% for category, message in messages %}
+        <div class="auth-flash auth-flash-{{ category }} shadow-lg">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
 {% block content %}{% endblock %}
 

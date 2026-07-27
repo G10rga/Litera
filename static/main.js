@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initSyllabusReveal();
     initTosScrollSpy();
     initStanzaCards();
+    initPasswordToggles();
+    initAuthFlashDismiss();
 });
 
 function initScrollProgress() {
@@ -263,5 +265,28 @@ function initStanzaCards() {
         card.addEventListener('click', () => {
             card.classList.toggle('is-flipped');
         });
+    });
+}
+
+function initPasswordToggles() {
+    document.querySelectorAll('[data-password-toggle]').forEach((toggleBtn) => {
+        const field = toggleBtn.parentElement && toggleBtn.parentElement.querySelector('input[type="password"], input[type="text"]');
+        if (!field) return;
+
+        toggleBtn.addEventListener('click', () => {
+            const showing = field.type === 'text';
+            field.type = showing ? 'password' : 'text';
+            toggleBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">${showing ? 'visibility' : 'visibility_off'}</span>`;
+        });
+    });
+}
+
+function initAuthFlashDismiss() {
+    document.querySelectorAll('.auth-flash').forEach((flash) => {
+        setTimeout(() => {
+            flash.style.opacity = '0';
+            flash.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => flash.remove(), 400);
+        }, 4000);
     });
 }
