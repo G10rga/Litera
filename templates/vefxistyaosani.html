@@ -1,227 +1,428 @@
 <!DOCTYPE html>
-<html lang="ka">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ვეფხის ციქაოსანი - Vefxistyaosani</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
+<html class="light" lang="ka"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ვეფხისტყაოსანი | Litera Scholastic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffe088",
+                        "outline": "#8c7071",
+                        "primary-fixed-dim": "#ffb3b5",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f0eded",
+                        "surface-container-low": "#f6f3f2",
+                        "on-surface-variant": "#584141",
+                        "on-secondary-fixed-variant": "#474744",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-surface": "#1c1b1b",
+                        "surface-variant": "#e5e2e1",
+                        "on-secondary-fixed": "#1b1c1a",
+                        "primary-fixed": "#ffdada",
+                        "surface-container-highest": "#e5e2e1",
+                        "error": "#ba1a1a",
+                        "tertiary": "#735c00",
+                        "surface": "#fcf9f8",
+                        "on-primary-fixed-variant": "#8e0f28",
+                        "inverse-primary": "#ffb3b5",
+                        "on-tertiary-fixed": "#241a00",
+                        "secondary": "#5e5e5c",
+                        "crimson-dark": "#5B0016",
+                        "surface-tint": "#af2b3e",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#313030",
+                        "tertiary-fixed-dim": "#e9c349",
+                        "secondary-fixed-dim": "#c8c6c3",
+                        "primary": "#570013",
+                        "parchment-deep": "#F5F1E6",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-tertiary-container": "#4f3d00",
+                        "secondary-container": "#e1dfdc",
+                        "surface-container-high": "#eae7e7",
+                        "surface-bright": "#fcf9f8",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#fcf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#cca730",
+                        "primary-container": "#800020",
+                        "on-primary-container": "#ff828a",
+                        "on-background": "#1c1b1b",
+                        "outline-variant": "#e0bfbf",
+                        "secondary-fixed": "#e4e2de",
+                        "on-primary-fixed": "#40000b",
+                        "charcoal-muted": "#333333",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-container": "#636360",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "64px",
+                        "container-max": "1120px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["EB Garamond"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-sm": ["EB Garamond"],
+                        "display-lg-mobile": ["EB Garamond"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["EB Garamond"],
+                        "quote-display": ["EB Garamond"],
+                        "label-caps": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "display-lg-mobile": ["36px", {"lineHeight": "44px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                        "quote-display": ["22px", {"lineHeight": "32px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #fcf9f8;
+            font-family: 'Hanken Grotesk', sans-serif;
+            color: #1c1b1b;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            padding: 40px;
+        .stanza-card-container {
+            perspective: 1000px;
+            height: 420px; /* Fixed height for stability */
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+        .stanza-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+        /* Prevent vertical movement by ensuring rotation happens on its axis */
+        .stanza-card-container.is-flipped .stanza-card-inner {
+            transform: rotateY(180deg);
         }
 
-        .line-count {
-            text-align: center;
-            color: #999;
-            margin-bottom: 30px;
-            font-size: 0.95em;
-        }
-
-        .lines-grid {
-            display: grid;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .line-item {
-            background: #f9f9f9;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            direction: rtl;
-            text-align: right;
-        }
-
-        .line-item:hover {
-            background: #f0f0f0;
-            border-left-color: #764ba2;
-            transform: translateX(-5px);
-        }
-
-        .line-meta {
+        .stanza-card-front, .stanza-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 0.125rem;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.85em;
-            color: #999;
+            flex-direction: column;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(87, 0, 19, 0.08);
+            border: 1px solid #e0bfbf;
+            top: 0;
+            left: 0;
         }
 
-        .line-meta span {
-            background: #e8eef7;
-            padding: 2px 8px;
-            border-radius: 3px;
+        .stanza-card-front {
+            background-color: #FDFBF7;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            z-index: 2;
         }
 
-        .line-text {
-            color: #333;
-            line-height: 1.6;
-            font-size: 1.1em;
+        .stanza-card-back {
+            background-color: #fcf9f8;
+            transform: rotateY(180deg);
+            border-style: dashed;
+            border-color: #8c7071;
+            z-index: 1;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+        .ornament-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
         }
 
-        .pagination a, .pagination span {
-            padding: 8px 12px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.3s ease;
+        .ornament-tl { top: 8px; left: 8px; border-top: 2px solid #570013; border-left: 2px solid #570013; }
+        .ornament-br { bottom: 8px; right: 8px; border-bottom: 2px solid #570013; border-right: 2px solid #570013; }
+
+        .swipe-hint {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .stanza-card-container:hover .swipe-hint {
+            opacity: 1;
         }
 
-        .pagination a:hover {
-            background: #764ba2;
+        .progress-indicator {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            height: 2px;
+            background-color: #570013;
+            z-index: 60;
+            transition: width 0.3s ease;
         }
 
-        .pagination .current {
-            background: #764ba2;
-            cursor: default;
-        }
-
-        .pagination .disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            flex: 1;
-            min-width: 150px;
-            padding: 12px 20px;
-            text-align: center;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background: #764ba2;
-        }
-
-        .nav-link.secondary {
-            background: #999;
-        }
-
-        .nav-link.secondary:hover {
-            background: #777;
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 40px;
-            color: #999;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>ვეფხის ციქაოსანი</h1>
-        <p class="subtitle">The Knight in the Panther's Skin</p>
+<body class="bg-background text-on-background">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">Litera</span>
+<div class="hidden md:flex gap-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">Welcome</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary" href="#">Study Guide</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">About Us</a>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 font-label-caps text-label-caps hover:opacity-80 transition-opacity">Start Learning</button>
+</div>
+</nav>
+<!-- Reading Progress Bar -->
+<div class="progress-indicator" id="scrollProgress" style="width: 32%;"></div>
+<main class="mt-24 pb-section-gap">
+<!-- Hero Section -->
+<section class="max-w-[720px] mx-auto px-margin-mobile text-center mb-16">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">ვეფხისტყაოსანი</h1>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant italic">The Knight in the Panther's Skin - Interactive Stanza Guide</p>
+<div class="mt-8 flex justify-center gap-4">
+<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">Epic Poetry</span>
+<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">12th Century</span>
+<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">Shota Rustaveli</span>
+</div>
+</section>
+<!-- Stanza Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
+<div class="stanza-card-inner">
+<!-- Front (Archaic) -->
+<div class="stanza-card-front relative overflow-hidden">
+<div class="ornament-corner ornament-tl"></div>
+<div class="ornament-corner ornament-br"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-primary">Strofi 1</span>
+<div class="swipe-hint flex items-center gap-1 text-outline">
+<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
+<span class="material-symbols-outlined text-sm">swap_horiz</span>
+</div>
+</div>
+<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
+                        {{ stanza.1.archaic_text }}<br/>
+                        "რომელმან შექმნა სამყარო ძალითა მით ძლიერითა,<br/>
+                        ზეგარდმო არსნი სულითა ყვნა ზეცით მონაბერითა,<br/>
+                        ჩვენ, კაცთა, მოგვცა ქვეყანა, გვაქვს უთვალავი ფერითა,<br/>
+                        მისგან არს ყოველი ხელმწიფე სახითა მისებრითა."
+                    </p>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+</div>
+<!-- Back (Modern) -->
+<div class="stanza-card-back">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-outline">Modernized</span>
+<span class="material-symbols-outlined text-outline" onclick="event.stopPropagation()">info</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            {{ stanza.1.modern_text }}<br/>
+                            "The One who created the universe with that mighty power, from above gave spirits to beings with a heavenly breath. To us humans, He gave the earth, possessed of countless colors; every sovereign exists through Him, in His own image."
+                        </p>
+</div>
+<div class="mt-4 flex justify-end">
+<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
+<div class="stanza-card-inner">
+<div class="stanza-card-front relative overflow-hidden">
+<div class="ornament-corner ornament-tl"></div>
+<div class="ornament-corner ornament-br"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-primary">Strofi 2</span>
+<div class="swipe-hint flex items-center gap-1 text-outline">
+<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
+<span class="material-symbols-outlined text-sm">swap_horiz</span>
+</div>
+</div>
+<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
+                        {{ stanza.2.archaic_text }}<br/>
+                        "ჰე, ღმერთო ერთო, შენ შექმენ სახე ყოვლისა ტანისა,<br/>
+                        შენ დამიფარე, ძლევა მეცი დათრგუნვად მე სატანისა,<br/>
+                        მომეც მიჯნურთა სურვილი, სიკვდიდმდე გასატანისა,<br/>
+                        ცოდვათა ჩემთა შესუბუქება მუნ თანა-წასატანისა."
+                    </p>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+</div>
+<div class="stanza-card-back">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-outline">Modernized</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            {{ stanza.2.modern_text }}<br/>
+                            "O One God, You created the form of every body. Protect me, give me the strength to overcome evil. Grant me the love of devotees to carry until death, and the lightening of my sins to carry into the afterlife."
+                        </p>
+</div>
+<div class="mt-4 flex justify-end">
+<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
+<div class="stanza-card-inner">
+<div class="stanza-card-front relative overflow-hidden">
+<div class="ornament-corner ornament-tl"></div>
+<div class="ornament-corner ornament-br"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-primary">Strofi 3</span>
+<div class="swipe-hint flex items-center gap-1 text-outline">
+<span class="font-label-caps text-[10px]">FLIP TO TRANSLATE</span>
+<span class="material-symbols-outlined text-sm">swap_horiz</span>
+</div>
+</div>
+<p class="font-display-lg text-headline-sm text-on-surface flex-grow leading-relaxed">
+                        {{ stanza.3.archaic_text }}<br/>
+                        "ვის ჰშვენის, ლომსა, ხმარება შუბისა, ფარ-შიმშერისა,<br/>
+                        - მეფისა მზის თამარისა, ღაწვ-ბადახშ, თმა-გიშერისა,<br/>
+                        - მას, ვისა ჰმართებს ქებათა შესხმა ხოტბისა ვერისა,<br/>
+                        კვლა მასვე ვჰკადრებ, ვინცა არს ჩემი პატრონი ერისა."
+                    </p>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Archaic Text</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+</div>
+<div class="stanza-card-back">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-caps text-label-caps text-outline">Modernized</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex-grow overflow-y-auto">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            {{ stanza.3.modern_text }}<br/>
+                            "Whom does it suit, like a lion, to wield the spear, shield, and sword? King Tamar, the sun, with ruby cheeks and jet-black hair. To her, whom I cannot praise enough, I offer these words, for she is my lord and the lord of the people."
+                        </p>
+</div>
+<div class="mt-4 flex justify-end">
+<button class="font-label-caps text-label-caps text-primary hover:underline underline-offset-4" onclick="event.stopPropagation()">Read Commentary →</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 (Placeholder) -->
+<div class="stanza-card-container group">
+<div class="stanza-card-inner !cursor-default">
+<div class="stanza-card-front relative overflow-hidden bg-surface-container-low border-dashed border-2 border-outline-variant flex items-center justify-center opacity-60">
+<div class="text-center">
+<span class="material-symbols-outlined text-4xl text-outline-variant mb-2">lock</span>
+<p class="font-label-caps text-label-caps">Next Canto Locked</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quote Spotlight Component -->
+<section class="mt-section-gap max-w-[720px] mx-auto px-margin-mobile">
+<div class="bg-parchment-deep p-12 relative overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined absolute -top-4 -left-4 text-9xl text-primary opacity-5 select-none" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<div class="relative z-10">
+<h3 class="font-label-caps text-label-caps text-primary mb-6">DAILY APHORISM</h3>
+<p class="font-quote-display text-quote-display text-on-surface italic mb-8">
+                    "ბოროტსა სძლია კეთილმან, არსება მისი გრძელია!"
+                </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-2 border-tertiary overflow-hidden">
+<img alt="Shota Rustaveli stylized portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY2OV4P9DZ5C5srqnUdNF2w7mpEgSvy5ytv-C5x5NJ2W_JJnWycXF1ooUj0Dm3Qf3iEF5A_QHN8g5sPjxvPbNDSbbtXylekkw11gvO5Loj2g4q5TsXnkyjhbo02x1MCFqVpqT5EZNEKSyWXEWjCC_k_N5fwAXiPpalEUVRApkvMKWcB-0O6zNh19ke3scvZHnZBcZWXdc3bGmxiD0QZOj_59mbaZLJNEB_4VjBFShke3tiyYyOqMPTmZopSjGm7lLCqiDcUIthR65m"/>
+</div>
+<div>
+<p class="font-label-caps text-label-caps font-bold">Shota Rustaveli</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant uppercase">Author of the Epic</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low w-full py-section-gap border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<div>
+<span class="font-headline-sm text-headline-sm text-primary mb-4 block">Litera</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Litera. Dedicated to the National Georgian Curriculum.</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface font-semibold mb-2">Academic</span>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Syllabus</a>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Character Analysis</a>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Modern Translations</a>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface font-semibold mb-2">Resources</span>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Study Guides</a>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Terms of Service</a>
+<a class="font-body-md text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="#">Privacy Policy</a>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface font-semibold mb-4 block">Newsletter</span>
+<div class="flex border-b border-outline">
+<input class="bg-transparent border-none focus:ring-0 text-sm py-2 w-full" placeholder="Student Email" type="email"/>
+<button class="material-symbols-outlined text-primary">arrow_forward</button>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Scroll Progress Logic
+    window.onscroll = function() {
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        let scrolled = (winScroll / height) * 100;
+        document.getElementById("scrollProgress").style.width = scrolled + "%";
+    };
 
-        {% if pagination.items %}
-            <p class="line-count">
-                Showing {{ (pagination.page - 1) * pagination.per_page + 1 }}-{{ min(pagination.page * pagination.per_page, pagination.total) }} of {{ pagination.total }} lines
-            </p>
-
-            <div class="lines-grid">
-                {% for line in pagination.items %}
-                    <div class="line-item">
-                        <div class="line-meta">
-                            <span>Ch. {{ line.chapter_id or '-' }} | Str. {{ line.strophe_id or '-' }} | L. {{ line.line_id or '-' }}</span>
-                            <span>ID: {{ line.id }}</span>
-                        </div>
-                        <p class="line-text">{{ line.line }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-
-            {% if pagination.pages > 1 %}
-                <div class="pagination">
-                    {% if pagination.has_prev %}
-                        <a href="{{ url_for('vefxistyaosani', page=1) }}">« First</a>
-                        <a href="{{ url_for('vefxistyaosani', page=pagination.prev_num) }}">‹ Prev</a>
-                    {% else %}
-                        <span class="disabled">« First</span>
-                        <span class="disabled">‹ Prev</span>
-                    {% endif %}
-
-                    {% for page_num in pagination.iter_pages() %}
-                        {% if page_num %}
-                            {% if page_num == pagination.page %}
-                                <span class="current">{{ page_num }}</span>
-                            {% else %}
-                                <a href="{{ url_for('vefxistyaosani', page=page_num) }}">{{ page_num }}</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if pagination.has_next %}
-                        <a href="{{ url_for('vefxistyaosani', page=pagination.next_num) }}">Next ›</a>
-                        <a href="{{ url_for('vefxistyaosani', page=pagination.pages) }}">Last »</a>
-                    {% else %}
-                        <span class="disabled">Next ›</span>
-                        <span class="disabled">Last »</span>
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% else %}
-            <div class="empty-message">
-                <p>No lines found in database.</p>
-                <p><a href="/vefxistyaosani/upload" style="color: #667eea; text-decoration: underline;">Upload the CSV file</a> to populate the database.</p>
-            </div>
-        {% endif %}
-
-        <div class="nav-links">
-            <a href="/vefxistyaosani/upload" class="nav-link">📤 Upload CSV</a>
-            <a href="/" class="nav-link secondary">← Back to Home</a>
-        </div>
-    </div>
-</body>
-</html>
-
+    // Card handling for better accessibility/prevention of movement
+    document.querySelectorAll('.stanza-card-container').forEach(card => {
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                card.classList.toggle('is-flipped');
+            }
+        });
+    });
+</script>
+</body></html>

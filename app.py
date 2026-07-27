@@ -83,52 +83,6 @@ def aphorisms():
     return render_template('aphorisms.html', aphorisms=all_aphorisms)
 
 
-@app.route('/vefxistyaosani/upload', methods=['GET', 'POST'])
-def upload_vefxistyaosani():
-    """Upload Vefxistyaosani CSV file to database."""
-    if request.method == 'POST':
-        try:
-            # Read CSV file from vefxistyaosani.csv
-            csv_path = 'vefxistyaosani.csv'
-            df = pd.read_csv(csv_path)
-
-            # Expected columns
-            expected_columns = {'id', 'line', 'chapter', 'chapter_id', 'strophe_id', 'line_id'}
-            actual_columns = set(df.columns)
-
-            if not expected_columns.issubset(actual_columns):
-                return f'Error: CSV must contain columns: {", ".join(expected_columns)}', 400
-
-            # Clear existing data if checkbox is checked
-            if request.form.get('clear_existing'):
-                VefxistyaosaniLine.query.delete()
-
-            # Add rows to database
-            count = 0
-            for _, row in df.iterrows():
-                line_obj = VefxistyaosaniLine(
-                    line=str(row['line']) if pd.notna(row['line']) else '',
-                    chapter=str(row['chapter']) if pd.notna(row['chapter']) else None,
-                    chapter_id=int(row['chapter_id']) if pd.notna(row['chapter_id']) else None,
-                    strophe_id=int(row['strophe_id']) if pd.notna(row['strophe_id']) else None,
-                    line_id=int(row['line_id']) if pd.notna(row['line_id']) else None
-                )
-                db.session.add(line_obj)
-                count += 1
-
-                # Commit in batches to avoid memory issues
-                if count % 1000 == 0:
-                    db.session.commit()
-
-            db.session.commit()
-            total = VefxistyaosaniLine.query.count()
-            return f'Successfully uploaded {count} lines! Total in database: {total}', 200
-
-        except Exception as e:
-            return f'Error processing file: {str(e)}', 400
-
-    return render_template('upload_vefxistyaosani.html')
-
 
 @app.route('/vefxistyaosani')
 def vefxistyaosani():
