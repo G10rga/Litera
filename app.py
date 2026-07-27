@@ -1,5 +1,6 @@
-from flask import Flask, render_template
-from models import db, Aphorism
+from flask import Flask, render_template, request
+from models import db, Aphorism, VefxistyaosaniLine
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -82,9 +83,35 @@ def aphorisms():
     return render_template('aphorisms.html', aphorisms=all_aphorisms)
 
 
+
+from collections import defaultdict
+
+@app.route("/vefxistyaosani")
+def vefxistyaosani():
+
+    rows = VefxistyaosaniLine.query.order_by(
+        VefxistyaosaniLine.chapter_id,
+        VefxistyaosaniLine.strophe_id,
+        VefxistyaosaniLine.line_id
+    ).all()
+
+    stanzas = defaultdict(list)
+
+    for row in rows:
+        stanzas[(row.chapter_id, row.strophe_id)].append(row)
+
+    return render_template(
+        "vefxistyaosani.html",
+        stanzas=stanzas
+    )
+
+
+
 # Create database tables
 with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+  
