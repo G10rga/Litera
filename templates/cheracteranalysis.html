@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Character Analysis Index | Litera</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .parchment-texture {
+            background-image: radial-gradient(#E0DCD0 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            background-color: #fcf9f8;
+        }
+        .ruled-line {
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #E0DCD0 31px, #E0DCD0 32px);
+        }
+        .character-card-hover:hover .avatar-ring {
+            transform: scale(1.05);
+            border-color: #cca730;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#f6f3f2",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "on-primary-container": "#ff828a",
+                      "surface": "#fcf9f8",
+                      "on-error": "#ffffff",
+                      "charcoal-muted": "#333333",
+                      "primary-container": "#800020",
+                      "crimson-dark": "#5B0016",
+                      "primary": "#570013",
+                      "on-secondary-container": "#636360",
+                      "on-surface-variant": "#584141",
+                      "on-surface": "#1c1b1b",
+                      "tertiary-container": "#cca730",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#e5e2e1",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f3f0ef",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#241a00",
+                      "tertiary": "#735c00",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#8e0f28",
+                      "surface-dim": "#dcd9d9",
+                      "background": "#fcf9f8",
+                      "surface-container-high": "#eae7e7",
+                      "outline": "#8c7071",
+                      "secondary-fixed-dim": "#c8c6c3",
+                      "on-secondary-fixed-variant": "#474744",
+                      "inverse-surface": "#313030",
+                      "parchment-deep": "#F5F1E6",
+                      "surface-bright": "#fcf9f8",
+                      "surface-tint": "#af2b3e",
+                      "on-secondary-fixed": "#1b1c1a",
+                      "on-primary-fixed": "#40000b",
+                      "tertiary-fixed-dim": "#e9c349",
+                      "primary-fixed-dim": "#ffb3b5",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#e4e2de",
+                      "secondary-container": "#e1dfdc",
+                      "inverse-primary": "#ffb3b5",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#ffe088",
+                      "on-background": "#1c1b1b",
+                      "secondary": "#5e5e5c",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e5e2e1",
+                      "primary-fixed": "#ffdada",
+                      "on-tertiary-container": "#4f3d00",
+                      "outline-variant": "#e0bfbf",
+                      "surface-container": "#f0eded"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "unit": "8px",
+                      "section-gap": "64px",
+                      "container-max": "1120px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "ebGaramond": ["EB Garamond", "serif"],
+                      "hankenGrotesk": ["Hanken Grotesk", "sans-serif"],
+                      "display-lg-mobile": ["EB Garamond"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "label-caps": ["Hanken Grotesk"],
+                      "headline-sm": ["EB Garamond"],
+                      "headline-md": ["EB Garamond"],
+                      "body-md": ["Hanken Grotesk"],
+                      "quote-display": ["EB Garamond"],
+                      "display-lg": ["EB Garamond"]
+              },
+              "fontSize": {
+                      "display-lg-mobile": ["36px", {"lineHeight": "44px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "quote-display": ["22px", {"lineHeight": "32px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-hankenGrotesk text-on-surface antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface shadow-sm max-w-none mx-auto border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
+<span class="font-ebGaramond text-headline-md font-semibold text-primary">Litera</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">Welcome</a>
+<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">About Us</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-semibold font-hankenGrotesk text-body-md" href="#">Character Analysis</a>
+<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-gutter">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary w-48 transition-all focus:w-64" placeholder="Search archive..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 font-semibold text-body-md transition-opacity active:opacity-80">Sign In</button>
+</div>
+</header>
+<!-- Progress Indicator -->
+<div class="fixed top-16 left-0 w-full h-1 bg-surface-container-highest z-40">
+<div class="h-full bg-primary w-1/3 transition-all duration-1000 ease-in-out"></div>
+</div>
+<main class="pt-32 pb-section-gap px-gutter max-w-container-max mx-auto overflow-hidden">
+<!-- Hero Section -->
+<div class="mb-section-gap text-center max-w-[720px] mx-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase mb-4 block tracking-widest">Scholastic Index</span>
+<h1 class="font-ebGaramond text-display-lg md:text-display-lg text-primary mb-6">Faces of Georgian Literature</h1>
+<p class="font-hankenGrotesk text-body-lg text-on-surface-variant leading-relaxed">
+                An authoritative compendium of historical and literary figures from the golden age of hagiography to the epic poetry of the Renaissance. Explore the virtues, conflicts, and legacies of those who shaped our narrative heritage.
+            </p>
+</div>
+<!-- Featured Character Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-section-gap">
+<!-- Tariel (Heroic Focus) -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 relative overflow-hidden group border border-outline-variant/20 character-card-hover">
+<div class="relative z-10 flex flex-col md:flex-row gap-8 items-center h-full">
+<div class="w-48 h-48 rounded-full avatar-ring border-4 border-primary transition-transform duration-500 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A regal, hand-painted classical portrait of Tariel, the Knight in the Panther's Skin. He is depicted with dark, intense eyes and a melancholic expression, wearing a rich, textured panther skin cloak over crimson and gold Georgian medieval armor. The style is that of a refined hagiographic manuscript, with golden light illuminating his face against a dark, scholarly library background. Academic minimalism aesthetic, sophisticated and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUatU65C21H2jcn8ybsfVSsCG7uuruODwgiYmHnm39bPkI7FeYl59d5PnmNq5ApMepCTIMgrJfF3kRX7lQ66KIrraaJG2BKc8InkW7BvZTZ2NGt_2IqYw37x-DIoJlfOLy73hA5nu9dTxP06oqPoodusuRfoiPUgaSbKPrLFtFNnonS29u93WhR7bwybcB6W_M05zg0GTEaNjdE6EVVjFrfvLLT_X6yTg4JWFLks1pIihvP1XuBsAMGn4LNf7F2eRlrMBI3hBd3DSD"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="px-3 py-1 bg-parchment-deep text-tertiary-container font-label-caps text-[10px] tracking-tighter uppercase border border-outline-variant">Epic Poetry</span>
+<span class="text-on-surface-variant text-body-md font-medium">12th Century</span>
+</div>
+<h2 class="font-ebGaramond text-display-lg-mobile text-primary mb-4">Tariel</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant mb-6 italic border-l-4 border-tertiary pl-4">
+                            "I, Tariel, the panther-clad, wanderer of the desert, seeking the lost sun of my existence."
+                        </p>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            The central figure of Shota Rustaveli's 'The Knight in the Panther's Skin'. Embodying the concept of 'mijnuruba' (courtly love), Tariel's journey is one of profound emotional depth and chivalric excellence.
+                        </p>
+<button class="bg-primary text-on-primary px-8 py-3 font-semibold text-body-md flex items-center gap-2 group-hover:gap-4 transition-all">
+                            Analyze Character <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Decorative background flourish -->
+<div class="absolute -bottom-10 -right-10 opacity-5 pointer-events-none transform rotate-12">
+<span class="material-symbols-outlined text-[200px]">auto_stories</span>
+</div>
+</div>
+<!-- Avtandil (Side Card) -->
+<div class="md:col-span-4 bg-primary text-on-primary p-8 flex flex-col justify-between character-card-hover group border border-primary-container">
+<div>
+<div class="w-24 h-24 rounded-full avatar-ring border-2 border-on-primary/30 mb-6 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of Avtandil, the loyal knight from Georgian literature, presented in a minimalist, academic artistic style. He is depicted with a noble, composed demeanor, wearing intricate silver-toned armor and a sapphire-colored tunic. The lighting is soft and directional, as if from a library window. The palette consists of deep burgundy, cool silver, and parchment tones. Sophisticated and calm atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYhifrOjYluIxNbiAjB1N7dngG4iGiOwCqCG5igl42Ce51y31ZxvXHn931U6NMkHLmtgnDHYt-hu5fCsyAkIe1gVKkeKlgmRrDqNi2bgDVogZ5i-Etj8v_mBpl_f183HBVwa5AwsCUQXP8BbKkf0Q3ucTb3eQkUi9GP1r2kDc4groJ73D-ogfqK4AIk87e9BO7I356fYLBAVPvPOFds7I2WOWC9agwLc1O4-oxa8nrxWnjPleOLttcr9Spo4UHc7uZcL2c7V4uTDHj"/>
+</div>
+<span class="font-label-caps text-[10px] text-primary-fixed-dim uppercase tracking-widest block mb-2">Loyal Protagonist</span>
+<h3 class="font-ebGaramond text-headline-md mb-4">Avtandil</h3>
+<p class="text-body-md opacity-90 leading-relaxed font-light mb-6">
+                        The epitome of wisdom and brotherhood. Avtandil balances the fiery passion of Tariel with strategic brilliance and unwavering loyalty to his sovereign, Tinatin.
+                    </p>
+</div>
+<div class="flex items-center justify-between border-t border-on-primary/10 pt-6">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">TH</div>
+<div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">LY</div>
+</div>
+<a class="text-body-md font-medium flex items-center gap-2 group-hover:underline" href="#">
+                        Full Bio <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Hagiography Section -->
+<div class="mb-section-gap">
+<div class="flex items-end justify-between mb-8 border-b border-outline-variant pb-4">
+<div>
+<h2 class="font-ebGaramond text-headline-md text-primary">Early Hagiographic Figures</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant">Defining the spiritual identity of the nation.</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Saint Shushanik -->
+<div class="bg-surface p-6 border border-outline-variant/30 character-card-hover">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A solemn, hagiographic illustration of Saint Shushanik in a 5th-century Georgian setting. She is shown in simple, humble linen garments, her expression one of quiet, unwavering spiritual resolve and suffering. The artistic style mimics ancient manuscript illumination with subtle metallic textures and a palette of muted earthy tones, deep burgundy, and parchment cream. The lighting is ethereal and soft, emphasizing her martyrdom and grace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTVjU9pWH31wdm3MCjPY2AmcqGBqNUZHo7Vs88THorvQ8_XJCjELNe2WyRsezKSuFMyFJdZ7CqZdpU4IXKqhqnlo1b6Bvkgrk3W2_e7xUkk6TrgZIGxZMgF3p9TD--hc4PXT0d9dNaye9r6J8eMibxFDdiCE-Pftumu8ymo8lMEuxmavepFsHEoBYmwkKCj6_ifPHXepMJMwfY4Tn74L9ikRCdEb_bZi7s30fUJWgMQ94bdol18OiIPcvB8FJbg2HedPEx8Rt2Fnp"/>
+<div class="absolute top-4 right-4 px-2 py-1 bg-surface/80 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest text-primary">5th Century</div>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-primary mb-2">Saint Shushanik</h3>
+<p class="text-body-md text-on-surface-variant mb-6 h-12 overflow-hidden text-ellipsis">
+                        The central figure of the first extant work of Georgian literature. A martyr of faith and resistance.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-low text-[10px] font-semibold text-on-surface-variant border border-outline-variant">Martyrdom</span>
+<span class="px-2 py-1 bg-surface-container-low text-[10px] font-semibold text-on-surface-variant border border-outline-variant">Stoicism</span>
+</div>
+</div>
+<!-- Saint Nino (Locked/In Progress) -->
+<div class="bg-surface p-6 border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-8">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">lock</span>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-on-surface opacity-50 mb-2">Saint Nino</h3>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant italic">Library entry in progress...</p>
+<p class="text-[11px] uppercase tracking-tighter mt-4 text-tertiary">Release: Winter 2024</p>
+</div>
+<div class="opacity-20 grayscale select-none">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden"></div>
+<div class="h-4 w-3/4 bg-on-surface-variant/20 mb-4"></div>
+<div class="h-4 w-1/2 bg-on-surface-variant/20 mb-4"></div>
+</div>
+</div>
+<!-- Abo Thbileli (Locked/In Progress) -->
+<div class="bg-surface p-6 border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-8">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">hourglass_empty</span>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-on-surface opacity-50 mb-2">Abo Thbileli</h3>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant italic">Library entry in progress...</p>
+<p class="text-[11px] uppercase tracking-tighter mt-4 text-tertiary">Processing Manuscript</p>
+</div>
+<div class="opacity-20 grayscale select-none">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden"></div>
+<div class="h-4 w-3/4 bg-on-surface-variant/20 mb-4"></div>
+<div class="h-4 w-1/2 bg-on-surface-variant/20 mb-4"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparative Study Section -->
+<div class="bg-parchment-deep border border-outline-variant p-gutter flex flex-col md:flex-row gap-gutter items-center">
+<div class="flex-1">
+<span class="font-label-caps text-label-caps text-primary uppercase mb-2 block">Premium Feature</span>
+<h2 class="font-ebGaramond text-headline-md text-primary mb-4">Cross-Character Thematic Analysis</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant leading-relaxed mb-6">
+                    Unlock our unique comparison engine to see how concepts of 'Honor', 'Sacrifice', and 'The Divine' evolve from the early Christian texts of the 5th century to the secular epics of the 12th.
+                </p>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-6 py-3 font-semibold text-body-md hover:shadow-lg transition-all">Start Comparison</button>
+<button class="bg-transparent border border-primary text-primary px-6 py-3 font-semibold text-body-md hover:bg-primary hover:text-on-primary transition-all">View Methodology</button>
+</div>
+</div>
+<div class="w-full md:w-1/3 aspect-square bg-surface border border-outline-variant/50 p-6 flex flex-col justify-center items-center gap-4 relative">
+<div class="absolute inset-0 opacity-[0.03] ruled-line"></div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">diversity_1</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary w-2/3"></div></div>
+</div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">history_edu</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-tertiary w-1/2"></div></div>
+</div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-crimson-dark/10 flex items-center justify-center"><span class="material-symbols-outlined text-crimson-dark">auto_graph</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-crimson-dark w-3/4"></div></div>
+</div>
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant mt-4">Analytic Neural Mapping v2.0</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-gutter flex flex-col md:flex-row justify-between items-start gap-unit bg-surface-container-low border-t border-outline-variant">
+<div class="flex flex-col gap-4 max-w-sm">
+<div class="flex items-center gap-3">
+<img alt="Litera Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
+<span class="font-ebGaramond text-headline-sm font-semibold text-primary">Litera</span>
+</div>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant leading-relaxed">
+                Elevating the study of literature through scholarly rigor and modern academic accessibility. Part of the Global Humanities Initiative.
+            </p>
+<p class="font-hankenGrotesk text-label-caps text-on-surface-variant opacity-70 mt-4">© 2024 Litera Study Platform. All rights reserved.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8 mt-10 md:mt-0">
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Resources</h4>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Syllabus</a>
+<a class="text-primary font-bold text-body-md hover:text-primary underline transition-all" href="#">Character Analysis</a>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Modern Translations</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Exam Center</h4>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Study Guides</a>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Exam Prep</a>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Practice Tests</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Legal</h4>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Terms of Service</a>
+<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for character cards
+        document.querySelectorAll('.character-card-hover').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Subtle lift or tone shift could be added here via JS if desired
+            });
+        });
+
+        // Search bar interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-105');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-105');
+        });
+    </script>
+</body></html>
