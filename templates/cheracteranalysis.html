@@ -2,20 +2,6 @@
 {% block title %}Character Analysis Index | Litera{% endblock %}
 {% block body_class %}bg-surface font-hankenGrotesk text-on-surface antialiased min-h-screen flex flex-col{% endblock %}
 {% block content %}
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface shadow-sm max-w-none mx-auto border-b border-outline-variant/30">
-<div class="flex items-center gap-4">
-<img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
-<span class="font-ebGaramond text-headline-md font-semibold text-primary">Litera</span>
-</div>
-
-<div class="flex items-center gap-gutter">
-<div class="relative hidden sm:block">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary w-48 transition-all focus:w-64" placeholder="Search archive..." type="text"/ data-character-search>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2 font-semibold text-body-md transition-opacity active:opacity-80">Sign In</button>
-</div>
-</header>
 <!-- Progress Indicator -->
 <div class="fixed top-16 left-0 w-full h-1 bg-surface-container-highest z-40">
 <div class="h-full bg-primary w-1/3 transition-all duration-1000 ease-in-out"></div>
@@ -49,9 +35,9 @@
 <p class="font-hankenGrotesk text-body-md text-on-surface-variant mb-8 line-clamp-3">
                             The central figure of Shota Rustaveli's 'The Knight in the Panther's Skin'. Embodying the concept of 'mijnuruba' (courtly love), Tariel's journey is one of profound emotional depth and chivalric excellence.
                         </p>
-<button class="bg-primary text-on-primary px-8 py-3 font-semibold text-body-md flex items-center gap-2 group-hover:gap-4 transition-all">
+<a href="{{ url_for('vefxistyaosani') }}" class="bg-primary text-on-primary px-8 py-3 font-semibold text-body-md flex items-center gap-2 group-hover:gap-4 transition-all inline-flex">
                             Analyze Character <span class="material-symbols-outlined">arrow_forward</span>
-</button>
+</a>
 </div>
 </div>
 <!-- Decorative background flourish -->
@@ -76,7 +62,7 @@
 <div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">TH</div>
 <div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">LY</div>
 </div>
-<a class="text-body-md font-medium flex items-center gap-2 group-hover:underline" href="#">
+<a class="text-body-md font-medium flex items-center gap-2 group-hover:underline" href="{{ url_for('vefxistyaosani') }}">
                         Full Bio <span class="material-symbols-outlined text-sm">open_in_new</span>
 </a>
 </div>
@@ -153,8 +139,8 @@
                     Unlock our unique comparison engine to see how concepts of 'Honor', 'Sacrifice', and 'The Divine' evolve from the early Christian texts of the 5th century to the secular epics of the 12th.
                 </p>
 <div class="flex gap-4">
-<button class="bg-primary text-on-primary px-6 py-3 font-semibold text-body-md hover:shadow-lg transition-all">Start Comparison</button>
-<button class="bg-transparent border border-primary text-primary px-6 py-3 font-semibold text-body-md hover:bg-primary hover:text-on-primary transition-all">View Methodology</button>
+<a href="{{ url_for('moderntraslations') }}" class="bg-primary text-on-primary px-6 py-3 font-semibold text-body-md hover:shadow-lg transition-all inline-block">Start Comparison</a>
+<a href="{{ url_for('studyguide') }}" class="bg-transparent border border-primary text-primary px-6 py-3 font-semibold text-body-md hover:bg-primary hover:text-on-primary transition-all inline-block">View Methodology</a>
 </div>
 </div>
 <div class="w-full md:w-1/3 aspect-square bg-surface border border-outline-variant/50 p-6 flex flex-col justify-center items-center gap-4 relative">

@@ -2,17 +2,6 @@
 {% block title %}Litera Study Guides | Scholastic Excellence{% endblock %}
 {% block body_class %}parchment-texture text-on-surface font-hankenGrotesk min-h-screen flex flex-col{% endblock %}
 {% block content %}
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-container-max mx-auto bg-surface dark:bg-surface-dim shadow-sm">
-<div class="flex items-center gap-4">
-<img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
-<span class="font-ebGaramond text-headline-md font-semibold text-primary dark:text-primary-fixed-dim">Litera</span>
-</div>
-
-<div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-semibold hover:opacity-80 transition-opacity">Sign In</button>
-</div>
-</header>
 <main class="pt-24 pb-section-gap max-w-container-max mx-auto px-gutter">
 <!-- Hero & Progress -->
 <section class="mb-section-gap">
@@ -107,9 +96,9 @@
 <p class="text-white text-sm">The Golden Age of King Tamar</p>
 </div>
 </div>
-<button class="flex items-center gap-2 text-primary font-bold hover:underline">
+<a href="{{ url_for('syllabus') }}" class="flex items-center gap-2 text-primary font-bold hover:underline">
                     Explore Timelines <span class="material-symbols-outlined">arrow_forward</span>
-</button>
+</a>
 </div>
 <!-- Placeholder Drafts Section (Modern Draft View) -->
 <div class="md:col-span-6 bg-surface-container-low p-8 rounded-xl border border-dashed border-outline flex flex-col gap-6">
