@@ -1,146 +1,17 @@
-<!DOCTYPE html>
-
-<html class="scroll-smooth" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Character Analysis Index | Litera</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .parchment-texture {
-            background-image: radial-gradient(#E0DCD0 0.5px, transparent 0.5px);
-            background-size: 24px 24px;
-            background-color: #fcf9f8;
-        }
-        .ruled-line {
-            background-image: repeating-linear-gradient(transparent, transparent 31px, #E0DCD0 31px, #E0DCD0 32px);
-        }
-        .character-card-hover:hover .avatar-ring {
-            transform: scale(1.05);
-            border-color: #cca730;
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface-container-low": "#f6f3f2",
-                      "on-tertiary-fixed-variant": "#574500",
-                      "on-primary-container": "#ff828a",
-                      "surface": "#fcf9f8",
-                      "on-error": "#ffffff",
-                      "charcoal-muted": "#333333",
-                      "primary-container": "#800020",
-                      "crimson-dark": "#5B0016",
-                      "primary": "#570013",
-                      "on-secondary-container": "#636360",
-                      "on-surface-variant": "#584141",
-                      "on-surface": "#1c1b1b",
-                      "tertiary-container": "#cca730",
-                      "on-error-container": "#93000a",
-                      "surface-variant": "#e5e2e1",
-                      "on-secondary": "#ffffff",
-                      "inverse-on-surface": "#f3f0ef",
-                      "error": "#ba1a1a",
-                      "on-tertiary-fixed": "#241a00",
-                      "tertiary": "#735c00",
-                      "on-primary": "#ffffff",
-                      "on-primary-fixed-variant": "#8e0f28",
-                      "surface-dim": "#dcd9d9",
-                      "background": "#fcf9f8",
-                      "surface-container-high": "#eae7e7",
-                      "outline": "#8c7071",
-                      "secondary-fixed-dim": "#c8c6c3",
-                      "on-secondary-fixed-variant": "#474744",
-                      "inverse-surface": "#313030",
-                      "parchment-deep": "#F5F1E6",
-                      "surface-bright": "#fcf9f8",
-                      "surface-tint": "#af2b3e",
-                      "on-secondary-fixed": "#1b1c1a",
-                      "on-primary-fixed": "#40000b",
-                      "tertiary-fixed-dim": "#e9c349",
-                      "primary-fixed-dim": "#ffb3b5",
-                      "on-tertiary": "#ffffff",
-                      "secondary-fixed": "#e4e2de",
-                      "secondary-container": "#e1dfdc",
-                      "inverse-primary": "#ffb3b5",
-                      "surface-container-lowest": "#ffffff",
-                      "tertiary-fixed": "#ffe088",
-                      "on-background": "#1c1b1b",
-                      "secondary": "#5e5e5c",
-                      "error-container": "#ffdad6",
-                      "surface-container-highest": "#e5e2e1",
-                      "primary-fixed": "#ffdada",
-                      "on-tertiary-container": "#4f3d00",
-                      "outline-variant": "#e0bfbf",
-                      "surface-container": "#f0eded"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "gutter": "24px",
-                      "unit": "8px",
-                      "section-gap": "64px",
-                      "container-max": "1120px",
-                      "margin-mobile": "16px"
-              },
-              "fontFamily": {
-                      "ebGaramond": ["EB Garamond", "serif"],
-                      "hankenGrotesk": ["Hanken Grotesk", "sans-serif"],
-                      "display-lg-mobile": ["EB Garamond"],
-                      "body-lg": ["Hanken Grotesk"],
-                      "label-caps": ["Hanken Grotesk"],
-                      "headline-sm": ["EB Garamond"],
-                      "headline-md": ["EB Garamond"],
-                      "body-md": ["Hanken Grotesk"],
-                      "quote-display": ["EB Garamond"],
-                      "display-lg": ["EB Garamond"]
-              },
-              "fontSize": {
-                      "display-lg-mobile": ["36px", {"lineHeight": "44px", "fontWeight": "600"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                      "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
-                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "quote-display": ["22px", {"lineHeight": "32px", "fontWeight": "400"}],
-                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
-              }
-            },
-          },
-        }
-      </script>
-</head>
-<body class="bg-surface font-hankenGrotesk text-on-surface antialiased">
-<!-- TopNavBar -->
+{% extends "base.html" %}
+{% block title %}Character Analysis Index | Litera{% endblock %}
+{% block body_class %}bg-surface font-hankenGrotesk text-on-surface antialiased min-h-screen flex flex-col{% endblock %}
+{% block content %}
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface shadow-sm max-w-none mx-auto border-b border-outline-variant/30">
 <div class="flex items-center gap-4">
 <img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
 <span class="font-ebGaramond text-headline-md font-semibold text-primary">Litera</span>
 </div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">Welcome</a>
-<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">About Us</a>
-<a class="text-primary border-b-2 border-primary pb-1 font-semibold font-hankenGrotesk text-body-md" href="#">Character Analysis</a>
-<a class="text-on-surface-variant font-hankenGrotesk text-body-md hover:text-primary transition-colors duration-200" href="#">Contact</a>
-</nav>
+
 <div class="flex items-center gap-gutter">
 <div class="relative hidden sm:block">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary w-48 transition-all focus:w-64" placeholder="Search archive..." type="text"/>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary w-48 transition-all focus:w-64" placeholder="Search archive..." type="text"/ data-character-search>
 </div>
 <button class="bg-primary text-on-primary px-6 py-2 font-semibold text-body-md transition-opacity active:opacity-80">Sign In</button>
 </div>
@@ -305,52 +176,4 @@
 </div>
 </main>
 <!-- Footer -->
-<footer class="w-full py-section-gap px-gutter flex flex-col md:flex-row justify-between items-start gap-unit bg-surface-container-low border-t border-outline-variant">
-<div class="flex flex-col gap-4 max-w-sm">
-<div class="flex items-center gap-3">
-<img alt="Litera Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
-<span class="font-ebGaramond text-headline-sm font-semibold text-primary">Litera</span>
-</div>
-<p class="font-hankenGrotesk text-body-md text-on-surface-variant leading-relaxed">
-                Elevating the study of literature through scholarly rigor and modern academic accessibility. Part of the Global Humanities Initiative.
-            </p>
-<p class="font-hankenGrotesk text-label-caps text-on-surface-variant opacity-70 mt-4">© 2024 Litera Study Platform. All rights reserved.</p>
-</div>
-<div class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8 mt-10 md:mt-0">
-<div class="flex flex-col gap-4">
-<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Resources</h4>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Syllabus</a>
-<a class="text-primary font-bold text-body-md hover:text-primary underline transition-all" href="#">Character Analysis</a>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Modern Translations</a>
-</div>
-<div class="flex flex-col gap-4">
-<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Exam Center</h4>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Study Guides</a>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Exam Prep</a>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Practice Tests</a>
-</div>
-<div class="flex flex-col gap-4">
-<h4 class="font-label-caps text-primary uppercase text-[10px] tracking-widest">Legal</h4>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Terms of Service</a>
-<a class="text-on-surface-variant text-body-md hover:text-primary underline transition-all" href="#">Privacy Policy</a>
-</div>
-</div>
-</footer>
-<script>
-        // Micro-interactions for character cards
-        document.querySelectorAll('.character-card-hover').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                // Subtle lift or tone shift could be added here via JS if desired
-            });
-        });
-
-        // Search bar interaction
-        const searchInput = document.querySelector('input[type="text"]');
-        searchInput.addEventListener('focus', () => {
-            searchInput.parentElement.classList.add('scale-105');
-        });
-        searchInput.addEventListener('blur', () => {
-            searchInput.parentElement.classList.remove('scale-105');
-        });
-    </script>
-</body></html>
+{% endblock %}
