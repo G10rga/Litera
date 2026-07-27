@@ -2,17 +2,6 @@
 {% block title %}Litera | National Exam Prep (NAEC){% endblock %}
 {% block body_class %}font-hankenGrotesk antialiased min-h-screen flex flex-col{% endblock %}
 {% block content %}
-<!-- TopNavBar Shell -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-full mx-auto bg-surface dark:bg-surface-dim shadow-sm">
-<div class="flex items-center gap-4">
-<img alt="Litera Logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
-<span class="font-ebGaramond text-headline-md font-semibold text-primary dark:text-primary-fixed-dim">Litera</span>
-</div>
-
-<div class="flex items-center gap-4">
-<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-hankenGrotesk text-body-md hover:bg-crimson-dark transition-colors">Sign In</button>
-</div>
-</header>
 <main class="mt-16 pt-section-gap">
 <!-- Hero Section -->
 <section class="max-w-container-max mx-auto px-gutter mb-section-gap">
@@ -24,12 +13,12 @@
                         Comprehensive study materials, modern translations of classical texts, and systematic preparation strategies designed for the Georgian National Examinations.
                     </p>
 <div class="flex gap-4">
-<button class="bg-primary text-on-primary px-8 py-4 rounded-lg font-hankenGrotesk font-semibold hover:bg-crimson-dark transition-all flex items-center gap-2 shadow-md">
+<a href="{{ url_for('studyguide') }}" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-hankenGrotesk font-semibold hover:bg-crimson-dark transition-all flex items-center gap-2 shadow-md">
                             Start Learning <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-<button class="border-2 border-primary text-primary px-8 py-4 rounded-lg font-hankenGrotesk font-semibold hover:bg-primary/5 transition-all">
+</a>
+<a href="{{ url_for('syllabus') }}" class="border-2 border-primary text-primary px-8 py-4 rounded-lg font-hankenGrotesk font-semibold hover:bg-primary/5 transition-all inline-block">
                             View Syllabus
-                        </button>
+                        </a>
 </div>
 </div>
 <div class="flex-1 w-full">
@@ -110,7 +99,7 @@
                                     "NAEC has released the updated 2024 Literature rubric for hagiographic text analysis. Students are advised to focus on meta-textual themes."
                                 </p>
 </div>
-<a class="text-xs font-bold underline mt-4" href="#">Read Full Memo</a>
+<a class="text-xs font-bold underline mt-4" href="{{ url_for('studyguide') }}">Read Full Memo</a>
 </div>
 </div>
 </div>

@@ -2,17 +2,6 @@
 {% block title %}Litera | Modern Translations{% endblock %}
 {% block body_class %}bg-background text-on-surface parchment-texture min-h-screen flex flex-col{% endblock %}
 {% block content %}
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-container-max mx-auto bg-surface dark:bg-surface-dim shadow-sm">
-<div class="flex items-center gap-4">
-<img alt="Litera Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLt4cPDGMQpf2-Huua9WsdARrp6l4v7Vv9AppzDMI5uF8m0uBIU-tiijUJeNpQD16j-QI5iB-6_R4CfTqep6woymQwvzZlUvTHnBY3iFHA3-UT-hkZNiDkYr0hKH53yVRZkZ_Hfld8UTF1ixQNearipcgQzgafEbdXBKigByKB4W9iffcLwxsgnSPpuQ_udGmM1uW4gJ11k7RpYwiHrlyT6BoaM5PYg-nlvInxivnxFDzNhZ7AK99x_wyFL3"/>
-<span class="font-ebGaramond text-headline-md font-semibold text-primary dark:text-primary-fixed-dim">Litera</span>
-</div>
-
-<div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-primary p-2">search</button>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-hankenGrotesk text-body-md font-medium hover:opacity-90 transition-opacity">Sign In</button>
-</div>
-</header>
 <!-- Progress Indicator Shell -->
 <div class="fixed top-16 left-0 w-full h-1 bg-surface-container z-40">
 <div class="h-full bg-primary" style="width: 35%"></div>
@@ -112,7 +101,7 @@
 </div>
 </div>
 <p class="font-hankenGrotesk text-body-md text-on-surface-variant italic mb-4">"A man who hides his sorrow is like a physician who treats himself."</p>
-<button class="w-full py-2 border border-primary text-primary font-hankenGrotesk font-semibold rounded-lg hover:bg-primary hover:text-on-primary transition-all">Full Profile</button>
+<a href="{{ url_for('cheracteranalysis') }}" class="w-full py-2 border border-primary text-primary font-hankenGrotesk font-semibold rounded-lg hover:bg-primary hover:text-on-primary transition-all inline-block text-center">Full Profile</a>
 </div>
 <div class="bg-surface-container-low p-6 rounded-lg border border-outline-variant">
 <h4 class="font-label-caps text-primary mb-4 uppercase">Scholarly Notes</h4>
