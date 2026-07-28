@@ -11,7 +11,7 @@ def load_shushaniki():
     with app.app_context():
         try:
             # Read the CSV file
-            csv_path = 'static/literature/shushaniki-Sheet1.csv'
+            csv_path = '../static/literature/shushaniki-Sheet1.csv'
             print(f"Reading {csv_path}...")
             df = pd.read_csv(csv_path)
 
