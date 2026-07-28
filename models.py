@@ -56,3 +56,14 @@ class VefxistyaosaniLine(db.Model):
         return f'<VefxistyaosaniLine {self.id}: {self.line[:50]}...>'
 
 
+class ShushanikiText(db.Model):
+    """ Model for storing Shushaniki literature """
+    __tablename__ = 'shushaniki_main'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    chapter = db.Column(db.Integer, nullable=True)
+
+
+
+
