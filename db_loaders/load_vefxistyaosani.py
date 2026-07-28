@@ -11,7 +11,7 @@ def load_vefxistyaosani():
     with app.app_context():
         try:
             # Read the CSV file
-            csv_path = 'static/literature/vefxistyaosani.csv'
+            csv_path = '../static/literature/vefxistyaosani.csv'
             print(f"Reading {csv_path}...")
             df = pd.read_csv(csv_path)
 
