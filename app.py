@@ -4,7 +4,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
-from models import Aphorism, User, VefxistyaosaniLine, db
+from models import Aphorism, User, VefxistyaosaniLine, GlossTerm, GlossOccurrence, db
 
 app = Flask(__name__)
 
