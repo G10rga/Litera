@@ -9,7 +9,7 @@ def load_aphorisms():
     """Load aphorisms from aforizmebi.txt into the database."""
     with app.app_context():
         # Read the file
-        with open('aforizmebi.txt', 'r', encoding='utf-8') as f:
+        with open('../static/literature/aforizmebi.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
         # Filter out empty lines and whitespace-only lines
