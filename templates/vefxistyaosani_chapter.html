@@ -196,7 +196,7 @@
   <select class="chapters" onchange="if(this.value) location.href=this.value;">
     {% for c in chapters %}
       <option value="/vefxistyaosani/{{ c.number }}" {% if c.number == chapter %}selected{% endif %}>
-        {{ c.number }}. {{ c.title or "-" }}{% if not c.modernised %} (დამუშავებული ჯერ არ არის){% endif %}
+        {{ c.number }}. {{ c.title or "—" }}{% if not c.modernised %} (დაამუშავებელი){% endif %}
       </option>
     {% endfor %}
   </select>
@@ -224,9 +224,9 @@
   <div class="divider"></div>
 
   <section class="col modern">
-    <h2>შინაარსი</h2>
+    <h2>გადამოწმება</h2>
     {% if modern_missing %}
-      <p class="missing">ამ თავის გაშინაარსებული ტექსტი პოვნაში ჯერ არ არის.</p>
+      <p class="missing">ამ თავის გადამოწმებული ტექსტი პოვნაში ჯერ არ არის.</p>
     {% else %}
       {% for p in modern_paragraphs %}<p>{{ p }}</p>{% endfor %}
     {% endif %}
@@ -237,7 +237,10 @@
 <footer class="meta">
   {{ strophes|length }} სტროფი &middot; {{ gloss_total }} განმარტებული სიტყვა
   {% if gloss_scheme == "none" %}
-    &middot; <strong>გაფრთხილება:</strong> gloss strophe numbering did not match this chapter
+    &middot; <strong>გაფრთხილება:</strong>
+    no gloss numbering matched this chapter &mdash; run check_numbering.py
+  {% else %}
+    &middot; alignment: {{ gloss_scheme }}{% if gloss_offset %} (offset {{ gloss_offset }}){% endif %}
   {% endif %}
 </footer>
 

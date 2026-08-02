@@ -8,12 +8,23 @@ templates/vefxistyaosani_chapter.html next to your other templates.
 The two columns are independent. The left is built from VefxistyaosaniLine
 rows for one chapter, grouped into strophes of four lines, with archaic terms
 wrapped in <span class="gloss"> carrying their modern meaning. The right is a
-single ModernChapter row rendered as paragraphs. Nothing has to line up
-horizontally, which is what makes this tractable.
+single ModernChapter row rendered as paragraphs.
 
 Gloss resolution is per strophe, never per term. 182 terms are defensibly
 polysemous (კვლა alone carries 7 distinct senses), so a global term->gloss
 dictionary would show the wrong meaning often enough to matter.
+
+NUMBERING
+---------
+vefxistyaosani_lines.strophe_id restarts at 1 in every chapter, while
+gloss_occurrences.strophe_global counts straight through the poem. The two
+schemes coincide only in chapter 1, so a naive join produces tooltips on the
+first chapter and nowhere else.
+
+_resolve_alignment() handles this without a migration: it tries the direct
+join, then a constant offset derived from the chapter's own first strophe,
+and keeps whichever explains more strophes. That works whether your rows are
+locally numbered, globally numbered, or backfilled later.
 """
 
 import re
@@ -32,16 +43,16 @@ reader = Blueprint("reader", __name__)
 # matching them wastes time and can produce nonsense partial hits.
 PREVERB_RE = re.compile(r"[-\u2010\u2011\u2013\u2014]\s*$")
 
-# Georgian has no case distinction, so a plain boundary check on non-Georgian
-# characters is enough to avoid matching inside a longer word.
+# Georgian is unicameral, so a boundary check against Georgian letters is
+# enough to stop a short term matching inside a longer word.
 GEORGIAN = r"\u10a0-\u10ff"
 
 
 def _load_chapter_glosses(chapter_id):
-    """Return {strophe_number: OrderedDict(term -> gloss)} for one chapter.
+    """Return (by_global, by_local), each {strophe_number: {term: gloss}}.
 
-    Terms are ordered longest first so that a phrase wins over any single word
-    it contains.
+    Terms within a strophe are ordered longest first so a phrase wins over any
+    single word it contains.
     """
     rows = (
         GlossOccurrence.query.join(GlossTerm, GlossOccurrence.term_id == GlossTerm.id)
@@ -69,14 +80,53 @@ def _load_chapter_glosses(chapter_id):
             by_local[strophe_local].setdefault(term, gloss)
 
     def _sorted(bucket):
-        out = {}
-        for strophe, mapping in bucket.items():
-            out[strophe] = OrderedDict(
+        return {
+            strophe: OrderedDict(
                 sorted(mapping.items(), key=lambda kv: len(kv[0]), reverse=True)
             )
-        return out
+            for strophe, mapping in bucket.items()
+        }
 
     return _sorted(by_global), _sorted(by_local)
+
+
+def _resolve_alignment(strophe_numbers, by_global, by_local):
+    """Pick the mapping that explains the most strophes in this chapter.
+
+    Returns (lookup_dict, offset, scheme_label). Applying the result means
+    looking up ``lookup[strophe_id + offset]``.
+    """
+    if not strophe_numbers:
+        return {}, 0, "none"
+
+    lowest = min(strophe_numbers)
+    candidates = []
+
+    for label, bucket in (("local", by_local), ("global", by_global)):
+        if not bucket:
+            continue
+        keys = set(bucket)
+
+        # Direct join.
+        candidates.append(
+            (len(strophe_numbers & keys), 0, bucket, label)
+        )
+
+        # Constant offset: assume this chapter's first strophe corresponds to
+        # the lowest glossed strophe recorded for the same chapter.
+        offset = min(keys) - lowest
+        if offset:
+            hits = sum(1 for s in strophe_numbers if s + offset in keys)
+            candidates.append((hits, offset, bucket, label + "+offset"))
+
+    if not candidates:
+        return {}, 0, "none"
+
+    hits, offset, bucket, label = max(candidates, key=lambda c: c[0])
+    if hits == 0:
+        return {}, 0, "none"
+
+    return bucket, offset, label
 
 
 def _annotate(line, glosses):
@@ -99,9 +149,9 @@ def _annotate(line, glosses):
             r"(?<![%s])(%s)(?![%s])" % (GEORGIAN, re.escape(str(escape(term))), GEORGIAN)
         )
 
-        def _swap(match):
+        def _swap(match, _gloss=gloss):
             index = len(slots)
-            slots.append((match.group(1), gloss))
+            slots.append((match.group(1), _gloss))
             return "\x00%d\x00" % index
 
         text = pattern.sub(_swap, text)
@@ -125,23 +175,12 @@ def _build_strophes(chapter_id):
         .all()
     )
     if not lines:
-        return [], "none"
+        return [], "none", 0
 
     by_global, by_local = _load_chapter_glosses(chapter_id)
+    strophe_numbers = {row.strophe_id for row in lines if row.strophe_id is not None}
 
-    strophe_numbers = {row.strophe_id for row in lines}
-
-    # strophe_local is NULL until load_glossary.py --backfill-local has run, so
-    # prefer whichever numbering actually overlaps this chapter's strophes.
-    overlap_global = len(strophe_numbers & set(by_global))
-    overlap_local = len(strophe_numbers & set(by_local))
-
-    if overlap_local > overlap_global:
-        lookup, scheme = by_local, "local"
-    elif overlap_global:
-        lookup, scheme = by_global, "global"
-    else:
-        lookup, scheme = {}, "none"
+    lookup, offset, scheme = _resolve_alignment(strophe_numbers, by_global, by_local)
 
     grouped = OrderedDict()
     for row in lines:
@@ -149,7 +188,7 @@ def _build_strophes(chapter_id):
 
     strophes = []
     for number, rows in grouped.items():
-        glosses = lookup.get(number, {})
+        glosses = lookup.get(number + offset, {})
         strophes.append(
             {
                 "number": number,
@@ -158,7 +197,7 @@ def _build_strophes(chapter_id):
             }
         )
 
-    return strophes, scheme
+    return strophes, scheme, offset
 
 
 def _chapter_index():
@@ -195,7 +234,7 @@ def vefxistyaosani_index():
 
 @reader.route("/vefxistyaosani/<int:chapter>")
 def vefxistyaosani_chapter(chapter):
-    strophes, scheme = _build_strophes(chapter)
+    strophes, scheme, offset = _build_strophes(chapter)
     if not strophes:
         abort(404)
 
@@ -217,6 +256,7 @@ def vefxistyaosani_chapter(chapter):
         modern_paragraphs=(modern.paragraphs if modern else []),
         modern_missing=(modern is None),
         gloss_scheme=scheme,
+        gloss_offset=offset,
         gloss_total=sum(s["gloss_count"] for s in strophes),
         chapters=chapters,
         prev_chapter=(numbers[position - 1] if position > 0 else None),
