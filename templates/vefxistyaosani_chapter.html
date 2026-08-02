@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ვეფხისტყაოსანი &mdash; თავი {{ chapter }}</title>
+<style>
+  :root {
+    --parchment: #f4ecd8;
+    --parchment-dark: #e8dcc0;
+    --ink: #2b2118;
+    --accent: #9b1c1c;
+    --muted: #7a6a55;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: "Noto Serif Georgian", "Sylfaen", Georgia, serif;
+    line-height: 1.7;
+  }
+
+  header.bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--parchment-dark);
+    border-bottom: 2px solid var(--accent);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  header.bar h1 {
+    font-size: 1.05rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  header.bar .title {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .spacer { flex: 1; }
+
+  .navlink {
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.9rem;
+  }
+  .navlink:hover { background: var(--accent); color: var(--parchment); }
+  .navlink.disabled { opacity: 0.3; pointer-events: none; }
+
+  select.chapters {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    background: var(--parchment);
+    border: 1px solid var(--muted);
+    border-radius: 4px;
+    max-width: 22rem;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .divider {
+    background: var(--accent);
+    align-self: stretch;
+    min-height: 100vh;
+  }
+
+  .col { padding: 2rem 2.25rem; }
+
+  .col h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+  }
+
+  .strophe {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    margin-bottom: 1.4rem;
+  }
+
+  .strophe .num {
+    color: var(--accent);
+    font-size: 0.8rem;
+    padding-top: 0.35rem;
+    user-select: none;
+  }
+
+  .strophe .verse div { white-space: pre-wrap; }
+
+  .modern p { margin: 0 0 1.1rem; text-align: justify; }
+
+  .missing {
+    color: var(--muted);
+    font-style: italic;
+    border: 1px dashed var(--muted);
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  /* ---- gloss tooltip ---- */
+
+  .gloss {
+    color: var(--accent);
+    cursor: help;
+    position: relative;
+    border-bottom: 1px dotted var(--accent);
+    outline: none;
+  }
+
+  .gloss::after {
+    content: attr(data-gloss);
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translate(-50%, -0.4rem);
+    background: #1b1b1b;
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    font-family: system-ui, sans-serif;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    white-space: normal;
+    width: max-content;
+    max-width: 22rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.12s ease;
+    z-index: 30;
+    pointer-events: none;
+  }
+
+  .gloss::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translate(-50%, 0.25rem);
+    border: 5px solid transparent;
+    border-top-color: #1b1b1b;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.12s ease;
+    z-index: 31;
+    pointer-events: none;
+  }
+
+  .gloss:hover::after, .gloss:focus::after,
+  .gloss:hover::before, .gloss:focus::before {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  footer.meta {
+    padding: 1rem 2.25rem 3rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 900px) {
+    .columns { grid-template-columns: 1fr; }
+    .divider { min-height: 2px; height: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <h1>ვეფხისტყაოსანი</h1>
+  <span class="title">თავი {{ chapter }}{% if title %} &mdash; {{ title }}{% endif %}</span>
+  <span class="spacer"></span>
+
+  <select class="chapters" onchange="if(this.value) location.href=this.value;">
+    {% for c in chapters %}
+      <option value="/vefxistyaosani/{{ c.number }}" {% if c.number == chapter %}selected{% endif %}>
+        {{ c.number }}. {{ c.title or "-" }}{% if not c.modernised %} (დამუშავებული ჯერ არ არის){% endif %}
+      </option>
+    {% endfor %}
+  </select>
+
+  <a class="navlink {% if not prev_chapter %}disabled{% endif %}"
+     href="/vefxistyaosani/{{ prev_chapter or chapter }}">←</a>
+  <a class="navlink {% if not next_chapter %}disabled{% endif %}"
+     href="/vefxistyaosani/{{ next_chapter or chapter }}">→</a>
+</header>
+
+<div class="columns">
+
+  <section class="col original">
+    <h2>ორიგინალი</h2>
+    {% for s in strophes %}
+      <div class="strophe">
+        <div class="num">{{ s.number }}</div>
+        <div class="verse">
+          {% for line in s.lines %}<div>{{ line }}</div>{% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="col modern">
+    <h2>შინაარსი</h2>
+    {% if modern_missing %}
+      <p class="missing">ამ თავის გაშინაარსებული ტექსტი პოვნაში ჯერ არ არის.</p>
+    {% else %}
+      {% for p in modern_paragraphs %}<p>{{ p }}</p>{% endfor %}
+    {% endif %}
+  </section>
+
+</div>
+
+<footer class="meta">
+  {{ strophes|length }} სტროფი &middot; {{ gloss_total }} განმარტებული სიტყვა
+  {% if gloss_scheme == "none" %}
+    &middot; <strong>გაფრთხილება:</strong> gloss strophe numbering did not match this chapter
+  {% endif %}
+</footer>
+
+</body>
+</html>

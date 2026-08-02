@@ -4,7 +4,15 @@ import os
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
-from models import Aphorism, User, VefxistyaosaniLine, db
+from models import (
+    Aphorism,
+    GlossOccurrence,
+    GlossTerm,
+    ModernChapter,
+    User,
+    VefxistyaosaniLine,
+    db,
+)
 
 app = Flask(__name__)
 
@@ -14,9 +22,26 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+# Flask-Migrate is required to add modern_chapters to an existing vepkhvi.db,
+# because db.create_all() never ALTERs a database that already exists.
+# Optional so the app still boots if the package is not installed yet.
+try:
+    from flask_migrate import Migrate
+
+    migrate = Migrate(app, db)
+except ImportError:  # pragma: no cover
+    migrate = None
+
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'error'
+
+
+# The chapter reader lives in reader_routes.py: original verse with hover
+# glosses on the left, modernised prose on the right. Registered here.
+from db_loaders.reader_routes import reader  # noqa: E402  (must follow db.init_app)
+
+app.register_blueprint(reader)
 
 
 @login_manager.user_loader
@@ -42,10 +67,16 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/cheracteranalysis')
-def cheracteranalysis():
+@app.route('/characteranalysis')
+def characteranalysis():
     """Render the character analysis page."""
     return render_template('cheracteranalysis.html')
+
+
+@app.route('/cheracteranalysis')
+def cheracteranalysis():
+    """Permanent redirect from the misspelled original URL."""
+    return redirect(url_for('characteranalysis'), code=301)
 
 
 @app.route('/examprep')
@@ -99,6 +130,30 @@ def aphorisms():
 
 @app.route('/vefxistyaosani')
 def vefxistyaosani():
+    """Send the bare URL to the first chapter of the reader.
+
+    The old behaviour loaded every line of the poem in a single request and
+    handed the template a dict keyed by (chapter_id, strophe_id). With ~1,600
+    strophes plus 10,988 gloss occurrences that page would now be very slow,
+    so reading is paginated by chapter.
+    """
+    first = (
+        VefxistyaosaniLine.query.with_entities(VefxistyaosaniLine.chapter_id)
+        .filter(VefxistyaosaniLine.chapter_id.isnot(None))
+        .order_by(VefxistyaosaniLine.chapter_id)
+        .first()
+    )
+    if first is None:
+        return render_template('vefxistyaosani.html', stanzas={})
+    return redirect(url_for('reader.vefxistyaosani_chapter', chapter=first[0]))
+
+
+@app.route('/vefxistyaosani/all')
+def vefxistyaosani_all():
+    """The original whole-poem view, kept for reference.
+
+    Not linked from the navigation. Slow by design.
+    """
     rows = VefxistyaosaniLine.query.order_by(
         VefxistyaosaniLine.chapter_id,
         VefxistyaosaniLine.strophe_id,
@@ -199,4 +254,5 @@ with app.app_context():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug = os.environ.get('FLASK_DEBUG', '1') == '1'
+    app.run(debug=debug, host='127.0.0.1', port=5000)
