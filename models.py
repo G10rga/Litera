@@ -196,3 +196,72 @@ class ModernChapter(db.Model):
             self.source,
             self.paragraph_count,
         )
+
+
+
+class ShushanikiGloss(db.Model):
+    """An archaic word or phrase from შუშანიკის წამება, with its gloss.
+
+    Unlike the utvalavi glossary these are not positional. NPLG publishes one
+    global word list applied by string match wherever a word occurs, so there
+    is no strophe or paragraph anchor to record and nothing that can drift out
+    of alignment with the text.
+    """
+    __tablename__ = 'shushaniki_glosses'
+
+    id = db.Column(db.Integer, primary_key=True)
+    term = db.Column(db.String(256), nullable=False, index=True)
+    gloss = db.Column(db.Text, nullable=False)
+
+    # True only when the term contains whitespace. A hyphenated compound such
+    # as ზრახვა-ყო is a single token in the running text, so treating it as a
+    # phrase would stop it ever matching.
+    is_phrase = db.Column(db.Boolean, default=False, index=True)
+
+    source = db.Column(db.String(64), default='nplg', index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        db.UniqueConstraint('term', 'gloss', name='uq_shushaniki_term_gloss'),
+    )
+
+    def __repr__(self):
+        return f'<ShushanikiGloss {self.id}: {self.term}>'
+
+
+class ShushanikiModern(db.Model):
+    """Modernised Georgian text of შუშანიკის წამება, by section.
+
+    chapter_id matches the roman section number of the original (I = 1 ...
+    XX = 20), which is the same key the left-hand column uses after
+    renumber_shushaniki.py has run.
+    """
+    __tablename__ = 'shushaniki_modern'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    # 1..20, matching sections I..XX. Unique on its own: this table holds
+    # exactly one work, so there is no second dimension to the key.
+    chapter_id = db.Column(db.Integer, nullable=False, unique=True, index=True)
+
+    title = db.Column(db.String(255), nullable=True)
+    text = db.Column(db.Text, nullable=False)
+
+    # draft | reviewed | final -- these are working translations, so it is
+    # worth being able to mark which have actually been checked.
+    review_status = db.Column(db.String(16), nullable=False, default='draft')
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def paragraphs(self):
+        """The stored text split back into display paragraphs."""
+        return [p for p in self.text.split('\n\n') if p.strip()]
+
+    @property
+    def paragraph_count(self):
+        return len(self.paragraphs)
+
+    def __repr__(self):
+        return f'<ShushanikiModern chapter {self.chapter_id}>'
+
