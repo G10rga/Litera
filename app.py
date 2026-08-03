@@ -43,6 +43,10 @@ from db_loaders.reader_routes import reader  # noqa: E402  (must follow db.init_
 
 app.register_blueprint(reader)
 
+from db_loaders.shushaniki_routes import shushaniki  # noqa: E402  (must follow db.init_app)
+app.register_blueprint(shushaniki)
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
