@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ლიტერატურა</title>
+<style>
+  :root {
+    --parchment: #f4ecd8;
+    --parchment-dark: #e8dcc0;
+    --ink: #2b2118;
+    --accent: #9b1c1c;
+    --muted: #7a6a55;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: "Noto Serif Georgian", "Sylfaen", Georgia, serif;
+    line-height: 1.7;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+  h1 { font-size: 1.4rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+  ul.works { list-style: none; padding: 0; }
+  ul.works li {
+    border-bottom: 1px solid var(--parchment-dark);
+    padding: 0.85rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+  ul.works a { color: var(--accent); text-decoration: none; font-size: 1.05rem; }
+  ul.works a:hover { text-decoration: underline; }
+  .author { color: var(--muted); font-size: 0.85rem; flex: 1 1 auto; }
+  .meta { color: var(--muted); font-size: 0.78rem; }
+  .bar {
+    width: 110px;
+    height: 6px;
+    background: var(--parchment-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--muted);
+    color: var(--muted);
+    border-radius: 3px;
+    padding: 0.05rem 0.35rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>ლიტერატურა</h1>
+
+  {% if rows %}
+    <ul class="works">
+      {% for row in rows %}
+        <li>
+          <a href="{{ url_for('literature.start', slug=row.work.slug) }}">{{ row.work.title }}</a>
+          <span class="tag">{{ row.work.kind }}</span>
+          <span class="author">{% if row.work.author %}{{ row.work.author }}{% endif %}</span>
+          <span class="meta">
+            {% if row.sections %}{{ row.sections }} თავი · {% endif %}{{ row.work.unit_count }} ერთეული
+          </span>
+          <span class="bar"><span style="width: {{ row.percent }}%"></span></span>
+          <span class="meta">{{ row.percent }}%</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="meta">ბაზაში ნაწარმოებები არ არის. გაუშვით load_literature.py --all</p>
+  {% endif %}
+</main>
+</body>
+</html>
