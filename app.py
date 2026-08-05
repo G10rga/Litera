@@ -4,6 +4,8 @@ import os
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
+
+
 from models import (
     Aphorism,
     GlossOccurrence,
@@ -42,6 +44,10 @@ login_manager.login_message_category = 'error'
 from db_loaders.reader_routes import reader  # noqa: E402  (must follow db.init_app)
 
 app.register_blueprint(reader)
+
+from db_loaders.literature_routes import literature
+app.register_blueprint(literature)
+
 
 from db_loaders.shushaniki_routes import shushaniki  # noqa: E402  (must follow db.init_app)
 app.register_blueprint(shushaniki)

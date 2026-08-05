@@ -265,3 +265,164 @@ class ShushanikiModern(db.Model):
     def __repr__(self):
         return f'<ShushanikiModern chapter {self.chapter_id}>'
 
+
+
+class Work(db.Model):
+    """One literary work, with its provenance.
+
+    Provenance lives here rather than in a separate table because it is 1:1
+    with the work, and because the Wikisource transcriptions are CC BY-SA 4.0 --
+    attribution has to be available wherever the text is displayed.
+    """
+    __tablename__ = 'works'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Stable identifier, matching the manifest and the static folder name,
+    # e.g. 'aluda-qetelauri'.
+    slug = db.Column(db.String(64), nullable=False, unique=True, index=True)
+
+    title = db.Column(db.String(255), nullable=False)
+    author = db.Column(db.String(255), nullable=True)
+    subtitle = db.Column(db.String(255), nullable=True)
+
+    # 'verse' or 'prose'. Decides whether the reader renders one unit per line
+    # or one unit per paragraph, and it is detected from the text rather than
+    # guessed from the genre.
+    kind = db.Column(db.String(16), nullable=False, default='prose')
+
+    composed = db.Column(db.String(64), nullable=True)
+    death_year = db.Column(db.Integer, nullable=True)
+
+    # Provenance.
+    source = db.Column(db.String(128), nullable=True)
+    url = db.Column(db.Text, nullable=True)
+    revision = db.Column(db.String(64), nullable=True)
+    retrieved = db.Column(db.String(32), nullable=True)
+    license = db.Column(db.String(64), nullable=True)
+    sha256 = db.Column(db.String(64), nullable=True)
+
+    # Set at load time so the reader does not have to COUNT on every request.
+    unit_count = db.Column(db.Integer, nullable=False, default=0)
+    section_count = db.Column(db.Integer, nullable=False, default=0)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    units = db.relationship(
+        'TextUnit',
+        backref='work',
+        lazy='dynamic',
+        cascade='all, delete-orphan',
+    )
+
+    def __repr__(self):
+        return f'<Work {self.slug}>'
+
+
+class TextUnit(db.Model):
+    """One addressable piece of a work: a verse line, or a prose paragraph.
+
+    Deliberately not called a strophe. Vefkhistkaosani has quatrains, Aluda has
+    couplet sections that do not divide by four, and the prose works have
+    paragraphs. The one thing they share is an ordered sequence of numbered
+    pieces, so that is what this models.
+    """
+    __tablename__ = 'text_units'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    work_id = db.Column(
+        db.Integer,
+        db.ForeignKey('works.id'),
+        nullable=False,
+        index=True,
+    )
+
+    # Section number, 1-based. NULL for works with no divisions at all
+    # (Memento Mori, Tano Tatano).
+    section = db.Column(db.Integer, nullable=True, index=True)
+
+    # The section marker as actually printed: 'II', 'I თავი'. Kept because the
+    # source files disagree about marker style and the reader should be able to
+    # show what the edition shows.
+    section_label = db.Column(db.String(32), nullable=True)
+
+    # Position within the section, 1-based.
+    unit_index = db.Column(db.Integer, nullable=False)
+
+    # Position within the whole work, 1-based and gapless. This is the stable
+    # anchor for future glosses: it does not shift when a section boundary is
+    # corrected, which is exactly what went wrong with the utvalavi glossary.
+    unit_global = db.Column(db.Integer, nullable=False)
+
+    # 'line' for verse, 'paragraph' for prose.
+    kind = db.Column(db.String(16), nullable=False, default='line')
+
+    text = db.Column(db.Text, nullable=False)
+
+    # Opens with a dash. Georgian prose marks speech this way, and the prose
+    # works here are dialogue-heavy (58 of 111 paragraphs in Gogia Uishvili).
+    is_dialogue = db.Column(db.Boolean, default=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        # Scoped by work_id, so two works cannot fight over the same number.
+        db.UniqueConstraint('work_id', 'unit_global', name='uq_text_unit_global'),
+        db.Index('ix_text_unit_work_section', 'work_id', 'section'),
+    )
+
+    def __repr__(self):
+        return f'<TextUnit w{self.work_id} #{self.unit_global}>'
+
+    class ModernSection(db.Model):
+        """Modernised Georgian for one section of one work.
+
+        Scoped by work_id for the same reason text_units is: a NOT NULL foreign key
+        cannot be forgotten in a query the way an optional source string can.
+        """
+        __tablename__ = 'modern_sections'
+
+        id = db.Column(db.Integer, primary_key=True)
+
+        work_id = db.Column(
+            db.Integer,
+            db.ForeignKey('works.id'),
+            nullable=False,
+            index=True,
+        )
+
+        # 0 means "the whole work", used by works with no sections at all
+        # (Memento Mori, Tano Tatano).
+        #
+        # NOT NULL with a sentinel rather than nullable, deliberately. SQLite (and
+        # the SQL standard) treat NULLs as distinct in a UNIQUE constraint, so a
+        # nullable section column would happily accept ten "whole work" rows for
+        # the same work and the reader would pick one at random.
+        section = db.Column(db.Integer, nullable=False, default=0, index=True)
+
+        title = db.Column(db.String(255), nullable=True)
+        text = db.Column(db.Text, nullable=False)
+
+        review_status = db.Column(db.String(16), nullable=False, default='draft')
+
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+        work = db.relationship('Work', backref=db.backref(
+            'modern_sections', lazy='dynamic', cascade='all, delete-orphan'))
+
+        __table_args__ = (
+            db.UniqueConstraint('work_id', 'section', name='uq_modern_section'),
+        )
+
+        @property
+        def paragraphs(self):
+            """Split the stored blob back into display paragraphs."""
+            return [p.strip() for p in (self.text or '').split('\n\n') if p.strip()]
+
+        @property
+        def paragraph_count(self):
+            return len(self.paragraphs)
+
+        def __repr__(self):
+            return f'<ModernSection w{self.work_id} s{self.section}>'
