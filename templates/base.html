@@ -152,7 +152,7 @@ tailwind.config = {
 
 <footer class="bg-surface-container-low dark:bg-surface-container-highest border-t border-outline-variant mt-auto">
   <div class="max-w-container-max mx-auto py-section-gap px-margin-mobile md:px-gutter">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter mb-12">
       <div class="space-y-4">
         <img alt="Litera Logo" class="h-10 w-10 object-contain mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt4Mtm05UqujbJUN23Da9ygLKiLWNVQJJcnSKEG4m_FvvmFkxfVN7itcHfygzIlJyOEATee4stzNmDreSvKXpux73SKwPsJxB9cA4nHAqrkK5zNQ2K74Zty0IJlZxWHuHA1gqhHW6Nxf6nax0itULH1Y3zKYgsLbFAJvO8WwIPzFW1yg4Kp_iFkgdHIEwXPp1OBM43QQH2ToVskSq1_TEQ0OLeCRDqUI7mPjh8mAfRJ2rP84K3eucGzghpPkMHHGF7Me6aNFhV3fCj">
         <p class="text-on-surface-variant text-body-md">Dedicated to the National Georgian Curriculum. Empowering the next generation of scholars.</p>
@@ -171,6 +171,14 @@ tailwind.config = {
           <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('studyguide') }}">Study Guides</a></li>
           <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('examprep') }}">Exam Prep</a></li>
           <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('practicetests') }}">Practice Tests</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest font-bold">Texts</h5>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('literature.index') }}">Library</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('vefxistyaosani') }}">ვეფხისტყაოსანი</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('shushaniki.reader', chapter=1) }}">შუშანიკის წამება</a></li>
         </ul>
       </div>
       <div>

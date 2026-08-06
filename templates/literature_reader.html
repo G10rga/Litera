@@ -1,195 +1,99 @@
-<!DOCTYPE html>
-<html lang="ka">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ work.title }}{% if section_label %} — {{ section_label }}{% endif %}</title>
-<style>
-  :root {
-    --parchment: #f4ecd8;
-    --parchment-dark: #e8dcc0;
-    --ink: #2b2118;
-    --accent: #9b1c1c;
-    --muted: #7a6a55;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: "Noto Serif Georgian", "Sylfaen", Georgia, serif;
-    line-height: 1.7;
-  }
-  header.bar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: var(--parchment-dark);
-    border-bottom: 2px solid var(--accent);
-    padding: 0.7rem 1.2rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    align-items: center;
-  }
-  header.bar h1 { font-size: 1.05rem; margin: 0; flex: 1 1 auto; }
-  header.bar .author { color: var(--muted); font-size: 0.85rem; font-weight: normal; }
-  header.bar a {
-    color: var(--accent);
-    text-decoration: none;
-    border: 1px solid var(--accent);
-    border-radius: 4px;
-    padding: 0.15rem 0.55rem;
-    font-size: 0.85rem;
-  }
-  header.bar a.disabled { color: var(--muted); border-color: var(--muted); pointer-events: none; opacity: 0.5; }
-  select { font-family: inherit; font-size: 0.85rem; padding: 0.2rem; }
-  main { max-width: 1180px; margin: 0 auto; padding: 1.4rem 1.2rem 3rem; }
-  .columns { display: grid; grid-template-columns: 1fr 2px 1fr; gap: 1.6rem; }
-  .rule { background: var(--accent); opacity: 0.35; }
-  h2.col {
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--parchment-dark);
-    padding-bottom: 0.35rem;
-    margin: 0 0 1rem;
-  }
-  .line { margin: 0 0 0.15rem; }
-  .para { margin: 0 0 0.9rem; text-align: justify; }
-  .para.dialogue { padding-left: 1.1rem; }
-  .line.dialogue { padding-left: 1.1rem; }
-  .num {
-    color: var(--muted);
-    font-size: 0.72rem;
-    margin-right: 0.5rem;
-    user-select: none;
-  }
-  .notice {
-    background: var(--parchment-dark);
-    border-left: 3px solid var(--muted);
-    padding: 0.8rem 1rem;
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  .draft {
-    display: inline-block;
-    background: var(--accent);
-    color: var(--parchment);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.1rem 0.4rem;
-    border-radius: 3px;
-    margin-left: 0.4rem;
-  }
-  footer.notes, footer.prov {
-    margin-top: 2.4rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--parchment-dark);
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  footer.notes p { margin: 0 0 0.5rem; }
-  footer.prov a { color: var(--accent); }
-  @media (max-width: 900px) {
-    .columns { grid-template-columns: 1fr; }
-    .rule { display: none; }
-  }
-</style>
-</head>
-<body>
+{% extends "base.html" %}
 
-<header class="bar">
-  <h1>
-    {{ work.title }}
-    <span class="author">{% if work.author %}· {{ work.author }}{% endif %}</span>
-  </h1>
+{% block title %}{{ work.title }}{% if section_label %} — {{ section_label }}{% endif %} — Litera{% endblock %}
 
-  {% if chapters %}
-    <select onchange="if(this.value) location.href=this.value;">
-      {% for chapter in chapters %}
-        <option value="{{ url_for('literature.reader', slug=work.slug, section=chapter.number) }}"
-                {% if chapter.number == section %}selected{% endif %}>
-          {{ chapter.label }}{% if not chapter.has_modern %} · დაუმუშავებელი{% endif %}
-        </option>
-      {% endfor %}
-    </select>
-  {% endif %}
+{% block content %}
+<div class="reader flex-1 pt-16">
 
-  {% if prev_section %}
-    <a href="{{ url_for('literature.reader', slug=work.slug, section=prev_section) }}">←</a>
-  {% else %}
-    <a class="disabled" href="#">←</a>
-  {% endif %}
-  {% if next_section %}
-    <a href="{{ url_for('literature.reader', slug=work.slug, section=next_section) }}">→</a>
-  {% else %}
-    <a class="disabled" href="#">→</a>
-  {% endif %}
+  <header class="reader-toolbar">
+    <h1>
+      {{ work.title }}
+      <span class="author">{% if work.author %}· {{ work.author }}{% endif %}</span>
+    </h1>
 
-  <a href="{{ url_for('literature.index') }}">სია</a>
-</header>
-
-<main>
-  <div class="columns">
-
-    <section>
-      <h2 class="col">ორიგინალი{% if section_label %} · {{ section_label }}{% endif %}</h2>
-
-      {% if units %}
-        {% for unit in units %}
-          <p class="{% if is_verse %}line{% else %}para{% endif %}{% if unit.is_dialogue %} dialogue{% endif %}">
-            {% if is_verse and unit.unit_index % 5 == 0 %}<span class="num">{{ unit.unit_index }}</span>{% endif %}{{ unit.text }}
-          </p>
+    {% if chapters %}
+      <select data-chapter-select>
+        {% for chapter in chapters %}
+          <option value="{{ url_for('literature.reader', slug=work.slug, section=chapter.number) }}"
+                  {% if chapter.number == section %}selected{% endif %}>
+            {{ chapter.label }}{% if not chapter.has_modern %} · დაუმუშავებელი{% endif %}
+          </option>
         {% endfor %}
-      {% else %}
-        <div class="notice">ამ თავში ტექსტი არ არის.</div>
-      {% endif %}
-    </section>
-
-    <div class="rule"></div>
-
-    <section>
-      <h2 class="col">
-        განახლებული ტექსტი
-        {% if modern and modern.review_status != 'final' %}<span class="draft">{{ modern.review_status }}</span>{% endif %}
-      </h2>
-
-      {% if modern_missing %}
-        <div class="notice">
-          ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
-        </div>
-      {% else %}
-        {% for paragraph in modern_paragraphs %}
-          <p class="para">{{ paragraph }}</p>
-        {% endfor %}
-      {% endif %}
-    </section>
-
-  </div>
-
-  {% if notes %}
-    <footer class="notes">
-      {% for note in notes %}
-        <p>{{ note.text }}</p>
-      {% endfor %}
-    </footer>
-  {% endif %}
-
-  <footer class="prov">
-    {% if work.composed %}{{ work.composed }} · {% endif %}
-    {% if work.subtitle %}{{ work.subtitle }} · {% endif %}
-    {{ units|length }} ერთეული
-    {% if work.source %}
-      · წძარო:
-      {% if work.url %}<a href="{{ work.url }}">{{ work.source }}</a>{% else %}{{ work.source }}{% endif %}
-      {% if work.revision %}(rev {{ work.revision }}){% endif %}
+      </select>
     {% endif %}
-    {% if work.license %} · {{ work.license }}{% endif %}
-  </footer>
-</main>
 
-</body>
-</html>
+    {% if prev_section %}
+      <a class="reader-nav-link" href="{{ url_for('literature.reader', slug=work.slug, section=prev_section) }}">←</a>
+    {% else %}
+      <a class="reader-nav-link disabled" href="#">←</a>
+    {% endif %}
+    {% if next_section %}
+      <a class="reader-nav-link" href="{{ url_for('literature.reader', slug=work.slug, section=next_section) }}">→</a>
+    {% else %}
+      <a class="reader-nav-link disabled" href="#">→</a>
+    {% endif %}
+
+    <a class="reader-nav-link" href="{{ url_for('literature.index') }}">სია</a>
+  </header>
+
+  <main class="reader-wide">
+    <div class="reader-columns">
+
+      <section>
+        <h2 class="reader-col-title">ორიგინალი{% if section_label %} · {{ section_label }}{% endif %}</h2>
+
+        {% if units %}
+          {% for unit in units %}
+            <p class="{% if is_verse %}line{% else %}para{% endif %}{% if unit.is_dialogue %} dialogue{% endif %}">
+              {% if is_verse and unit.unit_index % 5 == 0 %}<span class="num">{{ unit.unit_index }}</span>{% endif %}{{ unit.text }}
+            </p>
+          {% endfor %}
+        {% else %}
+          <div class="notice">ამ თავში ტექსტი არ არის.</div>
+        {% endif %}
+      </section>
+
+      <div class="reader-rule"></div>
+
+      <section>
+        <h2 class="reader-col-title">
+          განახლებული ტექსტი
+          {% if modern and modern.review_status != 'final' %}<span class="draft">{{ modern.review_status }}</span>{% endif %}
+        </h2>
+
+        {% if modern_missing %}
+          <div class="notice">
+            ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
+          </div>
+        {% else %}
+          {% for paragraph in modern_paragraphs %}
+            <p class="para">{{ paragraph }}</p>
+          {% endfor %}
+        {% endif %}
+      </section>
+
+    </div>
+
+    {% if notes %}
+      <footer class="reader-footnotes">
+        {% for note in notes %}
+          <p>{{ note.text }}</p>
+        {% endfor %}
+      </footer>
+    {% endif %}
+
+    <footer class="reader-provenance">
+      {% if work.composed %}{{ work.composed }} · {% endif %}
+      {% if work.subtitle %}{{ work.subtitle }} · {% endif %}
+      {{ units|length }} ერთეული
+      {% if work.source %}
+        · წყარო:
+        {% if work.url %}<a href="{{ work.url }}">{{ work.source }}</a>{% else %}{{ work.source }}{% endif %}
+        {% if work.revision %}(rev {{ work.revision }}){% endif %}
+      {% endif %}
+      {% if work.license %} · {{ work.license }}{% endif %}
+    </footer>
+  </main>
+
+</div>
+{% endblock %}

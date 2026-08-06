@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initStanzaCards();
     initPasswordToggles();
     initAuthFlashDismiss();
+    initStanzaReveal();
+    initChapterSelect();
 });
 
 function initScrollProgress() {
@@ -288,5 +290,45 @@ function initAuthFlashDismiss() {
             flash.style.transition = 'opacity 0.4s ease';
             setTimeout(() => flash.remove(), 400);
         }, 4000);
+    });
+}
+
+/* Fade stanzas in as they scroll into view (vefxistyaosani chapter view). */
+function initStanzaReveal() {
+    const stanzas = document.querySelectorAll('[data-stanza]');
+    if (!stanzas.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    stanzas.forEach((stanza) => {
+        stanza.style.opacity = '0.4';
+        stanza.style.transform = 'translateY(10px)';
+        stanza.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        observer.observe(stanza);
+    });
+}
+
+/* Chapter / work jump menus: navigate on change, highlight on focus. */
+function initChapterSelect() {
+    const selects = document.querySelectorAll('[data-chapter-select]');
+    if (!selects.length) return;
+
+    selects.forEach((select) => {
+        select.addEventListener('change', () => {
+            if (select.value) window.location.href = select.value;
+        });
+        select.addEventListener('focus', () => {
+            if (select.parentElement) select.parentElement.classList.add('ring-2', 'ring-primary');
+        });
+        select.addEventListener('blur', () => {
+            if (select.parentElement) select.parentElement.classList.remove('ring-2', 'ring-primary');
+        });
     });
 }
