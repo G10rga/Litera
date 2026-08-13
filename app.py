@@ -16,7 +16,12 @@ from collections import defaultdict
 
 import click
 from dotenv import load_dotenv
-from flask import (
+
+# Load .env before importing config — ProductionConfig reads SECRET_KEY /
+# DATABASE_URL at import time, so this must run first.
+load_dotenv()
+
+from flask import (  # noqa: E402
     Flask,
     flash,
     g,
@@ -25,21 +30,21 @@ from flask import (
     request,
     url_for,
 )
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from flask_login import (
+from flask_limiter import Limiter  # noqa: E402
+from flask_limiter.util import get_remote_address  # noqa: E402
+from flask_login import (  # noqa: E402
     LoginManager,
     current_user,
     login_required,
     login_user,
     logout_user,
 )
-from flask_wtf.csrf import CSRFProtect
-from sqlalchemy import func
+from flask_wtf.csrf import CSRFProtect  # noqa: E402
+from sqlalchemy import func  # noqa: E402
 
-from config import get_config
-from mailutil import send_email
-from models import (
+from config import get_config  # noqa: E402
+from mailutil import send_email  # noqa: E402
+from models import (  # noqa: E402
     Aphorism,
     ContactMessage,
     User,
@@ -47,9 +52,7 @@ from models import (
     Work,
     db,
 )
-from tokens import load_reset_token, make_reset_token
-
-load_dotenv()
+from tokens import load_reset_token, make_reset_token  # noqa: E402
 
 logger = logging.getLogger("litera.auth")
 
