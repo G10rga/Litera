@@ -1,0 +1,7 @@
+-r requirements.txt
+
+# Only needed by the one-off importers in db_loaders/, never at runtime.
+pandas>=2.2.2
+
+# Optional: uncomment if you deploy on Postgres and need a local driver.
+# psycopg[binary]>=3.1

@@ -1,62 +1,62 @@
 {% extends "base.html" %}
-{% block title %}Login | Litera{% endblock %}
+{% block title %}Log in — Litera{% endblock %}
+{% block meta_description %}Log in to your Litera account.{% endblock %}
 {% block body_class %}bg-surface font-body-md text-on-surface parchment-texture overflow-x-hidden min-h-screen flex flex-col{% endblock %}
 {% block progress_bar %}{% endblock %}
+
 {% block content %}
-<main class="flex-grow flex items-center justify-center px-margin-mobile py-section-gap pt-32">
-<div class="w-full max-w-md">
-<div class="text-center mb-10">
-<img alt="Litera Logo" class="mx-auto w-24 h-24 mb-4 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
-<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Welcome to Litera</h1>
-<p class="font-body-md text-secondary mt-2">Enter your scholarly sanctum</p>
-</div>
+<main class="flex-1 flex items-center justify-center px-margin-mobile py-section-gap">
+  <div class="w-full max-w-md">
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="mb-6 space-y-2">
-      {% for category, message in messages %}
-        <div class="auth-flash auth-flash-{{ category }}">{{ message }}</div>
-      {% endfor %}
+    <div class="text-center mb-10">
+      <img alt="Litera" class="mx-auto w-20 h-20 mb-4 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+      <h1 class="font-headline-md text-headline-md text-primary">Log in</h1>
+      <p class="font-body-md text-on-surface-variant mt-2">An account is optional — all texts are readable without one.</p>
     </div>
-  {% endif %}
-{% endwith %}
 
-<div class="bg-surface-container-lowest scholarly-card rounded-lg p-8 md:p-10">
-<form class="space-y-6" id="loginForm" method="post" action="{{ url_for('login') }}">
-<div class="space-y-1">
-<label class="font-label-caps text-label-caps text-secondary block uppercase" for="email">Academic Email</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
-<input class="w-full pl-10 pr-4 py-3 bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant font-body-md" id="email" name="email" placeholder="scholar@institute.ge" required type="email" value="{{ email or '' }}"/>
-</div>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between items-end">
-<label class="font-label-caps text-label-caps text-secondary block uppercase" for="password">Credentials</label>
-</div>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
-<input class="w-full pl-10 pr-10 py-3 bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant font-body-md" id="password" name="password" placeholder="••••••••" required type="password"/>
-<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-secondary" type="button" data-password-toggle aria-label="Show password">
-<span class="material-symbols-outlined text-[20px]">visibility</span>
-</button>
-</div>
-</div>
-<div class="flex items-center">
-<input class="w-4 h-4 text-primary border-outline-variant rounded-sm focus:ring-primary" id="remember" name="remember" type="checkbox" value="1"/>
-<label class="ml-2 font-body-md text-secondary text-sm" for="remember">Maintain session for 30 days</label>
-</div>
-<button class="w-full bg-primary text-parchment-deep py-4 rounded-lg font-label-caps text-label-caps uppercase tracking-widest transition-lift hover:bg-crimson-dark flex items-center justify-center gap-2 group" type="submit">
-  Enter Library
-  <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">menu_book</span>
-</button>
-</form>
-</div>
+    <div class="bg-surface-container-lowest scholarly-card rounded-lg p-8">
+      <form action="{{ url_for('login') }}" class="space-y-6" method="post" novalidate>
+        <input name="csrf_token" type="hidden" value="{{ csrf_token() }}"/>
 
-<p class="text-center mt-8 font-body-md text-secondary">
-  New to the collection?
-  <a class="text-primary font-bold hover:underline decoration-outline-variant underline-offset-4 transition-all" href="{{ url_for('register') }}">Apply for Access</a>
-</p>
-</div>
+        <div class="space-y-1">
+          <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="email">Email</label>
+          <div class="relative">
+            <span aria-hidden="true" class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">mail</span>
+            <input autocomplete="email" class="w-full pl-10 pr-4 py-3 bg-transparent border-b border-outline-variant focus:border-primary transition-colors font-body-md" id="email" name="email" required type="email" value="{{ email or '' }}"/>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="password">Password</label>
+          <div class="relative">
+            <span aria-hidden="true" class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">lock</span>
+            <input autocomplete="current-password" class="w-full pl-10 pr-10 py-3 bg-transparent border-b border-outline-variant focus:border-primary transition-colors font-body-md" id="password" name="password" required type="password"/>
+            <button aria-label="Show password" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface" data-password-toggle type="button">
+              <span aria-hidden="true" class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <input class="w-4 h-4 text-primary border-outline-variant rounded-sm focus:ring-primary" id="remember" name="remember" type="checkbox" value="1"/>
+          <label class="ml-2 font-body-md text-sm text-on-surface-variant" for="remember">Stay logged in on this device</label>
+        </div>
+
+        <button class="w-full bg-primary text-on-primary py-4 rounded-lg font-label-caps text-label-caps uppercase transition-lift hover:bg-crimson-dark" type="submit">
+          Log in
+        </button>
+      </form>
+    </div>
+
+    <p class="text-center mt-8 font-body-md text-on-surface-variant">
+      No account?
+      <a class="text-primary font-semibold hover:underline underline-offset-4" href="{{ url_for('register') }}">Register</a>
+    </p>
+    <p class="text-center mt-2 font-body-md text-xs text-on-surface-variant">
+      There is no password reset yet. If you are locked out,
+      <a class="text-primary hover:underline" href="{{ url_for('contact') }}">get in touch</a>.
+    </p>
+
+  </div>
 </main>
 {% endblock %}

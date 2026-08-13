@@ -1,9 +1,15 @@
-from datetime import datetime
+from datetime import datetime, timezone
+
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 
 db = SQLAlchemy()
+
+
+def _utcnow() -> datetime:
+    """Timezone-aware UTC default. datetime.utcnow() is deprecated in 3.12+."""
+    return datetime.now(timezone.utc)
 
 
 class User(UserMixin, db.Model):
@@ -15,7 +21,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     grade = db.Column(db.String(32), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)
@@ -33,7 +39,7 @@ class Aphorism(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False, unique=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     def __repr__(self):
         return f'<Aphorism {self.id}: {self.text[:50]}...>'
@@ -46,24 +52,26 @@ class VefxistyaosaniLine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     line = db.Column(db.Text, nullable=False)
     chapter = db.Column(db.String(255), nullable=True)
-    chapter_id = db.Column(db.Integer, nullable=True)
-    strophe_id = db.Column(db.Integer, nullable=True)
+    chapter_id = db.Column(db.Integer, nullable=True, index=True)
+    strophe_id = db.Column(db.Integer, nullable=True, index=True)
     line_id = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     def __repr__(self):
         return f'<VefxistyaosaniLine {self.id}: {self.line[:50]}...>'
 
 
 class ShushanikiText(db.Model):
-    """ Model for storing Shushaniki literature """
+    """Model for storing Shushaniki literature."""
     __tablename__ = 'shushaniki_main'
+
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    chapter = db.Column(db.Integer, nullable=True)
+    created_at = db.Column(db.DateTime, default=_utcnow)
+    chapter = db.Column(db.Integer, nullable=True, index=True)
 
-
+    def __repr__(self):
+        return f'<ShushanikiText {self.id}: chapter {self.chapter}>'
 
 
 class GlossTerm(db.Model):
@@ -80,7 +88,7 @@ class GlossTerm(db.Model):
     gloss = db.Column(db.Text, nullable=False)
     is_phrase = db.Column(db.Boolean, default=False, index=True)
     source = db.Column(db.String(64), default='utvalavi')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     occurrences = db.relationship(
         'GlossOccurrence',
@@ -117,7 +125,7 @@ class GlossOccurrence(db.Model):
     strophe_global = db.Column(db.Integer, nullable=False, index=True)
     strophe_local = db.Column(db.Integer, nullable=True, index=True)
     ganm_id = db.Column(db.String(32), index=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     __table_args__ = (
         db.UniqueConstraint(
@@ -133,9 +141,6 @@ class GlossOccurrence(db.Model):
             f'<GlossOccurrence {self.id}: ch={self.chapter_id} '
             f'str={self.strophe_global}>'
         )
-
-
-
 
 
 class ModernChapter(db.Model):
@@ -162,14 +167,12 @@ class ModernChapter(db.Model):
     text = db.Column(db.Text, nullable=False)
 
     # Provenance. 'utvalavi' for scraped/derived prose, 'manual' for your own.
-    # Keeping this in the unique key means you can hold two competing
-    # translations of the same chapter side by side.
     source = db.Column(db.String(64), nullable=False, default="utvalavi", index=True)
 
     # 'draft' | 'reviewed' | 'final'
     review_status = db.Column(db.String(16), nullable=False, default="draft")
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     __table_args__ = (
         db.UniqueConstraint("source", "chapter_id", name="uq_modern_chapter"),
@@ -198,7 +201,6 @@ class ModernChapter(db.Model):
         )
 
 
-
 class ShushanikiGloss(db.Model):
     """An archaic word or phrase from შუშანიკის წამება, with its gloss.
 
@@ -219,7 +221,7 @@ class ShushanikiGloss(db.Model):
     is_phrase = db.Column(db.Boolean, default=False, index=True)
 
     source = db.Column(db.String(64), default='nplg', index=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     __table_args__ = (
         db.UniqueConstraint('term', 'gloss', name='uq_shushaniki_term_gloss'),
@@ -240,18 +242,15 @@ class ShushanikiModern(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    # 1..20, matching sections I..XX. Unique on its own: this table holds
-    # exactly one work, so there is no second dimension to the key.
     chapter_id = db.Column(db.Integer, nullable=False, unique=True, index=True)
 
     title = db.Column(db.String(255), nullable=True)
     text = db.Column(db.Text, nullable=False)
 
-    # draft | reviewed | final -- these are working translations, so it is
-    # worth being able to mark which have actually been checked.
+    # draft | reviewed | final
     review_status = db.Column(db.String(16), nullable=False, default='draft')
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     @property
     def paragraphs(self):
@@ -264,7 +263,6 @@ class ShushanikiModern(db.Model):
 
     def __repr__(self):
         return f'<ShushanikiModern chapter {self.chapter_id}>'
-
 
 
 class Work(db.Model):
@@ -306,7 +304,7 @@ class Work(db.Model):
     unit_count = db.Column(db.Integer, nullable=False, default=0)
     section_count = db.Column(db.Integer, nullable=False, default=0)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     units = db.relationship(
         'TextUnit',
@@ -364,7 +362,7 @@ class TextUnit(db.Model):
     # works here are dialogue-heavy (58 of 111 paragraphs in Gogia Uishvili).
     is_dialogue = db.Column(db.Boolean, default=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
     __table_args__ = (
         # Scoped by work_id, so two works cannot fight over the same number.
@@ -375,54 +373,80 @@ class TextUnit(db.Model):
     def __repr__(self):
         return f'<TextUnit w{self.work_id} #{self.unit_global}>'
 
-    class ModernSection(db.Model):
-        """Modernised Georgian for one section of one work.
 
-        Scoped by work_id for the same reason text_units is: a NOT NULL foreign key
-        cannot be forgotten in a query the way an optional source string can.
-        """
-        __tablename__ = 'modern_sections'
+class ModernSection(db.Model):
+    """Modernised Georgian for one section of one work.
 
-        id = db.Column(db.Integer, primary_key=True)
+    Scoped by work_id for the same reason text_units is: a NOT NULL foreign key
+    cannot be forgotten in a query the way an optional source string can.
 
-        work_id = db.Column(
-            db.Integer,
-            db.ForeignKey('works.id'),
-            nullable=False,
-            index=True,
-        )
+    NOTE: this class used to be nested inside TextUnit, which made it
+    unreachable as models.ModernSection and forced every blueprint to guard its
+    import in a try/except. It is now a module-level model.
+    """
+    __tablename__ = 'modern_sections'
 
-        # 0 means "the whole work", used by works with no sections at all
-        # (Memento Mori, Tano Tatano).
-        #
-        # NOT NULL with a sentinel rather than nullable, deliberately. SQLite (and
-        # the SQL standard) treat NULLs as distinct in a UNIQUE constraint, so a
-        # nullable section column would happily accept ten "whole work" rows for
-        # the same work and the reader would pick one at random.
-        section = db.Column(db.Integer, nullable=False, default=0, index=True)
+    id = db.Column(db.Integer, primary_key=True)
 
-        title = db.Column(db.String(255), nullable=True)
-        text = db.Column(db.Text, nullable=False)
+    work_id = db.Column(
+        db.Integer,
+        db.ForeignKey('works.id'),
+        nullable=False,
+        index=True,
+    )
 
-        review_status = db.Column(db.String(16), nullable=False, default='draft')
+    # 0 means "the whole work", used by works with no sections at all
+    # (Memento Mori, Tano Tatano).
+    #
+    # NOT NULL with a sentinel rather than nullable, deliberately. SQLite (and
+    # the SQL standard) treat NULLs as distinct in a UNIQUE constraint, so a
+    # nullable section column would happily accept ten "whole work" rows for
+    # the same work and the reader would pick one at random.
+    section = db.Column(db.Integer, nullable=False, default=0, index=True)
 
-        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    title = db.Column(db.String(255), nullable=True)
+    text = db.Column(db.Text, nullable=False)
 
-        work = db.relationship('Work', backref=db.backref(
-            'modern_sections', lazy='dynamic', cascade='all, delete-orphan'))
+    review_status = db.Column(db.String(16), nullable=False, default='draft')
 
-        __table_args__ = (
-            db.UniqueConstraint('work_id', 'section', name='uq_modern_section'),
-        )
+    created_at = db.Column(db.DateTime, default=_utcnow)
 
-        @property
-        def paragraphs(self):
-            """Split the stored blob back into display paragraphs."""
-            return [p.strip() for p in (self.text or '').split('\n\n') if p.strip()]
+    work = db.relationship('Work', backref=db.backref(
+        'modern_sections', lazy='dynamic', cascade='all, delete-orphan'))
 
-        @property
-        def paragraph_count(self):
-            return len(self.paragraphs)
+    __table_args__ = (
+        db.UniqueConstraint('work_id', 'section', name='uq_modern_section'),
+    )
 
-        def __repr__(self):
-            return f'<ModernSection w{self.work_id} s{self.section}>'
+    @property
+    def paragraphs(self):
+        """Split the stored blob back into display paragraphs."""
+        return [p.strip() for p in (self.text or '').split('\n\n') if p.strip()]
+
+    @property
+    def paragraph_count(self):
+        return len(self.paragraphs)
+
+    def __repr__(self):
+        return f'<ModernSection w{self.work_id} s{self.section}>'
+
+
+class ContactMessage(db.Model):
+    """A message submitted through /contact.
+
+    Stored rather than emailed so that the confirmation shown to the user is
+    truthful: the message really has been persisted and can be read back with
+    `flask messages`.
+    """
+    __tablename__ = 'contact_messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(255), nullable=False, index=True)
+    subject = db.Column(db.String(160), nullable=True)
+    body = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=_utcnow, index=True)
+    handled = db.Column(db.Boolean, default=False, index=True)
+
+    def __repr__(self):
+        return f'<ContactMessage {self.id} from {self.email}>'

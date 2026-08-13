@@ -1,252 +1,87 @@
-<!DOCTYPE html>
-<html lang="ka">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>შუშანიკის წამება{% if chapter %} — თავი {{ chapter }}{% endif %}</title>
-<style>
-  :root {
-    --parchment: #f4ecd8;
-    --parchment-dark: #e8dcc0;
-    --ink: #2b2118;
-    --accent: #9b1c1c;
-    --muted: #7a6a55;
-  }
+{% extends "base.html" %}
 
-  * { box-sizing: border-box; }
+{% block title %}შუშანიკის წამება{% if chapter %} — თავი {{ chapter }}{% endif %} — Litera{% endblock %}
+{% block meta_description %}შუშანიკის წამება: the original text beside a modern-Georgian rendering, with archaic words glossed in place.{% endblock %}
 
-  body {
-    margin: 0;
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: "Noto Serif Georgian", "Sylfaen", Georgia, serif;
-    line-height: 1.85;
-  }
+{% block content %}
+<div class="reader flex-1">
 
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: var(--parchment-dark);
-    border-bottom: 2px solid var(--accent);
-    padding: 0.7rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+  <header class="reader-toolbar">
+    <h1 lang="ka">შუშანიკის წამება</h1>
 
-  header h1 {
-    font-size: 1.1rem;
-    margin: 0;
-    letter-spacing: 0.02em;
-  }
+    {% if chapters %}
+      <label class="sr-only" for="chapter-select">თავი</label>
+      <select data-chapter-select id="chapter-select">
+        {% for item in chapters %}
+          <option value="{{ url_for('shushaniki.reader', chapter=item.number) }}"
+                  {% if item.number == chapter %}selected{% endif %}>
+            თავი {{ item.number }}{% if not item.modernised %} (დასამუშავებელი){% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    {% endif %}
 
-  header .spacer { flex: 1; }
+    <span class="spacer"></span>
 
-  select, .nav-link {
-    font-family: inherit;
-    font-size: 0.9rem;
-    padding: 0.3rem 0.6rem;
-    border: 1px solid var(--muted);
-    border-radius: 4px;
-    background: var(--parchment);
-    color: var(--ink);
-    text-decoration: none;
-  }
+    {% if prev_chapter %}
+      <a class="reader-nav-link" href="{{ url_for('shushaniki.reader', chapter=prev_chapter) }}" rel="prev" aria-label="წინა თავი">←</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">←</span>
+    {% endif %}
+    {% if next_chapter %}
+      <a class="reader-nav-link" href="{{ url_for('shushaniki.reader', chapter=next_chapter) }}" rel="next" aria-label="შემდეგი თავი">→</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">→</span>
+    {% endif %}
+  </header>
 
-  .nav-link.disabled {
-    opacity: 0.35;
-    pointer-events: none;
-  }
+  <main class="reader-full">
 
-  main { padding: 1.5rem 1.2rem 4rem; }
+  {% if empty %}
+    <div class="notice" lang="ka">
+      ამ ნაწარმოების ტექსტი ჯერ არ არის დამატებული.
+    </div>
+  {% else %}
 
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 2px 1fr;
-    gap: 0 1.8rem;
-    max-width: 1500px;
-    margin: 0 auto;
-  }
+    <div class="reader-columns wide-gap">
 
-  .divider { background: var(--accent); opacity: 0.35; }
+      <section>
+        <h2 class="reader-col-title" lang="ka">ორიგინალი</h2>
+        {% for para in paragraphs %}
+          <p class="para indented" lang="ka">{{ para.html | safe }}</p>
+        {% else %}
+          <div class="notice" lang="ka">ამ თავში ტექსტი არ არის.</div>
+        {% endfor %}
+      </section>
 
-  .column h2 {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--muted);
-    font-weight: 600;
-    margin: 0 0 1.1rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid rgba(155, 28, 28, 0.25);
-  }
+      <div class="reader-rule" aria-hidden="true"></div>
 
-  .para {
-    margin: 0 0 1.15rem;
-    text-align: justify;
-    text-indent: 1.4rem;
-  }
+      <section>
+        <h2 class="reader-col-title" lang="ka">განახლებული ტექსტი</h2>
+        {% if modern_missing %}
+          <div class="notice" lang="ka">
+            ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
+          </div>
+        {% else %}
+          {% for para in modern_paragraphs %}
+            <p class="para indented" lang="ka">{{ para }}</p>
+          {% endfor %}
+        {% endif %}
+      </section>
 
-  .para:first-of-type { text-indent: 0; }
+    </div>
 
-  .notice {
-    background: rgba(155, 28, 28, 0.06);
-    border-left: 3px solid var(--accent);
-    padding: 0.9rem 1.1rem;
-    color: var(--muted);
-    font-size: 0.92rem;
-    line-height: 1.6;
-  }
+    <footer class="reader-provenance" lang="ka">
+      თავი {{ chapter }} ·
+      {{ paragraphs | length }} აბზაცი ·
+      {{ gloss_hits }} განმარტებული სიტყვა ·
+      ლექსიკონი: {{ gloss_total }} ჩანაწერი ·
+      წყარო: NPLG
+    </footer>
 
-  /* ---- hover glosses -------------------------------------------------- */
-
-  .gloss {
-    color: var(--accent);
-    border-bottom: 1px dotted var(--accent);
-    cursor: help;
-    position: relative;
-    outline: none;
-  }
-
-  .gloss::after {
-    content: attr(data-gloss);
-    position: absolute;
-    left: 50%;
-    bottom: 135%;
-    transform: translateX(-50%);
-    background: #1b1b1b;
-    color: #f5f0e6;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.86rem;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    line-height: 1.45;
-    white-space: normal;
-    width: max-content;
-    max-width: 24rem;
-    text-align: left;
-    text-indent: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.12s ease;
-    z-index: 40;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
-    pointer-events: none;
-  }
-
-  .gloss::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 118%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: #1b1b1b;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.12s ease;
-    z-index: 41;
-    pointer-events: none;
-  }
-
-  .gloss:hover::after, .gloss:focus::after,
-  .gloss:hover::before, .gloss:focus::before {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  footer {
-    max-width: 1500px;
-    margin: 2.5rem auto 0;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(122, 106, 85, 0.35);
-    color: var(--muted);
-    font-size: 0.82rem;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-
-  @media (max-width: 900px) {
-    .columns { grid-template-columns: 1fr; }
-    .divider { display: none; }
-    .column + .column { margin-top: 2.5rem; }
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <h1>შუშანიკის წამება</h1>
-
-  {% if chapters %}
-    <select onchange="if(this.value) location.href=this.value;">
-      {% for item in chapters %}
-        <option value="{{ url_for('shushaniki.reader', chapter=item.number) }}"
-                {% if item.number == chapter %}selected{% endif %}>
-          თავი {{ item.number }}{% if not item.modernised %} (დასამუშავებელი){% endif %}
-        </option>
-      {% endfor %}
-    </select>
   {% endif %}
 
-  <span class="spacer"></span>
+  </main>
 
-  <a class="nav-link {% if not prev_chapter %}disabled{% endif %}"
-     href="{% if prev_chapter %}{{ url_for('shushaniki.reader', chapter=prev_chapter) }}{% else %}#{% endif %}">←</a>
-  <a class="nav-link {% if not next_chapter %}disabled{% endif %}"
-     href="{% if next_chapter %}{{ url_for('shushaniki.reader', chapter=next_chapter) }}{% else %}#{% endif %}">→</a>
-</header>
-
-<main>
-
-{% if empty %}
-  <div class="notice">
-    ცხრილი <code>shushaniki_main</code> ცარიელია. შეავსეთ ტექსტი ბაზაში.
-  </div>
-{% else %}
-
-  <div class="columns">
-
-    <section class="column">
-      <h2>ორიგინალი</h2>
-      {% for para in paragraphs %}
-        <p class="para">{{ para.html | safe }}</p>
-      {% else %}
-        <div class="notice">ამ თავში ტექსტი არ არის.</div>
-      {% endfor %}
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="column">
-      <h2>განახლებული ტექსტი</h2>
-      {% if modern_missing %}
-        <div class="notice">
-          ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
-        </div>
-      {% else %}
-        {% for para in modern_paragraphs %}
-          <p class="para">{{ para }}</p>
-        {% endfor %}
-      {% endif %}
-    </section>
-
-  </div>
-
-  <footer>
-    თავი {{ chapter }} ·
-    {{ paragraphs | length }} აბზაცი ·
-    {{ gloss_hits }} განმარტებული სიტყვა ·
-    ლექსიკონი: {{ gloss_total }} ჩანაწერი
-    {% if gloss_hits == 0 %}
-      · <strong>გაფრთხილება:</strong> არც ერთი სიტყვა დაემთხვა —
-      გადაამოწმეთ, დაიტვირთა თუ არა shushaniki_glosses
-    {% endif %}
-  </footer>
-
-{% endif %}
-
-</main>
-</body>
-</html>
+</div>
+{% endblock %}

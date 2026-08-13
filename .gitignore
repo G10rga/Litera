@@ -1,4 +1,4 @@
-# Byte-compiled / cache
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -11,24 +11,31 @@ venv/
 ENV/
 env/
 
-# Distribution / packaging
+# Build artefacts
 build/
 dist/
 *.egg-info/
 .eggs/
 *.egg
 
-# Flask / local runtime
+# Node (Tailwind build toolchain)
+node_modules/
+npm-debug.log*
+
+# NOTE: static/dist/app.css is deliberately committed so that a deploy needs no
+# Node step. Rebuild it with `npm run build:css` after changing any template.
+
+# Flask instance folder and local databases
 instance/
 *.db
 *.sqlite3
 
-# Environment & secrets
+# Environment
 .env
 .env.*
 !.env.example
 
-# IDE / editor
+# Editors
 .idea/
 .vscode/
 *.swp
@@ -40,7 +47,7 @@ instance/
 Thumbs.db
 Desktop.ini
 
-# Testing / coverage
+# Test and type-check caches
 .coverage
 htmlcov/
 .pytest_cache/
@@ -51,6 +58,6 @@ htmlcov/
 # Logs
 *.log
 
-# Local data dumps (optional keep in repo — uncomment if needed)
+# Raw import sources (uncomment if you keep them locally)
 # *.csv
 # aforizmebi.txt

@@ -1,84 +1,93 @@
 {% extends "base.html" %}
-{% block title %}Terms of Service | Litera{% endblock %}
-{% block body_class %}font-hankenGrotesk min-h-screen flex flex-col{% endblock %}
+{% block title %}Terms of Use — Litera{% endblock %}
+{% block meta_description %}The terms under which you may use Litera. Short, because the site is free, non-commercial and sells nothing.{% endblock %}
+
 {% block content %}
-<main class="pt-32 pb-section-gap px-gutter max-w-container-max mx-auto flex flex-col md:flex-row gap-12">
-<!-- Sticky Sidebar Navigation (Table of Contents) -->
-<aside class="hidden md:block w-64 shrink-0 h-fit sticky top-32">
-<div class="p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-outline-variant/30">
-<h4 class="font-ebGaramond text-headline-sm text-primary mb-6">Contents</h4>
-<nav class="flex flex-col gap-4 font-hankenGrotesk text-body-md text-on-surface-variant">
-<a class="nav-item sticky-nav-active" href="#agreement">User Agreement</a>
-<a class="nav-item" href="#intellectual">Intellectual Property</a>
-<a class="nav-item" href="#conduct">User Conduct</a>
-<a class="nav-item" href="#membership">Membership &amp; Billing</a>
-<a class="nav-item" href="#liability">Limitation of Liability</a>
-<a class="nav-item" href="#governing">Governing Law</a>
-</nav>
-</div>
-<div class="mt-8 p-6 bg-parchment-deep rounded-xl border-l-4 border-primary">
-<p class="font-hankenGrotesk text-label-caps text-primary mb-2">LAST UPDATED</p>
-<p class="font-ebGaramond text-body-lg font-medium">October 24, 2023</p>
-</div>
-</aside>
-<!-- Main Terms Content -->
-<article class="flex-1 max-w-[720px] mx-auto md:mx-0">
-<header class="mb-12">
-<h1 class="font-ebGaramond text-display-lg text-primary mb-4">Terms of Service</h1>
-<p class="font-hankenGrotesk text-body-lg text-secondary">Please read these terms carefully. By using Litera, you agree to comply with our scholarly standards and legal requirements.</p>
-</header>
-<div class="prose-legal">
-<section id="agreement" data-tos-section>
-<h2>1. User Agreement</h2>
-<p>Welcome to Litera, the modern study companion for classical literature. By accessing or using our platform, you signify that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, you are not authorized to use the services provided by Litera.</p>
-<p>Litera provides tools for literary analysis, modern translations of archaic texts, and exam preparation. Our services are designed for academic enhancement and personal study. We reserve the right to modify these terms at any time, and your continued use of the platform indicates acceptance of any changes.</p>
-</section>
-<section id="intellectual" data-tos-section>
-<h2>2. Intellectual Property</h2>
-<p>The Litera study platform, including its original content, features, and functionality (excluding public domain literary texts being analyzed), are and will remain the exclusive property of Litera Study Platform and its licensors. Our translations, summaries, character analyses, and proprietary study algorithms are protected by copyright, trademark, and other laws.</p>
-<p>Users may download or print study materials for personal, non-commercial academic use only. Redistribution, resale, or scraping of Litera's proprietary academic content is strictly prohibited without prior written consent.</p>
-</section>
-<!-- Visual Break / Callout -->
-<div class="my-12 p-8 bg-surface-container-low rounded-xl border border-outline-variant relative overflow-hidden">
-<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] text-primary/5 select-none">menu_book</span>
-<h3 class="font-ebGaramond text-headline-sm text-primary mb-4">Scholarly Integrity</h3>
-<p class="font-hankenGrotesk text-body-md text-charcoal-muted italic">"At Litera, we believe that academic rigor and modern efficiency should go hand in hand. Our platform is built on the foundation of honoring literary heritage while empowering the next generation of scholars."</p>
-</div>
-<section id="conduct" data-tos-section>
-<h2>3. User Conduct</h2>
-<p>As a member of the Litera community, you agree to use the platform in a manner consistent with academic integrity. Prohibited actions include:</p>
-<ul class="list-disc pl-6 space-y-4 font-hankenGrotesk text-body-md text-charcoal-muted mb-6">
-<li>Attempting to bypass security measures or gain unauthorized access to other user accounts.</li>
-<li>Using Litera's essay templates or analysis tools to engage in plagiarism or academic dishonesty.</li>
-<li>Automated scraping of our character databases or modern translation archives.</li>
-<li>Posting offensive or derogatory content in community discussion modules.</li>
-</ul>
-</section>
-<section id="membership" data-tos-section>
-<h2>4. Membership &amp; Billing</h2>
-<p>Litera offers both free access to public domain summaries and premium "Scholar" subscriptions for full analysis suites. Subscription fees are billed on a monthly or annual basis and are non-refundable unless required by law. You may cancel your subscription at any time through your account settings.</p>
-</section>
-<section id="liability" data-tos-section>
-<h2>5. Limitation of Liability</h2>
-<p>Litera provides academic resources "as is" and "as available." While we strive for the highest degree of accuracy in our literary analyses and modern translations, we do not guarantee specific academic outcomes or exam scores. Litera shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our services.</p>
-</section>
-<section id="governing" data-tos-section>
-<h2>6. Governing Law</h2>
-<p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which Litera Study Platform is registered, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.</p>
-</section>
-</div>
-<!-- Acceptance Footer -->
-<div class="mt-16 p-10 bg-primary text-on-primary rounded-xl flex flex-col md:flex-row items-center gap-8">
-<div class="text-center md:text-left">
-<h3 class="font-ebGaramond text-headline-md mb-2">Ready to begin your study?</h3>
-<p class="font-hankenGrotesk text-body-md opacity-90">By clicking 'I Accept', you confirm you have read the terms above.</p>
-</div>
-<div class="flex gap-4">
-<button class="bg-white text-primary px-8 py-3 rounded-lg font-bold hover:bg-parchment-deep transition-all transform hover:-translate-y-1">I Accept</button>
-<button class="border border-white/30 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-all">Decline</button>
-</div>
-</div>
-</article>
+<main class="flex-1 px-margin-mobile md:px-gutter py-section-gap">
+  <div class="max-w-[46rem] mx-auto prose-legal legal-content">
+
+    <h1 class="font-display-lg text-display-lg-mobile text-primary mb-2">Terms of Use</h1>
+    <p class="font-body-md text-sm text-on-surface-variant mb-10">Last updated 9 August 2026.</p>
+
+    <section>
+      <h2>1. What Litera is</h2>
+      <p>
+        Litera is a free, non-commercial website that publishes public-domain Georgian literary texts
+        together with modern-Georgian renderings and word glosses. It is run by an individual, not a
+        company. There is nothing for sale: no subscriptions, no paid tiers, no adverts.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Using the site</h2>
+      <p>
+        You may read, quote and cite anything here for study, teaching or research. Please do not
+        scrape the site at a rate that degrades it for other readers, attempt to break into it, or send
+        anything through the contact form that you do not have the right to send.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Accounts</h2>
+      <p>
+        An account is optional — nothing on the site is behind a login today. If you create one, keep
+        your password to yourself. Passwords are stored only as salted hashes and cannot be read back,
+        and there is no password-reset flow yet, so a forgotten password means registering again. Email
+        us and an account can be deleted.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Copyright and attribution</h2>
+      <p>
+        The original works are in the public domain. Individual transcriptions are reproduced from
+        published digital editions under their own licences, and each reader page prints its source,
+        revision and licence at the foot of the text. Modern renderings and glosses written for this
+        site may be reused for non-commercial educational purposes with attribution to Litera.
+      </p>
+      <p>
+        If you hold rights in something published here and believe it should not be, write to us and it
+        will be taken down while the claim is checked.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Accuracy</h2>
+      <p>
+        The texts are transcriptions and the modern renderings are working translations, marked in the
+        database as draft, reviewed or final — a status the reader displays rather than hides. Errors
+        exist. Litera is a study aid, not an authoritative critical edition, and it is not a substitute
+        for your syllabus or your teacher. Do not rely on it as your only source in an examination.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Availability</h2>
+      <p>
+        The site is provided as-is, with no guarantee of uptime, and it may change or be withdrawn at
+        any time. To the extent the law allows, no liability is accepted for loss arising from the use
+        of the site or reliance on its contents.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Changes to these terms</h2>
+      <p>
+        These terms may be updated; the date at the top will change when they are. Continuing to use
+        the site after a change means you accept the revised terms.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Contact</h2>
+      <p>
+        Questions, corrections and takedown requests:
+        <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>,
+        or use the <a href="{{ url_for('contact') }}">contact form</a>.
+        See also the <a href="{{ url_for('privacypolicy') }}">privacy policy</a>.
+      </p>
+    </section>
+
+  </div>
 </main>
-<!-- Footer Component -->
 {% endblock %}
