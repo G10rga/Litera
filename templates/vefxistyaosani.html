@@ -1,111 +1,92 @@
 {% extends "base.html" %}
-{% block title %}ვეფხისტყაოსანი | Litera Scholastic{% endblock %}
-{% block body_class %}bg-background text-on-background min-h-screen flex flex-col{% endblock %}
+{% block title %}ვეფხისტყაოსანი — all strophes — Litera{% endblock %}
+{% block meta_description %}The full text of ვეფხისტყაოსანი, strophe by strophe, as stored in the database.{% endblock %}
 
 {% block progress_bar %}
-<div class="progress-indicator" id="scrollProgress" style="width: 0%"></div>
+<div class="progress-indicator" id="scrollProgress"></div>
 {% endblock %}
+
 {% block content %}
-<!-- Reading Progress Bar -->
-<main class="mt-24 pb-section-gap">
-<!-- Hero Section -->
-<section class="max-w-[720px] mx-auto px-margin-mobile text-center mb-16">
-<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">ვეფხისტყაოსანი</h1>
-<p class="font-headline-sm text-headline-sm text-on-surface-variant italic">The Knight in the Panther's Skin - Interactive Stanza Guide</p>
-<div class="mt-8 flex justify-center gap-4">
-<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">Epic Poetry</span>
-<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">12th Century</span>
-<span class="px-3 py-1 text-label-caps font-label-caps border border-outline rounded-full text-outline bg-surface">Shota Rustaveli</span>
-</div>
-</section>
-<!-- Stanza Grid -->
-<!-- Stanza Grid -->
-<section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<main class="flex-1 py-section-gap">
 
-{% for strophe_number, stanza in stanzas.items() %}
+  <section class="max-w-[720px] mx-auto px-margin-mobile text-center mb-16">
+    <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4" lang="ka">ვეფხისტყაოსანი</h1>
+    <p class="font-body-md text-on-surface-variant">
+      Every strophe in the database, in order. For the chapter reader with the modern rendering and
+      glosses beside the original, use the
+      <a class="text-primary font-semibold hover:underline" href="{{ url_for('reader.vefxistyaosani_index') }}">chapter view</a>.
+    </p>
+  </section>
 
-<div class="stanza-card-container group" onclick="this.classList.toggle('is-flipped')">
-    <div class="stanza-card-inner">
+  {% if stanzas %}
+    <section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for key, stanza in stanzas.items() %}
+        {% set chapter_id = key[0] %}
+        {% set strophe_number = key[1] %}
+        <article class="stanza-card-container group" aria-label="Strophe {{ strophe_number }}">
+          <div class="stanza-card-inner" aria-expanded="false" data-stanza-flip role="button" tabindex="0">
 
-        <!-- FRONT -->
-        <div class="stanza-card-front relative overflow-hidden">
+            <div class="stanza-card-front relative overflow-hidden">
+              <span class="ornament-corner ornament-tl" aria-hidden="true"></span>
+              <span class="ornament-corner ornament-br" aria-hidden="true"></span>
 
-            <div class="ornament-corner ornament-tl"></div>
-            <div class="ornament-corner ornament-br"></div>
-
-            <div class="flex justify-between items-start mb-6">
-                <span class="font-label-caps text-label-caps text-primary">
-                    Strofi {{ strophe_number }}
+              <div class="flex justify-between items-start mb-6">
+                <span class="font-label-caps text-label-caps uppercase text-primary">
+                  სტროფი {{ strophe_number }}
                 </span>
+                <span class="swipe-hint flex items-center gap-1 text-outline font-label-caps text-[10px] uppercase">
+                  დათანა
+                  <span aria-hidden="true" class="material-symbols-outlined text-sm">swap_horiz</span>
+                </span>
+              </div>
 
-                <div class="swipe-hint flex items-center gap-1 text-outline">
-                    <span class="font-label-caps text-[10px]">
-                        FLIP
-                    </span>
-
-                    <span class="material-symbols-outlined text-sm">
-                        swap_horiz
-                    </span>
-                </div>
-            </div>
-
-            <div class="flex-grow space-y-3">
-
+              <div class="flex-grow space-y-3" lang="ka">
                 {% for line in stanza %}
-                    <p class="font-display-lg text-headline-sm leading-relaxed">
-                        {{ line.line }}
-                    </p>
+                  <p class="font-display-lg text-headline-sm leading-relaxed">{{ line.line }}</p>
                 {% endfor %}
+              </div>
 
+              <div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
+                <span class="font-label-caps text-label-caps uppercase text-on-surface-variant">ორიგინალი</span>
+                <span aria-hidden="true" class="material-symbols-outlined">history_edu</span>
+              </div>
             </div>
 
-            <div class="mt-4 pt-4 border-t border-outline-variant flex justify-between items-center">
-                <span class="font-label-caps text-label-caps text-on-surface-variant">
-                    Original
-                </span>
-
-                <span class="material-symbols-outlined"
-                      style="font-variation-settings:'FILL' 1;">
-                    history_edu
-                </span>
-
+            <div class="stanza-card-back">
+              <span class="font-label-caps text-label-caps uppercase text-outline mb-6 block">მითითება</span>
+              <dl class="bg-surface-container-low p-4 rounded-lg flex-grow font-body-md text-sm space-y-2">
+                <div>
+                  <dt class="text-on-surface-variant">თავი</dt>
+                  <dd lang="ka">{{ stanza[0].chapter or '—' }}</dd>
+                </div>
+                <div>
+                  <dt class="text-on-surface-variant">თავის ნომერი</dt>
+                  <dd>{{ chapter_id if chapter_id is not none else '—' }}</dd>
+                </div>
+                <div>
+                  <dt class="text-on-surface-variant">სტროფი</dt>
+                  <dd>{{ strophe_number if strophe_number is not none else '—' }}</dd>
+                </div>
+              </dl>
+              {% if chapter_id %}
+                <a class="mt-4 inline-flex items-center gap-2 text-primary font-label-caps text-label-caps uppercase hover:underline" href="{{ url_for('reader.vefxistyaosani_chapter', chapter=chapter_id) }}">
+                  <span aria-hidden="true" class="material-symbols-outlined text-sm">menu_book</span>
+                  გახსნა თავი
+                </a>
+              {% endif %}
             </div>
 
-        </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  {% else %}
+    <section class="max-w-[46rem] mx-auto px-margin-mobile">
+      <p class="font-body-md text-on-surface-variant border border-outline-variant rounded-lg p-8 text-center">
+        ტექსტი ბაზაში ჯერ არ არის.
+      </p>
+    </section>
+  {% endif %}
 
-        <!-- BACK -->
-        <div class="stanza-card-back">
-
-            <div class="flex justify-between items-start mb-6">
-                <span class="font-label-caps text-label-caps text-outline">
-                    Information
-                </span>
-            </div>
-
-            <div class="bg-surface-container-low p-4 rounded-lg flex-grow">
-
-                <p>
-                    Chapter: {{ stanza[0].chapter }}
-                </p>
-
-                <p>
-                    Chapter ID: {{ stanza[0].chapter_id }}
-                </p>
-
-                <p>
-                    Strophe: {{ strophe_number }}
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-{% endfor %}
-
-</section>
 </main>
-<!-- Footer -->
 {% endblock %}

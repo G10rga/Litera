@@ -1,105 +1,96 @@
 {% extends "base.html" %}
-{% block title %}Privacy Policy | Litera Study Platform{% endblock %}
-{% block body_class %}font-hankenGrotesk text-body-md antialiased overflow-x-hidden min-h-screen flex flex-col{% endblock %}
+{% block title %}Privacy Policy — Litera{% endblock %}
+{% block meta_description %}What little data Litera collects, why, where it is stored, and how to have it deleted.{% endblock %}
+
 {% block content %}
-<!-- Reading Progress Indicator -->
-<main class="mt-24 mb-section-gap px-margin-mobile md:px-gutter max-w-[720px] mx-auto">
-<!-- Header Section -->
-<header class="mb-12 text-center">
-<div class="inline-block px-4 py-1 mb-4 bg-parchment-deep border border-outline-variant rounded-full text-label-caps text-primary tracking-widest uppercase">
-                Legal Document
-            </div>
-<h1 class="font-ebGaramond text-display-lg md:text-display-lg mb-4 text-primary">Privacy Policy</h1>
-<p class="text-on-surface-variant font-hankenGrotesk italic">Last updated: May 24, 2024</p>
-</header>
-<!-- Content Canvas -->
-<div class="legal-content font-hankenGrotesk text-body-lg text-on-surface leading-relaxed">
-<!-- Intro -->
-<section class="fade-on-scroll mb-10">
-<p>Welcome to Litera Study Platform. We are committed to protecting your personal information and your right to privacy. This policy outlines how we handle the scholarly journey you undertake with us, ensuring your data remains as secure as a locked archival collection.</p>
-</section>
-<!-- Data Collection -->
-<section class="fade-on-scroll mb-12" id="data-collection">
-<h2 class="font-ebGaramond text-headline-md text-primary mb-6 ruled-title">Data Collection</h2>
-<p>In our pursuit of academic excellence, we collect information that you provide to us directly. This includes the following categories of scholarly data:</p>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-<div class="p-6 bg-surface-container-low border border-outline-variant rounded-xl shadow-sm">
-<span class="material-symbols-outlined text-primary mb-2" style="font-variation-settings: 'opsz' 32;">account_circle</span>
-<h3 class="font-ebGaramond text-headline-sm text-on-surface mb-2">Personal Identity</h3>
-<p class="text-body-md text-on-surface-variant">Name, email address, and institutional affiliation used to personalize your study dashboard.</p>
-</div>
-<div class="p-6 bg-surface-container-low border border-outline-variant rounded-xl shadow-sm">
-<span class="material-symbols-outlined text-primary mb-2" style="font-variation-settings: 'opsz' 32;">history_edu</span>
-<h3 class="font-ebGaramond text-headline-sm text-on-surface mb-2">Academic Progress</h3>
-<p class="text-body-md text-on-surface-variant">Completed modules, quiz scores, and saved character analyses to track your curriculum mastery.</p>
-</div>
-</div>
-<p>We do not collect sensitive biological or biometric data. Your intellectual growth is the only metric we track.</p>
-</section>
-<!-- Cookies -->
-<section class="fade-on-scroll mb-12" id="cookies">
-<h2 class="font-ebGaramond text-headline-md text-primary mb-6 ruled-title">Cookies and Tracking</h2>
-<div class="p-8 bg-parchment-deep rounded-lg border-l-4 border-primary">
-<p class="mb-4">Litera uses "Cookies" to enhance your library experience. These small text files act as digital bookmarks, allowing us to:</p>
-<ul class="list-disc pl-6 space-y-2 text-on-surface-variant text-body-md">
-<li>Remember your preferred font sizes for dense literary analysis.</li>
-<li>Keep you authenticated during long study sessions.</li>
-<li>Analyze which study guides are most effective for exam preparation.</li>
-</ul>
-<p class="mt-4 text-body-md italic">You may disable cookies in your browser settings, though some archival features may become unavailable.</p>
-</div>
-</section>
-<!-- Use of Information -->
-<section class="fade-on-scroll mb-12" id="usage">
-<h2 class="font-ebGaramond text-headline-md text-primary mb-6 ruled-title">Use of Information</h2>
-<p>Your data is processed exclusively for the purpose of facilitating your education. We use it to:</p>
-<div class="space-y-4">
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-tertiary-container mt-1">check_circle</span>
-<div>
-<span class="font-bold">Provide Services:</span> Ensuring your access to modern translations and hagiographic summaries is seamless.
-                        </div>
-</div>
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-tertiary-container mt-1">check_circle</span>
-<div>
-<span class="font-bold">Improve Experience:</span> Using anonymized data to refine our character relationship diagrams and study chips.
-                        </div>
-</div>
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-tertiary-container mt-1">check_circle</span>
-<div>
-<span class="font-bold">Safety:</span> Protecting our platform from intellectual property theft and malicious actors.
-                        </div>
-</div>
-</div>
-</section>
-<!-- Data Sharing -->
-<section class="fade-on-scroll mb-12" id="sharing">
-<h2 class="font-ebGaramond text-headline-md text-primary mb-6 ruled-title">Data Sharing</h2>
-<p>We believe in the sanctity of private study. We do NOT sell your data to third-party marketers. We only share information with:</p>
-<ul class="list-decimal pl-6 space-y-3 text-on-surface">
-<li><strong>Service Providers:</strong> Cloud hosting partners who maintain our digital archives.</li>
-<li><strong>Legal Obligations:</strong> If required by law to protect our rights or comply with judicial proceedings.</li>
-<li><strong>Academic Partners:</strong> Only with your explicit consent for collaborative research.</li>
-</ul>
-</section>
-<!-- Your Rights -->
-<section class="fade-on-scroll mb-12" id="rights">
-<div class="p-8 border border-outline bg-white rounded-xl shadow-lg relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container opacity-5 rounded-bl-full"></div>
-<h2 class="font-ebGaramond text-headline-md text-primary mb-4">Your Academic Rights</h2>
-<p class="mb-6">You maintain full control over your digital footprint. At any time, you may request to:</p>
-<div class="flex flex-wrap gap-3">
-<span class="px-4 py-2 bg-surface-container-high rounded-full text-label-caps">Access Archive</span>
-<span class="px-4 py-2 bg-surface-container-high rounded-full text-label-caps">Correct Records</span>
-<span class="px-4 py-2 bg-surface-container-high rounded-full text-label-caps">Erase History</span>
-<span class="px-4 py-2 bg-surface-container-high rounded-full text-label-caps">Export Data</span>
-</div>
-<p class="mt-6 text-body-md text-on-surface-variant">To exercise these rights, contact our Privacy Officer at privacy@litera-study.edu</p>
-</div>
-</section>
-</div>
+<main class="flex-1 px-margin-mobile md:px-gutter py-section-gap">
+  <div class="max-w-[46rem] mx-auto prose-legal legal-content">
+
+    <h1 class="font-display-lg text-display-lg-mobile text-primary mb-2">Privacy Policy</h1>
+    <p class="font-body-md text-sm text-on-surface-variant mb-10">Last updated 9 August 2026.</p>
+
+    <section>
+      <h2>1. Summary</h2>
+      <p>
+        Litera collects as little as it can. There is no analytics script, no advertising, no tracking
+        pixels and no third-party cookies. Data is collected in exactly two places: when you register an
+        account, and when you send a message through the contact form.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. What is stored</h2>
+      <p>
+        <strong>If you register:</strong> your name, your email address, an optional school year or
+        grade, a salted hash of your password (never the password itself), and the date you signed up.
+        This is used only to identify you when you log in.
+      </p>
+      <p>
+        <strong>If you use the contact form:</strong> the name, email address, subject and message you
+        type, plus the time you sent it. This is stored so a person can read and reply to it.
+      </p>
+      <p>
+        <strong>Cookies:</strong> one session cookie to keep you logged in, and a second longer-lived
+        cookie only if you tick “stay logged in”. Both are strictly functional. A CSRF token is also
+        held in the session to protect form submissions.
+      </p>
+      <p>
+        <strong>Server logs:</strong> the hosting provider records ordinary web-server request logs,
+        which include IP addresses. These are not used to build profiles and are not combined with
+        account data.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. What is not done</h2>
+      <p>
+        Your data is not sold, rented, shared with advertisers, or used to train anything. There is no
+        newsletter and no marketing email. Nothing you read on the site is tracked against your account.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Where it is stored</h2>
+      <p>
+        In the application database on the server that runs the site, reachable only by the maintainer.
+        Traffic to the site is served over HTTPS.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. How long it is kept</h2>
+      <p>
+        Account records are kept until you ask for the account to be deleted. Contact messages are kept
+        until the matter is dealt with, and are cleared out periodically after that.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Your requests</h2>
+      <p>
+        Email <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a> to ask for a
+        copy of what is held about you, to correct it, or to have it deleted. Requests are handled by
+        hand by one person, so allow a few days; there is no automated self-service tool for this yet
+        and this policy does not pretend otherwise.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Children</h2>
+      <p>
+        The site is aimed at secondary-school students and above. No account is required to read
+        anything, and accounts should not be created by children under 13.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Changes</h2>
+      <p>
+        If this policy changes, the date at the top changes with it. See also the
+        <a href="{{ url_for('tos') }}">terms of use</a>.
+      </p>
+    </section>
+
+  </div>
 </main>
-<!-- Footer -->
 {% endblock %}

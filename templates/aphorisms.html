@@ -1,45 +1,46 @@
 {% extends "base.html" %}
-{% block title %}აფორიზმები | Litera Scholastic{% endblock %}
-{% block body_class %}bg-surface font-body-md text-on-surface parchment-texture overflow-x-hidden min-h-screen flex flex-col{% endblock %}
+{% block title %}აფორიზმები — Litera{% endblock %}
+{% block meta_description %}The collected Georgian aphorisms, numbered so they can be cited in an essay.{% endblock %}
+
 {% block content %}
-<!-- Content -->
-<main class="flex-grow pt-32 pb-section-gap px-margin-mobile md:px-gutter">
-<div class="max-w-3xl mx-auto">
-<div class="text-center mb-16">
-<span class="inline-block px-4 py-1 rounded-full border border-primary text-primary text-[10px] uppercase tracking-[0.2em] mb-4 font-bold">Wisdom of the Ages</span>
-<h1 class="font-display-lg text-4xl md:text-5xl text-primary mb-4 leading-tight">აფორიზმები</h1>
-<p class="font-headline-sm text-xl text-on-surface-variant italic">The Collected Georgian Aphorisms</p>
-<div class="w-24 h-px bg-outline-variant mx-auto mt-8"></div>
-</div>
-<div class="space-y-6">
-            {% for aphorism in aphorisms %}
-            <div class="aphorism-card bg-surface-container-low border border-outline-variant p-8 rounded-lg relative overflow-hidden group">
-<div class="flex flex-row-reverse items-start gap-6">
-<!-- Number Indicator -->
-<div class="flex-shrink-0">
-<div class="w-10 h-10 border border-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-sm bg-white group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                            {{ loop.index }}
-                        </div>
-</div>
-<!-- Text Content (RTL) -->
-<div class="flex-grow text-right" dir="rtl">
-<p class="font-aphorism text-2xl text-on-surface leading-relaxed tracking-wide">
-                            {{ aphorism.text }}
-                        </p>
-</div>
-</div>
-<!-- Scholarly Ornament -->
-<div class="absolute bottom-0 left-0 w-full h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
-</div>
-            {% endfor %}
-        </div>
-<div class="mt-16 text-center">
-<a class="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all uppercase tracking-widest text-xs" href="{{ url_for('index') }}">
-<span class="material-symbols-outlined">arrow_back</span>
-                Back to Home
-            </a>
-</div>
-</div>
+<main class="flex-1 py-section-gap px-margin-mobile md:px-gutter">
+  <div class="max-w-3xl mx-auto">
+
+    <header class="text-center mb-16">
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4" lang="ka">აფორიზმები</h1>
+      <p class="font-body-md text-on-surface-variant">
+        {{ aphorisms|length }} aphorism{{ '' if aphorisms|length == 1 else 's' }} in the database, numbered for citation.
+      </p>
+      <div class="w-24 h-px bg-outline-variant mx-auto mt-8"></div>
+    </header>
+
+    {% if aphorisms %}
+      <ol class="space-y-6">
+        {% for aphorism in aphorisms %}
+          <li class="aphorism-card bg-surface-container-low border border-outline-variant p-8 rounded-lg relative overflow-hidden group">
+            <div class="flex items-start gap-6">
+              <span class="shrink-0 w-10 h-10 border border-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-sm bg-surface-container-lowest group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
+                {{ loop.index }}
+              </span>
+              <p class="font-aphorism text-aphorism text-on-surface" lang="ka">{{ aphorism.text }}</p>
+            </div>
+            <span class="absolute bottom-0 left-0 w-full h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="font-body-md text-on-surface-variant text-center border border-outline-variant rounded-lg p-8">
+        No aphorisms have been imported yet.
+      </p>
+    {% endif %}
+
+    <div class="mt-16 text-center">
+      <a class="inline-flex items-center gap-2 text-primary font-label-caps text-label-caps uppercase hover:gap-3 transition-all" href="{{ url_for('index') }}">
+        <span aria-hidden="true" class="material-symbols-outlined">arrow_back</span>
+        Back to home
+      </a>
+    </div>
+
+  </div>
 </main>
-<!-- Footer -->
 {% endblock %}
