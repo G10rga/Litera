@@ -1,8 +1,12 @@
 """WSGI entrypoint. Run with: gunicorn wsgi:application"""
 
-from werkzeug.middleware.proxy_fix import ProxyFix
+from dotenv import load_dotenv
 
-from app import create_app
+load_dotenv()
+
+from werkzeug.middleware.proxy_fix import ProxyFix  # noqa: E402
+
+from app import create_app  # noqa: E402
 
 application = create_app()
 

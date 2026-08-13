@@ -113,9 +113,6 @@ class ProductionConfig(BaseConfig):
     REMEMBER_COOKIE_SECURE = True
     PREFERRED_URL_SCHEME = "https"
 
-    SECRET_KEY = os.environ.get("SECRET_KEY")
-    SQLALCHEMY_DATABASE_URI = _normalise_db_url(os.environ.get("DATABASE_URL", ""))
-
     # Sensible default for free-tier Postgres (often 20–25 connections).
     SQLALCHEMY_ENGINE_OPTIONS = {
         **_engine_options(),
@@ -125,6 +122,13 @@ class ProductionConfig(BaseConfig):
 
     @staticmethod
     def init_app(app):
+        # Re-read from the process environment so .env / systemd EnvironmentFile
+        # win even if this module was imported before load_dotenv().
+        secret = os.environ.get("SECRET_KEY") or app.config.get("SECRET_KEY")
+        database_url = _normalise_db_url(os.environ.get("DATABASE_URL", ""))
+        app.config["SECRET_KEY"] = secret
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+
         if not app.config.get("SECRET_KEY"):
             raise RuntimeError(
                 "SECRET_KEY must be set in the environment for production."
