@@ -14,6 +14,8 @@ env/
 # Build artefacts
 build/
 dist/
+!static/dist/
+!static/dist/**
 *.egg-info/
 .eggs/
 *.egg

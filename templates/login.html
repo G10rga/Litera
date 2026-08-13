@@ -9,7 +9,7 @@
   <div class="w-full max-w-md">
 
     <div class="text-center mb-10">
-      <img alt="Litera" class="mx-auto w-20 h-20 mb-4 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+      <img alt="Litera" class="mx-auto w-20 h-20 mb-4 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
       <h1 class="font-headline-md text-headline-md text-primary">Log in</h1>
       <p class="font-body-md text-on-surface-variant mt-2">An account is optional — all texts are readable without one.</p>
     </div>
@@ -52,9 +52,8 @@
       No account?
       <a class="text-primary font-semibold hover:underline underline-offset-4" href="{{ url_for('register') }}">Register</a>
     </p>
-    <p class="text-center mt-2 font-body-md text-xs text-on-surface-variant">
-      There is no password reset yet. If you are locked out,
-      <a class="text-primary hover:underline" href="{{ url_for('contact') }}">get in touch</a>.
+    <p class="text-center mt-2 font-body-md text-sm text-on-surface-variant">
+      <a class="text-primary hover:underline" href="{{ url_for('forgot_password') }}">Forgot your password?</a>
     </p>
 
   </div>

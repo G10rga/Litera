@@ -5,13 +5,16 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>{% block title %}Litera{% endblock %}</title>
 <meta name="description" content="{% block meta_description %}Litera publishes the Georgian literature texts on the school curriculum alongside modern-Georgian renderings and word-by-word glosses.{% endblock %}"/>
+<link rel="canonical" href="{% block canonical %}{{ request.url }}{% endblock %}"/>
 <meta property="og:site_name" content="Litera"/>
 <meta property="og:title" content="{{ self.title() }}"/>
 <meta property="og:description" content="{{ self.meta_description() }}"/>
 <meta property="og:type" content="website"/>
-<meta property="og:image" content="{{ url_for('static', filename='litera_book_monogram_logo.png', _external=True) }}"/>
+<meta property="og:image" content="{{ url_for('static', filename='litera_book_monogram_logo.webp', _external=True) }}"/>
 <meta name="twitter:card" content="summary"/>
-<link href="{{ url_for('static', filename='litera_book_monogram_logo.png') }}" rel="icon" type="image/png"/>
+<link href="{{ url_for('static', filename='favicon-32.png') }}" rel="icon" type="image/png" sizes="32x32"/>
+<link href="{{ url_for('static', filename='apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180"/>
+<link href="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" rel="icon" type="image/webp"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -22,8 +25,8 @@
 <link href="{{ url_for('static', filename='dist/app.css') }}" rel="stylesheet"/>
 {% else %}
 <!-- Development fallback. Run `npm run build:css` to serve the compiled stylesheet instead. -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="{{ url_for('static', filename='tailwind-cdn-config.js') }}"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" nonce="{{ g.csp_nonce }}"></script>
+<script src="{{ url_for('static', filename='tailwind-cdn-config.js') }}" nonce="{{ g.csp_nonce }}"></script>
 {% endif %}
 
 <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
@@ -43,7 +46,7 @@
   <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter h-16 flex items-center justify-between gap-4">
 
     <a class="flex items-center gap-2 shrink-0" href="{{ url_for('index') }}">
-      <img alt="Litera" class="h-9 w-9 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+      <img alt="Litera" class="h-9 w-9 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="36" height="36"/>
       <span class="font-headline-md text-xl text-primary">Litera</span>
     </a>
 
@@ -92,7 +95,7 @@
 
     <div>
       <a class="flex items-center gap-2 mb-3" href="{{ url_for('index') }}">
-        <img alt="Litera" class="h-8 w-8 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+        <img alt="Litera" class="h-8 w-8 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="32" height="32"/>
         <span class="font-headline-md text-lg text-primary">Litera</span>
       </a>
       <p class="font-body-md text-sm text-on-surface-variant">Georgian curriculum texts, with modern-Georgian renderings and glossed vocabulary.</p>
@@ -134,7 +137,7 @@
   </div>
 </footer>
 
-<script src="{{ url_for('static', filename='main.js') }}" defer></script>
+<script src="{{ url_for('static', filename='main.js') }}" defer nonce="{{ g.csp_nonce }}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

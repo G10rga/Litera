@@ -22,12 +22,26 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     grade = db.Column(db.String(32), nullable=True)
     created_at = db.Column(db.DateTime, default=_utcnow)
+    # Set (and advanced) whenever the password changes so open sessions die.
+    password_reset_at = db.Column(db.DateTime, nullable=True)
+    session_version = db.Column(db.Integer, nullable=False, default=0)
 
     def set_password(self, password: str) -> None:
-        self.password_hash = generate_password_hash(password)
+        # Werkzeug 3 defaults to scrypt; pin method explicitly for audits.
+        self.password_hash = generate_password_hash(password, method="scrypt")
+        self.invalidate_sessions()
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
+
+    def invalidate_sessions(self) -> None:
+        """Bump the session version so every existing login cookie stops working."""
+        self.session_version = int(self.session_version or 0) + 1
+        self.password_reset_at = _utcnow()
+
+    def get_id(self) -> str:
+        # Flask-Login stores this string; changing session_version logs everyone out.
+        return f"{self.id}.{int(self.session_version or 0)}"
 
     def __repr__(self):
         return f'<User {self.id}: {self.email}>'

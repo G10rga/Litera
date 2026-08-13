@@ -1,9 +1,21 @@
+# Software licence (application code)
+
 Copyright (c) 2026 G10rga
 
-All rights reserved.
+All rights reserved for the application source code in this repository
+(`*.py`, templates, static assets authored for Litera, configuration, CI).
 
-This repository and all of its contents are proprietary.
+No licence is granted to copy, modify, distribute, publish, sublicense, or use
+this software for any purpose without prior written permission from the
+copyright holder, except as required for running your own deployment of Litera
+from this repository.
 
-No license is granted. You may not copy, modify, distribute, publish,
-sublicense, or use this software for any purpose without prior written
-permission from the copyright holder.
+---
+
+# Content licence (literary materials)
+
+Literary texts, modern renderings, glossaries, importer CSVs, and database rows
+produced from them are **not** covered by the software terms above.
+
+See **CONTENT_LICENSING.md** for provenance, public-domain originals, and the
+clearance checklist for modern Georgian translations and scholarly glosses.

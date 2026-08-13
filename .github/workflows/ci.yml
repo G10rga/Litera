@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Install Node deps and build CSS
+        run: |
+          npm ci || npm install
+          npm run build:css
+
+      - name: Fail if stylesheet is missing or uncommitted drift
+        run: |
+          test -f static/dist/app.css
+          git diff --exit-code -- static/dist/app.css || (
+            echo "static/dist/app.css is out of date — run npm run build:css and commit it"
+            exit 1
+          )
+
+      - name: pytest
+        env:
+          FLASK_CONFIG: testing
+        run: pytest -q
+
+      - name: pip-audit
+        run: pip-audit -r requirements.txt
