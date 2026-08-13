@@ -49,6 +49,12 @@ module.exports = {
         "on-error-container": "#93000a",
         "surface-container": "#f0eded",
         "parchment-deep": "#F5F1E6",
+        /* Reader-module tokens, promoted so marketing and reading mode share one source. */
+        parchment: "#f4ecd8",
+        "parchment-dark": "#e8dcc0",
+        ink: "#2b2118",
+        "reader-accent": "#9b1c1c",
+        "reader-muted": "#7a6a55",
         primary: "#570013",
         secondary: "#5e5e5c",
         "tertiary-container": "#cca730",

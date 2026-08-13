@@ -55,7 +55,7 @@
         <div class="flex items-center gap-2 text-secondary">
           <span class="font-label-caps text-label-caps uppercase" lang="ka">დამავება</span>
           <span class="w-32 h-1 bg-surface-variant rounded-full overflow-hidden" role="img" aria-label="თავი {{ position }} / {{ total_chapters }}">
-            <span class="block h-full bg-primary" style="width: {{ percent }}%"></span>
+            <span class="block h-full bg-primary" style="--meter: {{ percent }}%; width: var(--meter)"></span>
           </span>
           <span class="font-label-caps text-label-caps">{{ position }}/{{ total_chapters }}</span>
         </div>

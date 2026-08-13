@@ -1,7 +1,8 @@
 -r requirements.txt
 
-# Only needed by the one-off importers in db_loaders/, never at runtime.
+# Importers in db_loaders/
 pandas>=2.2.2
 
-# Optional: uncomment if you deploy on Postgres and need a local driver.
-# psycopg[binary]>=3.1
+# Test + audit toolchain
+pytest>=8.2
+pip-audit>=2.7

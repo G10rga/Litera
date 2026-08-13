@@ -158,9 +158,10 @@ def _annotate(line, glosses):
 
     def _expand(match):
         surface, gloss = slots[int(match.group(1))]
-        return '<span class="gloss" data-gloss="%s" tabindex="0">%s</span>' % (
-            escape(gloss),
-            surface,
+        return (
+            '<span class="gloss" data-gloss="%s" tabindex="0" '
+            'role="button" aria-label="%s: %s">%s</span>'
+            % (escape(gloss), surface, escape(gloss), surface)
         )
 
     text = re.sub(r"\x00(\d+)\x00", _expand, text)

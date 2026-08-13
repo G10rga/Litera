@@ -30,6 +30,7 @@ from models import (  # noqa: E402
     VefxistyaosaniLine,
     db,
 )
+from sanitize import clean_gloss  # noqa: E402
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_CSV = os.path.join(PROJECT_ROOT, 'gloss_occurrences.csv')
@@ -72,8 +73,8 @@ def read_rows(csv_path):
             )
 
         for line_no, raw in enumerate(reader, start=2):
-            term = (raw.get('term') or '').strip()
-            gloss = (raw.get('gloss') or '').strip()
+            term = clean_gloss(raw.get('term') or '')
+            gloss = clean_gloss(raw.get('gloss') or '')
             chapter_id = as_int(raw.get('chapter_id'))
             strophe_global = as_int(raw.get('strophe_id'))
 

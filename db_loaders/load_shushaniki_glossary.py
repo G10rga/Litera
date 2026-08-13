@@ -102,6 +102,12 @@ def read_rows(path):
         for lineno, row in enumerate(csv.DictReader(fh), start=2):
             term = " ".join((row.get("term") or "").split())
             gloss = " ".join((row.get("gloss") or "").split())
+            try:
+                from sanitize import clean_gloss
+                term = clean_gloss(term)
+                gloss = clean_gloss(gloss)
+            except ImportError:
+                pass
             if not term or not gloss:
                 skipped.append((lineno, row))
                 continue
