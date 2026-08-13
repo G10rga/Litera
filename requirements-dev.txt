@@ -5,4 +5,4 @@ pandas>=2.2.2
 
 # Test + audit toolchain
 pytest>=8.2
-pip-audit>=2.7
+pip-audit>=2.10.1
