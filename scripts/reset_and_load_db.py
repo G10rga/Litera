@@ -26,7 +26,9 @@ os.chdir(PROJECT_ROOT)
 def _run_loader(script: str, *args: str) -> None:
     cmd = [sys.executable, os.path.join("db_loaders", script), *args]
     print(f"\n>>> {' '.join(cmd)}")
-    subprocess.check_call(cmd, cwd=PROJECT_ROOT)
+    env = os.environ.copy()
+    env["PYTHONPATH"] = PROJECT_ROOT + os.pathsep + env.get("PYTHONPATH", "")
+    subprocess.check_call(cmd, cwd=PROJECT_ROOT, env=env)
 
 
 def _drop_table(bind, table: str) -> None:
