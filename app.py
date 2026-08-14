@@ -256,29 +256,17 @@ def register_routes(app: Flask) -> None:  # noqa: C901 - flat route table
         return render_template("vefxistyaosani.html", stanzas=dict(stanzas))
 
     @app.route("/syllabus")
-    def syllabus():
-        return render_template("syllabus.html")
-
     @app.route("/studyguide")
-    def studyguide():
-        return render_template("studyguide.html")
-
     @app.route("/examprep")
-    def examprep():
-        return render_template("examprep.html")
-
     @app.route("/practicetests")
-    def practicetests():
-        return render_template("practicetests.html")
+    def _redirect_study_hub():
+        return redirect(url_for("literature.index"), code=301)
 
     @app.route("/moderntraslations")
-    def moderntraslations():
-        return render_template("moderntraslations.html")
-
     @app.route("/cheracteranalysis")
     @app.route("/characteranalysis")
-    def cheracteranalysis():
-        return render_template("cheracteranalysis.html")
+    def _redirect_to_reader():
+        return redirect(url_for("vefxistyaosani"), code=301)
 
     @app.route("/register", methods=["GET", "POST"])
     def register():

@@ -7,8 +7,8 @@
 <div class="w-full max-w-md">
 <div class="text-center mb-10">
 <img alt="Litera Logo" class="mx-auto w-24 h-24 mb-4 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
-<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Welcome to Litera</h1>
-<p class="font-body-md text-secondary mt-2">Enter your scholarly sanctum</p>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Log in</h1>
+<p class="font-body-md text-secondary mt-2">An account is optional — all texts are readable without one.</p>
 </div>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -25,7 +25,7 @@
 <form class="space-y-6" id="loginForm" method="post" action="{{ url_for('login') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 <div class="space-y-1">
-<label class="font-label-caps text-label-caps text-secondary block uppercase" for="email">Academic Email</label>
+<label class="font-label-caps text-label-caps text-secondary block uppercase" for="email">Email</label>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
 <input class="w-full pl-10 pr-4 py-3 bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant font-body-md" id="email" name="email" placeholder="scholar@institute.ge" required type="email" value="{{ email or '' }}"/>
@@ -33,7 +33,7 @@
 </div>
 <div class="space-y-1">
 <div class="flex justify-between items-end">
-<label class="font-label-caps text-label-caps text-secondary block uppercase" for="password">Credentials</label>
+<label class="font-label-caps text-label-caps text-secondary block uppercase" for="password">Password</label>
 <a class="font-body-md text-xs text-primary hover:underline" href="{{ url_for('forgot_password') }}">Forgot password?</a>
 </div>
 <div class="relative">
@@ -46,18 +46,18 @@
 </div>
 <div class="flex items-center">
 <input class="w-4 h-4 text-primary border-outline-variant rounded-sm focus:ring-primary" id="remember" name="remember" type="checkbox" value="1"/>
-<label class="ml-2 font-body-md text-secondary text-sm" for="remember">Maintain session for 30 days</label>
+<label class="ml-2 font-body-md text-secondary text-sm" for="remember">Stay logged in on this device</label>
 </div>
 <button class="w-full bg-primary text-parchment-deep py-4 rounded-lg font-label-caps text-label-caps uppercase tracking-widest transition-lift hover:bg-crimson-dark flex items-center justify-center gap-2 group" type="submit">
-  Enter Library
-  <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">menu_book</span>
+  Log in
+  <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">login</span>
 </button>
 </form>
 </div>
 
 <p class="text-center mt-8 font-body-md text-secondary">
-  New to the collection?
-  <a class="text-primary font-bold hover:underline decoration-outline-variant underline-offset-4 transition-all" href="{{ url_for('register') }}">Apply for Access</a>
+  No account?
+  <a class="text-primary font-bold hover:underline decoration-outline-variant underline-offset-4 transition-all" href="{{ url_for('register') }}">Register</a>
 </p>
 </div>
 </main>

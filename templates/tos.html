@@ -11,14 +11,14 @@
 <a class="nav-item sticky-nav-active" href="#agreement">User Agreement</a>
 <a class="nav-item" href="#intellectual">Intellectual Property</a>
 <a class="nav-item" href="#conduct">User Conduct</a>
-<a class="nav-item" href="#membership">Membership &amp; Billing</a>
+<a class="nav-item" href="#accounts">Accounts</a>
 <a class="nav-item" href="#liability">Limitation of Liability</a>
 <a class="nav-item" href="#governing">Governing Law</a>
 </nav>
 </div>
 <div class="mt-8 p-6 bg-parchment-deep rounded-xl border-l-4 border-primary">
 <p class="font-hankenGrotesk text-label-caps text-primary mb-2">LAST UPDATED</p>
-<p class="font-ebGaramond text-body-lg font-medium">October 24, 2023</p>
+<p class="font-ebGaramond text-body-lg font-medium">August 2026</p>
 </div>
 </aside>
 <!-- Main Terms Content -->
@@ -30,13 +30,13 @@
 <div class="prose-legal">
 <section id="agreement" data-tos-section>
 <h2>1. User Agreement</h2>
-<p>Welcome to Litera, the modern study companion for classical literature. By accessing or using our platform, you signify that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, you are not authorized to use the services provided by Litera.</p>
-<p>Litera provides tools for literary analysis, modern translations of archaic texts, and exam preparation. Our services are designed for academic enhancement and personal study. We reserve the right to modify these terms at any time, and your continued use of the platform indicates acceptance of any changes.</p>
+<p>Welcome to Litera, a non-commercial reader for Georgian curriculum literature. By using the site you agree to these terms. Litera is not affiliated with NAEC or any examination authority.</p>
+<p>The site provides public-domain texts with modern-Georgian renderings and glosses for personal study. We may update these terms; continued use means you accept the current version.</p>
 </section>
 <section id="intellectual" data-tos-section>
 <h2>2. Intellectual Property</h2>
-<p>The Litera study platform, including its original content, features, and functionality (excluding public domain literary texts being analyzed), are and will remain the exclusive property of Litera Study Platform and its licensors. Our translations, summaries, character analyses, and proprietary study algorithms are protected by copyright, trademark, and other laws.</p>
-<p>Users may download or print study materials for personal, non-commercial academic use only. Redistribution, resale, or scraping of Litera's proprietary academic content is strictly prohibited without prior written consent.</p>
+<p>Litera’s site design, code, and original glosses or renderings are © Litera contributors. Public-domain source texts remain in the public domain. Modern renderings and glosses are credited on each reader page with their licence and revision status.</p>
+<p>You may read and quote from the site for personal, non-commercial study. Do not scrape the site at scale or republish our renderings without checking the licence shown on the page you copied from.</p>
 </section>
 <!-- Visual Break / Callout -->
 <div class="my-12 p-8 bg-surface-container-low rounded-xl border border-outline-variant relative overflow-hidden">
@@ -48,19 +48,18 @@
 <h2>3. User Conduct</h2>
 <p>As a member of the Litera community, you agree to use the platform in a manner consistent with academic integrity. Prohibited actions include:</p>
 <ul class="list-disc pl-6 space-y-4 font-hankenGrotesk text-body-md text-charcoal-muted mb-6">
-<li>Attempting to bypass security measures or gain unauthorized access to other user accounts.</li>
-<li>Using Litera's essay templates or analysis tools to engage in plagiarism or academic dishonesty.</li>
-<li>Automated scraping of our character databases or modern translation archives.</li>
-<li>Posting offensive or derogatory content in community discussion modules.</li>
+<li>Attempting to bypass security measures or access other users’ accounts.</li>
+<li>Automated scraping that overloads the service.</li>
+<li>Submitting contact-form spam or abusive messages.</li>
 </ul>
 </section>
-<section id="membership" data-tos-section>
-<h2>4. Membership &amp; Billing</h2>
-<p>Litera offers both free access to public domain summaries and premium "Scholar" subscriptions for full analysis suites. Subscription fees are billed on a monthly or annual basis and are non-refundable unless required by law. You may cancel your subscription at any time through your account settings.</p>
+<section id="accounts" data-tos-section>
+<h2>4. Accounts</h2>
+<p>Creating an account is optional. All texts on Litera are readable without one. Accounts store your name, email, an optional school year, and a password hash — see the <a class="text-primary hover:underline" href="{{ url_for('privacypolicy') }}">Privacy Policy</a>. There is no paid tier and no billing.</p>
 </section>
 <section id="liability" data-tos-section>
 <h2>5. Limitation of Liability</h2>
-<p>Litera provides academic resources "as is" and "as available." While we strive for the highest degree of accuracy in our literary analyses and modern translations, we do not guarantee specific academic outcomes or exam scores. Litera shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our services.</p>
+<p>Litera provides texts and renderings “as is”. We do not guarantee exam results. To the extent permitted by law, Litera is not liable for indirect or consequential damages from use of the site.</p>
 </section>
 <section id="governing" data-tos-section>
 <h2>6. Governing Law</h2>
@@ -68,15 +67,10 @@
 </section>
 </div>
 <!-- Acceptance Footer -->
-<div class="mt-16 p-10 bg-primary text-on-primary rounded-xl flex flex-col md:flex-row items-center gap-8">
-<div class="text-center md:text-left">
-<h3 class="font-ebGaramond text-headline-md mb-2">Ready to begin your study?</h3>
-<p class="font-hankenGrotesk text-body-md opacity-90">By clicking 'I Accept', you confirm you have read the terms above.</p>
-</div>
-<div class="flex gap-4">
-<button class="bg-white text-primary px-8 py-3 rounded-lg font-bold hover:bg-parchment-deep transition-all transform hover:-translate-y-1">I Accept</button>
-<button class="border border-white/30 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-all">Decline</button>
-</div>
+<div class="mt-16 p-10 bg-primary text-on-primary rounded-xl text-center md:text-left">
+<h3 class="font-ebGaramond text-headline-md mb-2">Questions?</h3>
+<p class="font-hankenGrotesk text-body-md opacity-90 mb-6">If anything here is unclear, write via the contact page before relying on the site for an exam or publication.</p>
+<a class="inline-block bg-white text-primary px-8 py-3 rounded-lg font-bold hover:bg-parchment-deep transition-all" href="{{ url_for('contact') }}">Contact</a>
 </div>
 </article>
 </main>
