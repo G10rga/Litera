@@ -110,7 +110,7 @@ def load_all_data() -> None:
         "--csv",
         "db_loaders/db_checkers/gloss_occurrences.csv",
     )
-    _run_loader("load_literature.py", "--all")
+    _run_loader("load_literature.py", "--all", "--root", "static/Literature")
     _run_loader("load_shushaniki.py")
     _run_loader(
         "load_shushaniki_glossary.py",

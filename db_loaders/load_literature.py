@@ -44,7 +44,7 @@ import os
 import re
 import sys
 
-DEFAULT_ROOT = os.path.join("static", "literature")
+DEFAULT_ROOT = os.path.join("static", "Literature")
 
 ROMAN_RE = re.compile(r"^([IVXLC]+)\.?$")
 ROMAN_TAVI_RE = re.compile(u"^([IVXLC]+)\\s*\u10d7\u10d0\u10d5\u10d8\\.?$")

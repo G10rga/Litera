@@ -28,8 +28,8 @@ import os
 import re
 import sys
 
-DEFAULT_TEXT = "static/literature/text.txt"
-DEFAULT_META = "static/literature/source.json"
+DEFAULT_TEXT = "static/Literature/aluda-qetelauri/text.txt"
+DEFAULT_META = "static/Literature/aluda-qetelauri/source.json"
 
 WORK_SLUG = "aluda-ketelauri"
 WORK_TITLE = u"\u10d0\u10da\u10e3\u10d3\u10d0 \u10e5\u10d4\u10d7\u10d4\u10da\u10d0\u10e3\u10e0\u10d8"
