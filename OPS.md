@@ -54,6 +54,15 @@ Load order (handled automatically by the script):
 
 After reset, register a test account at `/register` and confirm `/healthz` returns `{"status":"ok"}`.
 
+If `flask db upgrade` fails with `Can't locate revision identified by '…'`, the DB still has a stale `alembic_version` row from an old migration. Either pull the latest reset script (it drops the whole `public` schema on Postgres) or run manually:
+
+```bash
+python -c "from app import app, db; from sqlalchemy import text; 
+ctx = app.app_context(); ctx.push();
+db.engine.begin().execute(text('DROP TABLE IF EXISTS alembic_version')); ctx.pop()"
+flask --app app db upgrade
+```
+
 ## Email
 
 Configure SMTP (Resend / Postmark / SES) via `MAIL_*` in `.env.example`.
