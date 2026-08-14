@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}Syllabus | Litera Study Platform{% endblock %}
+{% block body_class %}bg-background text-on-background min-h-screen flex flex-col{% endblock %}
+{% block content %}
+<main class="pt-32 pb-section-gap px-gutter max-w-[1120px] mx-auto">
+<!-- Hero Section -->
+<section class="text-center mb-section-gap max-w-[720px] mx-auto">
+<h1 class="font-display-lg text-display-lg mb-4 text-primary">National Georgian Curriculum</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A comprehensive guide to Georgia's literary heritage, from medieval hagiography to the golden age of romanticism and modern classics.</p>
+<!-- Progress Bar Anchor -->
+<div class="mt-12 w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="w-1/3 h-full bg-primary transition-all duration-1000"></div>
+</div>
+<p class="mt-2 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest text-center">33% of Curriculum Complete</p>
+</section>
+<!-- Bento Grid Syllabus Structure -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Golden Age Section (Asymmetric Large Card) -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant relative overflow-hidden group" data-reveal>
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-primary opacity-20 text-8xl rotate-12">auto_stories</span>
+</div>
+<div class="relative z-10">
+<span class="font-label-caps text-label-caps text-tertiary-container bg-tertiary-fixed-dim/20 px-3 py-1 rounded-full uppercase tracking-tighter mb-4 inline-block">The Golden Age</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">The Knight in the Panther's Skin</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-[500px]">Explore Shota Rustaveli's masterpiece. We break down the philosophical themes of friendship, loyalty, and courtly love across 1,500+ quatrains.</p>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">book_4</span>
+</div>
+<span class="font-body-md font-semibold">Introduction &amp; Prologue</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<span class="font-body-md font-semibold">Character Analysis: Avtandil &amp; Tariel</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coming Soon: Hagiography -->
+<div class="md:col-span-4 bg-parchment-deep p-8 rounded-xl border border-outline-variant flex flex-col justify-between" data-reveal>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-full uppercase mb-4 inline-block">V-X Centuries</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-4">Hagiography</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">The martyrdom and spiritual journeys of Georgia's early saints.</p>
+</div>
+<div class="space-y-4">
+<!-- Placeholder Loading State -->
+<div class="space-y-2 opacity-50">
+<div class="h-4 w-3/4 skeleton rounded"></div>
+<div class="h-4 w-1/2 skeleton rounded"></div>
+</div>
+<div class="flex items-center gap-2 text-primary font-semibold py-4 border-t border-outline-variant">
+<span class="material-symbols-outlined text-sm">cloud_sync</span>
+<span class="font-label-caps text-label-caps uppercase">Fetching from Database...</span>
+</div>
+<p class="text-xs text-on-surface-variant italic">Full module arriving Fall 2024</p>
+</div>
+</div>
+<!-- Modern Classics -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant hover:shadow-md transition-shadow">
+<div class="aspect-video w-full mb-4 overflow-hidden rounded bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-5xl">history_edu</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Ilia Chavchavadze</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">The 'Father of the Nation'. Analysis of "The Hermit" and "Is That a Man?!".</p>
+<div class="flex gap-2">
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded font-medium">Poetry</span>
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded font-medium">Politics</span>
+</div>
+</div>
+<!-- Card 2: Coming Soon -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant relative group opacity-75 grayscale hover:grayscale-0 transition-all">
+<div class="absolute inset-0 bg-surface/40 flex flex-col items-center justify-center z-20 backdrop-blur-[2px]">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">lock_clock</span>
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold">Coming Soon</span>
+</div>
+<div class="aspect-video w-full mb-4 overflow-hidden rounded bg-surface-container-low"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Vazha-Pshavela</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">The tragedy of "The Guest and the Host".</p>
+</div>
+<!-- Card 3: Interactive Practice Component -->
+<div class="bg-primary text-on-primary p-6 rounded-xl shadow-lg flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm mb-4">Exam Prep</h3>
+<p class="font-body-md text-body-md opacity-90 mb-6">Ready to test your knowledge of the 12th-century context?</p>
+</div>
+<button class="w-full py-3 bg-on-primary text-primary font-bold rounded-lg hover:bg-surface transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">quiz</span>
+                        Start Practice Test
+                    </button>
+</div>
+</div>
+</div>
+<!-- Section Break: Character Analysis Preview -->
+<section class="mt-section-gap">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">Character Studies</h2>
+<a class="text-primary font-semibold flex items-center gap-1 group" href="{{ url_for('cheracteranalysis') }}">
+                    View All Characters
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
+<!-- Character Card 1 -->
+<div class="min-w-[200px] text-center">
+<div class="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-primary-container p-1 relative">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A dignified historical portrait illustration of King Rostevan from the poem The Knight in the Panther's Skin. The style is classic academic etching, with fine lines and rich burgundy and gold undertones, appearing as a character profile in an elite literary study application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz1Lqhd6GpS5_ZerrVPiVqNf_NTPnui3V6Z18SvGFYho-bQnSTTz7_qD-eIZL96db_Qt3kxZRFlMYGmiETk5tdaBE0tA0uFkweqGtwnLrCxs5HJ8h_YtVeclySQsR2gy51Q_dUTKQfn5iYkgavHsVrJXO3UtYg48hamuc1SA9fN229cROwT28A659IpSD26eYP87QAXidW9Ru0KjuZTvqwLZCfSq6OcB5OwKH7cGN0rwgWpvuCGBfCKd3g0j0xjdT4RNmRcYrYaAYX"/>
+</div>
+</div>
+<h4 class="font-ebGaramond font-bold text-body-lg">King Rostevan</h4>
+<p class="text-xs text-on-surface-variant uppercase font-hankenGrotesk">The Wise Sovereign</p>
+</div>
+<!-- Character Card 2 -->
+<div class="min-w-[200px] text-center">
+<div class="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-primary-container p-1 relative">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A portrait of Princess Tinatin from Georgian literature, depicted in a refined, minimalist academic illustration style. She possesses a look of profound wisdom and grace, rendered with golden lighting and soft cream parchment textures, consistent with a high-end educational UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBegD8nMtwGoSt5trProv3Gp8X79yZxmND4DQCz-0DdSA1qPG71EBPOwMC7hTrI7pUr46iDtQcOj_oVgmi413BKc9Qge-22BGgFnXMLXj3xVzrKsXR_jMxqIsTA_gJbnDa29ohUOsuOruoaBPP6xaTMFaxpOCe7uuZNTjh8J3FzP4w_OC92uYmx8az7dRgYsRHNQEcKdjOkoBNycORJtR0fmifd4iRLgnslAzqw1ycajuBx_UzcqNKLDi-SliucJVngrZDGtDbl5CvC"/>
+</div>
+</div>
+<h4 class="font-ebGaramond font-bold text-body-lg">Tinatin</h4>
+<p class="text-xs text-on-surface-variant uppercase font-hankenGrotesk">The Enlightened Heiress</p>
+</div>
+<!-- Placeholder Character -->
+<div class="min-w-[200px] text-center opacity-40 grayscale">
+<div class="w-24 h-24 mx-auto mb-4 rounded-full bg-surface-container-high border-2 border-dashed border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">person_add</span>
+</div>
+<div class="h-4 w-24 bg-surface-container-high rounded mx-auto mb-1"></div>
+<div class="h-3 w-16 bg-surface-container-high rounded mx-auto"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+{% endblock %}

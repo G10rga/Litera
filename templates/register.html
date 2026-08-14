@@ -1,84 +1,85 @@
 {% extends "base.html" %}
-{% block title %}Register — Litera{% endblock %}
-{% block meta_description %}Create a Litera account. Optional — every text on the site is readable without one.{% endblock %}
+{% block title %}Register | Litera{% endblock %}
 {% block body_class %}bg-surface font-body-md text-on-surface parchment-dots overflow-x-hidden min-h-screen flex flex-col{% endblock %}
 {% block progress_bar %}{% endblock %}
-
 {% block content %}
-<main class="flex-1 flex items-center justify-center py-section-gap px-margin-mobile md:px-gutter">
-  <div class="max-w-[960px] w-full grid grid-cols-1 md:grid-cols-2 bg-surface rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+<main class="flex-grow flex items-center justify-center py-section-gap px-margin-mobile md:px-gutter pt-32">
+<div class="max-w-[1000px] w-full grid grid-cols-1 md:grid-cols-2 bg-surface rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+<div class="hidden md:flex flex-col justify-between p-12 bg-primary text-on-primary relative overflow-hidden">
+<div class="z-10">
+<img class="w-16 h-16 mb-8 object-contain brightness-0 invert opacity-90" alt="Litera Logo" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+<h2 class="font-headline-md text-headline-md mb-4 leading-tight">Preserving Wisdom, Facilitating Excellence.</h2>
+<p class="font-body-lg text-body-lg opacity-80 max-w-sm">Join a community of scholars dedicated to mastering classical texts through modern academic rigor.</p>
+</div>
+<div class="z-10">
+<div class="p-6 bg-primary-container rounded-lg border border-on-primary-container/20">
+<p class="font-quote-display text-quote-display italic mb-2">"Learning is a treasure that will follow its owner everywhere."</p>
+<p class="font-label-caps text-label-caps uppercase tracking-widest opacity-60">— Classical Proverb</p>
+</div>
+</div>
+<div class="absolute -bottom-20 -left-20 w-64 h-64 border border-on-primary/10 rounded-full"></div>
+<div class="absolute -top-10 -right-10 w-40 h-40 border border-on-primary/10 rounded-full"></div>
+</div>
 
-    <div class="hidden md:flex flex-col justify-between p-12 bg-primary text-on-primary">
-      <div>
-        <img alt="Litera" class="w-14 h-14 mb-8 object-contain brightness-0 invert opacity-90" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
-        <h2 class="font-headline-md text-headline-md mb-4 leading-tight">An account is optional.</h2>
-        <p class="font-body-lg text-body-lg opacity-80 max-w-sm">
-          Every text, rendering and gloss on Litera is readable without logging in. Registering only
-          reserves your name for the reading features that are still being built.
-        </p>
-      </div>
-      <p class="font-body-md text-sm opacity-70">
-        We store your name, email, an optional school year and a hash of your password — nothing else.
-        See the <a class="underline" href="{{ url_for('privacypolicy') }}">privacy policy</a>.
-      </p>
+<div class="p-8 md:p-12 flex flex-col justify-center bg-surface">
+<header class="mb-8 text-center md:text-left">
+<img class="w-12 h-12 mb-4 mx-auto md:mx-0 md:hidden object-contain" alt="Litera Logo" src="{{ url_for('static', filename='litera_book_monogram_logo.png') }}"/>
+<h1 class="font-headline-md text-headline-md text-primary mb-2">Begin Your Scholarly Journey</h1>
+<p class="font-body-md text-on-surface-variant">Create your account to access our curated study guides and modern translations.</p>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="mb-6 space-y-2">
+      {% for category, message in messages %}
+        <div class="auth-flash auth-flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
     </div>
+  {% endif %}
+{% endwith %}
 
-    <div class="p-8 md:p-12 flex flex-col justify-center bg-surface">
-      <header class="mb-8 text-center md:text-left">
-        <img alt="Litera" class="w-12 h-12 mb-4 mx-auto md:hidden object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
-        <h1 class="font-headline-md text-headline-md text-primary mb-2">Create an account</h1>
-        <p class="font-body-md text-on-surface-variant">Takes a minute. No confirmation email is sent.</p>
-      </header>
-
-      <form action="{{ url_for('register') }}" class="space-y-5" method="post" novalidate>
-        <input name="csrf_token" type="hidden" value="{{ csrf_token() }}"/>
-
-        <div class="space-y-1.5">
-          <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="full_name">Full name</label>
-          <input autocomplete="name" class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="full_name" maxlength="120" name="full_name" required type="text" value="{{ full_name or '' }}"/>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="email">Email</label>
-          <input autocomplete="email" class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="email" maxlength="255" name="email" required type="email" value="{{ email or '' }}"/>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="grade">School year <span class="normal-case tracking-normal text-outline">(optional)</span></label>
-          <select class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="grade" name="grade">
-            <option hidden value="" {% if not grade %}selected{% endif %}>Select your year</option>
-            <option value="9" {% if grade == '9' %}selected{% endif %}>Grade 9</option>
-            <option value="10" {% if grade == '10' %}selected{% endif %}>Grade 10</option>
-            <option value="11" {% if grade == '11' %}selected{% endif %}>Grade 11</option>
-            <option value="12" {% if grade == '12' %}selected{% endif %}>Grade 12</option>
-            <option value="undergrad" {% if grade == 'undergrad' %}selected{% endif %}>University</option>
-            <option value="other" {% if grade == 'other' %}selected{% endif %}>Other</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="space-y-1.5">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="password">Password</label>
-            <input autocomplete="new-password" class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="password" minlength="{{ password_min_length }}" name="password" required type="password"/>
-          </div>
-          <div class="space-y-1.5">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant block" for="confirm_password">Confirm password</label>
-            <input autocomplete="new-password" class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="confirm_password" minlength="{{ password_min_length }}" name="confirm_password" required type="password"/>
-          </div>
-        </div>
-        <p class="font-body-md text-xs text-on-surface-variant">At least {{ password_min_length }} characters. You can reset it later from the login page.</p>
-
-        <button class="w-full bg-primary text-on-primary py-4 rounded-lg font-label-caps text-label-caps uppercase hover:bg-crimson-dark transition-colors" type="submit">
-          Create account
-        </button>
-
-        <p class="text-center font-body-md text-on-surface-variant">
-          Already registered?
-          <a class="text-primary font-semibold hover:underline underline-offset-4" href="{{ url_for('login') }}">Log in</a>
-        </p>
-      </form>
-    </div>
-
-  </div>
+<form class="space-y-5" id="registerForm" method="post" action="{{ url_for('register') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="full_name">Full Name</label>
+<input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus placeholder:text-outline/50" id="full_name" name="full_name" placeholder="ნიკოლოზ ბარათაშვილი" required type="text" value="{{ full_name or '' }}"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="email">Academic Email</label>
+<input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="email" name="email" placeholder="scholar@academy.edu" required type="email" value="{{ email or '' }}"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="grade">Academic Year / Grade</label>
+<select class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus appearance-none" id="grade" name="grade">
+<option disabled {% if not grade %}selected{% endif %} value="">Select Your Level</option>
+<option value="9" {% if grade == '9' %}selected{% endif %}>Year 9 (Grade 9)</option>
+<option value="10" {% if grade == '10' %}selected{% endif %}>Year 10 (Grade 10)</option>
+<option value="11" {% if grade == '11' %}selected{% endif %}>Year 11 (Grade 11)</option>
+<option value="12" {% if grade == '12' %}selected{% endif %}>Year 12 (Graduate Candidate)</option>
+<option value="undergrad" {% if grade == 'undergrad' %}selected{% endif %}>University Undergraduate</option>
+</select>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="password">Password</label>
+<input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="password" name="password" required minlength="{{ password_min_length|default(12) }}" type="password"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="confirm_password">Confirm Password</label>
+<input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="confirm_password" name="confirm_password" required minlength="{{ password_min_length|default(12) }}" type="password"/>
+</div>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">At least {{ password_min_length|default(12) }} characters.</p>
+<button class="w-full bg-primary text-on-primary font-label-caps text-body-md py-4 rounded-lg shadow-sm hover:bg-crimson-dark transition-all duration-200 active:scale-[0.98] mt-4 flex justify-center items-center gap-2" type="submit">
+<span>Register as Scholar</span>
+<span class="material-symbols-outlined text-sm">history_edu</span>
+</button>
+<p class="text-center mt-6 font-body-md text-on-surface-variant">
+  Already a member?
+  <a class="text-primary font-semibold hover:underline decoration-1 underline-offset-4" href="{{ url_for('login') }}">Log in</a>
+</p>
+</form>
+</div>
+</div>
 </main>
 {% endblock %}

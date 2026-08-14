@@ -225,16 +225,6 @@
     });
   }
 
-  /* ------------------------------------------------------ gloss tooltips */
-
-  function initGlossTooltips() {
-    each(".gloss", function (node) {
-      node.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") node.blur();
-      });
-    });
-  }
-
   /* ---------------------------------------------------------------- boot */
 
   function boot() {
@@ -250,7 +240,6 @@
     initPasswordToggles();
     initFlashDismiss();
     initSmoothAnchors();
-    initGlossTooltips();
   }
 
   if (document.readyState === "loading") {

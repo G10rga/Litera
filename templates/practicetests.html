@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Practice Tests | Litera Study Platform{% endblock %}
+{% block body_class %}font-body-md text-on-surface min-h-screen flex flex-col{% endblock %}
+{% block content %}
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-section-gap px-gutter max-w-container-max mx-auto">
+<!-- Hero / Progress Section -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-8">
+<div class="max-w-2xl">
+<h1 class="font-display-lg text-display-lg text-primary mb-2">Practice Mastery</h1>
+<p class="font-body-lg text-body-lg text-secondary">Hone your literary analysis skills with curated mock exams and historical question banks. Prepare with precision.</p>
+</div>
+<div class="w-full md:w-64 bg-surface-container-high rounded-full h-1 relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary" style="width: 65%;"></div>
+<p class="absolute -top-6 right-0 text-label-caps text-primary">65% SYLLABUS COVERED</p>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout for Tests & Questions -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Test Categories Sidebar -->
+<aside class="md:col-span-3 space-y-6">
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/30">
+<h3 class="font-label-caps text-primary mb-4">EXAM MODULES</h3>
+<ul class="space-y-3">
+<li>
+<button class="flex items-center gap-3 w-full text-left text-body-md font-semibold text-primary">
+<span class="material-symbols-outlined text-sm">book</span>
+                Medieval Epics
+              </button>
+</li>
+<li>
+<button class="flex items-center gap-3 w-full text-left text-body-md text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+                Renaissance Poetry
+              </button>
+</li>
+<li>
+<button class="flex items-center gap-3 w-full text-left text-body-md text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">theater_comedy</span>
+                Modern Drama
+              </button>
+</li>
+<li>
+<button class="flex items-center gap-3 w-full text-left text-body-md text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">edit_note</span>
+                Comparative Analysis
+              </button>
+</li>
+</ul>
+</div>
+<div class="bg-primary text-on-primary p-6 rounded-xl shadow-lg relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-10 transform group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl">school</span>
+</div>
+<h4 class="font-headline-sm mb-2">Timed Simulation</h4>
+<p class="text-sm opacity-90 mb-4">Ready for the real pressure? Start a 3-hour full syllabus mock exam.</p>
+<a href="{{ url_for('examprep') }}" class="w-full bg-on-primary text-primary py-2 rounded-full font-bold text-sm hover:bg-surface transition-colors inline-block text-center">Begin Mock Exam</a>
+</div>
+</aside>
+<!-- Main Test Bank -->
+<div class="md:col-span-9 space-y-gutter">
+<!-- Active Mock Exams (Loading Skeletons) -->
+<div class="bg-surface border border-outline-variant/50 rounded-xl overflow-hidden shadow-sm">
+<div class="p-6 border-b border-outline-variant/30 flex justify-between items-center">
+<h2 class="font-headline-md text-primary">Available Mock Exams</h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-parchment-deep text-primary text-xs font-bold rounded-full border border-primary/20">HOT</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-xs font-bold rounded-full">3 NEW</span>
+</div>
+</div>
+<div class="divide-y divide-outline-variant/20">
+<!-- Skeleton Row 1 -->
+<div class="p-6 flex items-start gap-6 animate-pulse">
+<div class="w-16 h-16 rounded-lg skeleton-pulse shrink-0"></div>
+<div class="flex-1 space-y-3">
+<div class="h-6 w-1/3 skeleton-pulse rounded"></div>
+<div class="h-4 w-full skeleton-pulse rounded"></div>
+<div class="flex gap-4">
+<div class="h-4 w-20 skeleton-pulse rounded"></div>
+<div class="h-4 w-20 skeleton-pulse rounded"></div>
+</div>
+</div>
+<div class="w-24 h-10 rounded-full skeleton-pulse"></div>
+</div>
+<!-- Skeleton Row 2 -->
+<div class="p-6 flex items-start gap-6 animate-pulse">
+<div class="w-16 h-16 rounded-lg skeleton-pulse shrink-0"></div>
+<div class="flex-1 space-y-3">
+<div class="h-6 w-1/4 skeleton-pulse rounded"></div>
+<div class="h-4 w-full skeleton-pulse rounded"></div>
+<div class="flex gap-4">
+<div class="h-4 w-20 skeleton-pulse rounded"></div>
+<div class="h-4 w-20 skeleton-pulse rounded"></div>
+</div>
+</div>
+<div class="w-24 h-10 rounded-full skeleton-pulse"></div>
+</div>
+<!-- Loaded Example for Style Clarity -->
+<div class="p-6 flex items-start gap-6 bg-white/50 group hover:bg-parchment-deep/30 transition-colors">
+<div class="w-16 h-16 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-3xl">auto_stories</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-1">
+<h3 class="font-headline-sm text-primary">The Knight in the Panther's Skin - Section A</h3>
+<span class="text-xs bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded">Expert Level</span>
+</div>
+<p class="text-on-surface-variant text-body-md mb-3">Focus on character archetypes of Tariel and Avtandil. Includes 15 multiple choice and 2 short essay prompts.</p>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1 text-xs text-secondary">
+<span class="material-symbols-outlined text-sm">timer</span> 45 Mins
+                  </div>
+<div class="flex items-center gap-1 text-xs text-secondary">
+<span class="material-symbols-outlined text-sm">quiz</span> 17 Questions
+                  </div>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm shadow-sm self-center">Start</button>
+</div>
+</div>
+</div>
+<!-- Sample Questions / Notebook Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Sample Question Card -->
+<div class="bg-surface p-8 rounded-xl border border-outline-variant/30 shadow-sm relative">
+<span class="absolute top-8 right-8 text-label-caps text-outline">Q# 114</span>
+<h3 class="font-headline-sm text-primary mb-6">Daily Practice Question</h3>
+<div class="ruled-line p-6 bg-white shadow-inner mb-6 min-h-[200px]">
+<p class="font-quote-display italic text-charcoal-muted mb-4">"How does the metaphor of the 'hidden heart' reflect the hagiographical tradition in early medieval Georgian literature?"</p>
+<div class="flex flex-wrap gap-2 mt-8">
+<span class="px-3 py-1 bg-surface-container-low border border-outline-variant text-xs text-on-surface-variant font-semibold">THEME: FAITH</span>
+<span class="px-3 py-1 bg-surface-container-low border border-outline-variant text-xs text-on-surface-variant font-semibold">ERA: 5TH CENTURY</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary font-bold text-sm flex items-center gap-2">
+<span class="material-symbols-outlined">lightbulb</span> View Hint
+              </button>
+<button class="border border-primary text-primary px-6 py-2 rounded-full font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">Submit Answer</button>
+</div>
+</div>
+<!-- Resources & Tips -->
+<div class="space-y-gutter">
+<div class="bg-parchment-deep p-6 rounded-xl border border-primary/10">
+<h4 class="font-headline-sm text-primary-container mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined">analytics</span> Progress Insights
+              </h4>
+<p class="text-sm text-on-surface-variant mb-4">Your analysis speed has improved by 12% this week. Focus more on 'Rhetorical Devices' for your next test.</p>
+<div class="flex gap-2">
+<div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 80%;"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">80% Accuracy</span>
+</div>
+</div>
+<!-- Small Skeleton Cards -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white p-4 rounded-lg border border-outline-variant/20 animate-pulse">
+<div class="h-4 w-12 skeleton-pulse rounded mb-2"></div>
+<div class="h-12 w-full skeleton-pulse rounded"></div>
+</div>
+<div class="bg-white p-4 rounded-lg border border-outline-variant/20 animate-pulse">
+<div class="h-4 w-12 skeleton-pulse rounded mb-2"></div>
+<div class="h-12 w-full skeleton-pulse rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+{% endblock %}

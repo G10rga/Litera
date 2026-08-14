@@ -170,10 +170,18 @@ def test_robots_and_sitemap(client):
     assert b"<urlset" in sitemap.data
 
 
-def test_retired_paths_redirect(client):
-    response = client.get("/practicetests")
-    assert response.status_code == 301
-    assert "/literature" in response.headers["Location"]
+def test_study_module_pages(client):
+    for path in (
+        "/syllabus",
+        "/studyguide",
+        "/examprep",
+        "/practicetests",
+        "/moderntraslations",
+        "/cheracteranalysis",
+    ):
+        response = client.get(path)
+        assert response.status_code == 200
+        assert b"Litera" in response.data
 
 
 def test_delete_user_cli(app):
