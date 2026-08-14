@@ -27,6 +27,7 @@ On the server (`~/litera`, venv active, `FLASK_CONFIG=production`, `.env` with `
 ```bash
 cd ~/litera
 source .venv/bin/activate
+pip install -r requirements.txt   # includes pandas for db_loaders
 export FLASK_CONFIG=production
 
 # Destructive: drops all tables, migrates, loads CSV/MD content
