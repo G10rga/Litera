@@ -28,7 +28,10 @@ import os
 import re
 import sys
 
-DEFAULT_FILE = "static/literature/shushaniki_modernised.md"
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_FILE = os.path.join(
+    PROJECT_ROOT, "static", "Literature", "shushaniki_modernised.md"
+)
 
 # Matches '# **I** თავი', '# IV თავი', '## **XX** თავი' and friends.
 HEAD_RE = re.compile(
