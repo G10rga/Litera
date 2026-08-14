@@ -64,19 +64,6 @@ login_manager.login_message_category = "error"
 csrf = CSRFProtect()
 limiter = Limiter(key_func=get_remote_address, default_limits=[])
 
-# URLs that used to serve hand-written mockups with no data behind them.
-# Kept as permanent redirects so existing links and search results do not 404.
-RETIRED_PATHS = (
-    "/syllabus",
-    "/studyguide",
-    "/examprep",
-    "/practicetests",
-    "/moderntraslations",
-    "/characteranalysis",
-    "/cheracteranalysis",
-)
-
-
 def create_app(config_name: str | None = None) -> Flask:
     app = Flask(__name__, instance_relative_config=True)
 
@@ -100,11 +87,8 @@ def create_app(config_name: str | None = None) -> Flask:
 
     _init_sentry(app)
 
-    # True once `npm run build:css` has produced the compiled stylesheet. When
-    # false, base.html falls back to the Tailwind CDN so the app still renders.
-    app.config["TAILWIND_BUILT"] = os.path.exists(
-        os.path.join(app.static_folder, "dist", "app.css")
-    )
+    # Stitch UI uses the Tailwind CDN + tailwind-cdn-config.js for design tokens.
+    app.config["TAILWIND_BUILT"] = False
 
     register_blueprints(app)
     register_routes(app)
@@ -194,7 +178,11 @@ def register_routes(app: Flask) -> None:  # noqa: C901 - flat route table
                 "name": (request.form.get("name") or "").strip(),
                 "email": (request.form.get("email") or "").strip().lower(),
                 "subject": (request.form.get("subject") or "").strip(),
-                "body": (request.form.get("body") or "").strip(),
+                "body": (
+                    request.form.get("body")
+                    or request.form.get("message")
+                    or ""
+                ).strip(),
             }
 
             errors = []
@@ -266,6 +254,31 @@ def register_routes(app: Flask) -> None:  # noqa: C901 - flat route table
         for line in lines:
             stanzas[(line.chapter_id, line.strophe_id)].append(line)
         return render_template("vefxistyaosani.html", stanzas=dict(stanzas))
+
+    @app.route("/syllabus")
+    def syllabus():
+        return render_template("syllabus.html")
+
+    @app.route("/studyguide")
+    def studyguide():
+        return render_template("studyguide.html")
+
+    @app.route("/examprep")
+    def examprep():
+        return render_template("examprep.html")
+
+    @app.route("/practicetests")
+    def practicetests():
+        return render_template("practicetests.html")
+
+    @app.route("/moderntraslations")
+    def moderntraslations():
+        return render_template("moderntraslations.html")
+
+    @app.route("/cheracteranalysis")
+    @app.route("/characteranalysis")
+    def cheracteranalysis():
+        return render_template("cheracteranalysis.html")
 
     @app.route("/register", methods=["GET", "POST"])
     def register():
@@ -480,17 +493,6 @@ def register_routes(app: Flask) -> None:  # noqa: C901 - flat route table
         lines.append("</urlset>")
         return app.response_class("\n".join(lines) + "\n", mimetype="application/xml")
 
-    # Permanent redirects for the retired mockup pages.
-    def _retired():
-        return redirect(url_for("literature.index"), code=301)
-
-    for path in RETIRED_PATHS:
-        app.add_url_rule(
-            path,
-            endpoint="retired_" + path.strip("/"),
-            view_func=_retired,
-        )
-
     # Old legal URLs.
     app.add_url_rule(
         "/tos",
@@ -539,13 +541,14 @@ def register_security_headers(app: Flask) -> None:
         # When the compiled stylesheet is present we no longer need the Tailwind
         # CDN. Inline styles remain in a few reader meters, so style-src still
         # allows 'unsafe-inline' until those are converted to CSS variables.
-        script_src = f"'self' 'nonce-{nonce}'"
-        if not app.config.get("TAILWIND_BUILT"):
-            script_src += " https://cdn.tailwindcss.com 'unsafe-inline'"
+        script_src = (
+            f"'self' 'nonce-{nonce}' https://cdn.tailwindcss.com 'unsafe-inline'"
+        )
 
         csp = (
             "default-src 'self'; "
-            "img-src 'self' data: https://www.transparenttextures.com; "
+            "img-src 'self' data: https://www.transparenttextures.com "
+            "https://lh3.googleusercontent.com; "
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "font-src 'self' https://fonts.gstatic.com; "
             f"script-src {script_src}; "

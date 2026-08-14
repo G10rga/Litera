@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}Character Analysis Index | Litera{% endblock %}
+{% block body_class %}bg-surface font-hankenGrotesk text-on-surface antialiased min-h-screen flex flex-col{% endblock %}
+{% block content %}
+<!-- Progress Indicator -->
+<div class="fixed top-16 left-0 w-full h-1 bg-surface-container-highest z-40">
+<div class="h-full bg-primary w-1/3 transition-all duration-1000 ease-in-out"></div>
+</div>
+<main class="pt-32 pb-section-gap px-gutter max-w-container-max mx-auto overflow-hidden">
+<!-- Hero Section -->
+<div class="mb-section-gap text-center max-w-[720px] mx-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase mb-4 block tracking-widest">Scholastic Index</span>
+<h1 class="font-ebGaramond text-display-lg md:text-display-lg text-primary mb-6">Faces of Georgian Literature</h1>
+<p class="font-hankenGrotesk text-body-lg text-on-surface-variant leading-relaxed">
+                An authoritative compendium of historical and literary figures from the golden age of hagiography to the epic poetry of the Renaissance. Explore the virtues, conflicts, and legacies of those who shaped our narrative heritage.
+            </p>
+</div>
+<!-- Featured Character Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-section-gap">
+<!-- Tariel (Heroic Focus) -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 relative overflow-hidden group border border-outline-variant/20 character-card-hover">
+<div class="relative z-10 flex flex-col md:flex-row gap-8 items-center h-full">
+<div class="w-48 h-48 rounded-full avatar-ring border-4 border-primary transition-transform duration-500 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A regal, hand-painted classical portrait of Tariel, the Knight in the Panther's Skin. He is depicted with dark, intense eyes and a melancholic expression, wearing a rich, textured panther skin cloak over crimson and gold Georgian medieval armor. The style is that of a refined hagiographic manuscript, with golden light illuminating his face against a dark, scholarly library background. Academic minimalism aesthetic, sophisticated and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUatU65C21H2jcn8ybsfVSsCG7uuruODwgiYmHnm39bPkI7FeYl59d5PnmNq5ApMepCTIMgrJfF3kRX7lQ66KIrraaJG2BKc8InkW7BvZTZ2NGt_2IqYw37x-DIoJlfOLy73hA5nu9dTxP06oqPoodusuRfoiPUgaSbKPrLFtFNnonS29u93WhR7bwybcB6W_M05zg0GTEaNjdE6EVVjFrfvLLT_X6yTg4JWFLks1pIihvP1XuBsAMGn4LNf7F2eRlrMBI3hBd3DSD"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="px-3 py-1 bg-parchment-deep text-tertiary-container font-label-caps text-[10px] tracking-tighter uppercase border border-outline-variant">Epic Poetry</span>
+<span class="text-on-surface-variant text-body-md font-medium">12th Century</span>
+</div>
+<h2 class="font-ebGaramond text-display-lg-mobile text-primary mb-4">Tariel</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant mb-6 italic border-l-4 border-tertiary pl-4">
+                            "I, Tariel, the panther-clad, wanderer of the desert, seeking the lost sun of my existence."
+                        </p>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                            The central figure of Shota Rustaveli's 'The Knight in the Panther's Skin'. Embodying the concept of 'mijnuruba' (courtly love), Tariel's journey is one of profound emotional depth and chivalric excellence.
+                        </p>
+<a href="{{ url_for('vefxistyaosani') }}" class="bg-primary text-on-primary px-8 py-3 font-semibold text-body-md flex items-center gap-2 group-hover:gap-4 transition-all inline-flex">
+                            Analyze Character <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Decorative background flourish -->
+<div class="absolute -bottom-10 -right-10 opacity-5 pointer-events-none transform rotate-12">
+<span class="material-symbols-outlined text-[200px]">auto_stories</span>
+</div>
+</div>
+<!-- Avtandil (Side Card) -->
+<div class="md:col-span-4 bg-primary text-on-primary p-8 flex flex-col justify-between character-card-hover group border border-primary-container">
+<div>
+<div class="w-24 h-24 rounded-full avatar-ring border-2 border-on-primary/30 mb-6 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of Avtandil, the loyal knight from Georgian literature, presented in a minimalist, academic artistic style. He is depicted with a noble, composed demeanor, wearing intricate silver-toned armor and a sapphire-colored tunic. The lighting is soft and directional, as if from a library window. The palette consists of deep burgundy, cool silver, and parchment tones. Sophisticated and calm atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYhifrOjYluIxNbiAjB1N7dngG4iGiOwCqCG5igl42Ce51y31ZxvXHn931U6NMkHLmtgnDHYt-hu5fCsyAkIe1gVKkeKlgmRrDqNi2bgDVogZ5i-Etj8v_mBpl_f183HBVwa5AwsCUQXP8BbKkf0Q3ucTb3eQkUi9GP1r2kDc4groJ73D-ogfqK4AIk87e9BO7I356fYLBAVPvPOFds7I2WOWC9agwLc1O4-oxa8nrxWnjPleOLttcr9Spo4UHc7uZcL2c7V4uTDHj"/>
+</div>
+<span class="font-label-caps text-[10px] text-primary-fixed-dim uppercase tracking-widest block mb-2">Loyal Protagonist</span>
+<h3 class="font-ebGaramond text-headline-md mb-4">Avtandil</h3>
+<p class="text-body-md opacity-90 leading-relaxed font-light mb-6">
+                        The epitome of wisdom and brotherhood. Avtandil balances the fiery passion of Tariel with strategic brilliance and unwavering loyalty to his sovereign, Tinatin.
+                    </p>
+</div>
+<div class="flex items-center justify-between border-t border-on-primary/10 pt-6">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">TH</div>
+<div class="w-8 h-8 rounded-full border border-primary bg-surface/20 flex items-center justify-center text-[10px]">LY</div>
+</div>
+<a class="text-body-md font-medium flex items-center gap-2 group-hover:underline" href="{{ url_for('vefxistyaosani') }}">
+                        Full Bio <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Hagiography Section -->
+<div class="mb-section-gap">
+<div class="flex items-end justify-between mb-8 border-b border-outline-variant pb-4">
+<div>
+<h2 class="font-ebGaramond text-headline-md text-primary">Early Hagiographic Figures</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant">Defining the spiritual identity of the nation.</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Saint Shushanik -->
+<div class="bg-surface p-6 border border-outline-variant/30 character-card-hover">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A solemn, hagiographic illustration of Saint Shushanik in a 5th-century Georgian setting. She is shown in simple, humble linen garments, her expression one of quiet, unwavering spiritual resolve and suffering. The artistic style mimics ancient manuscript illumination with subtle metallic textures and a palette of muted earthy tones, deep burgundy, and parchment cream. The lighting is ethereal and soft, emphasizing her martyrdom and grace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTVjU9pWH31wdm3MCjPY2AmcqGBqNUZHo7Vs88THorvQ8_XJCjELNe2WyRsezKSuFMyFJdZ7CqZdpU4IXKqhqnlo1b6Bvkgrk3W2_e7xUkk6TrgZIGxZMgF3p9TD--hc4PXT0d9dNaye9r6J8eMibxFDdiCE-Pftumu8ymo8lMEuxmavepFsHEoBYmwkKCj6_ifPHXepMJMwfY4Tn74L9ikRCdEb_bZi7s30fUJWgMQ94bdol18OiIPcvB8FJbg2HedPEx8Rt2Fnp"/>
+<div class="absolute top-4 right-4 px-2 py-1 bg-surface/80 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest text-primary">5th Century</div>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-primary mb-2">Saint Shushanik</h3>
+<p class="text-body-md text-on-surface-variant mb-6 h-12 overflow-hidden text-ellipsis">
+                        The central figure of the first extant work of Georgian literature. A martyr of faith and resistance.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-low text-[10px] font-semibold text-on-surface-variant border border-outline-variant">Martyrdom</span>
+<span class="px-2 py-1 bg-surface-container-low text-[10px] font-semibold text-on-surface-variant border border-outline-variant">Stoicism</span>
+</div>
+</div>
+<!-- Saint Nino (Locked/In Progress) -->
+<div class="bg-surface p-6 border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-8">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">lock</span>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-on-surface opacity-50 mb-2">Saint Nino</h3>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant italic">Library entry in progress...</p>
+<p class="text-[11px] uppercase tracking-tighter mt-4 text-tertiary">Release: Winter 2024</p>
+</div>
+<div class="opacity-20 grayscale select-none">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden"></div>
+<div class="h-4 w-3/4 bg-on-surface-variant/20 mb-4"></div>
+<div class="h-4 w-1/2 bg-on-surface-variant/20 mb-4"></div>
+</div>
+</div>
+<!-- Abo Thbileli (Locked/In Progress) -->
+<div class="bg-surface p-6 border border-outline-variant/30 relative overflow-hidden group">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-8">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">hourglass_empty</span>
+</div>
+<h3 class="font-ebGaramond text-headline-sm text-on-surface opacity-50 mb-2">Abo Thbileli</h3>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant italic">Library entry in progress...</p>
+<p class="text-[11px] uppercase tracking-tighter mt-4 text-tertiary">Processing Manuscript</p>
+</div>
+<div class="opacity-20 grayscale select-none">
+<div class="w-full aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden"></div>
+<div class="h-4 w-3/4 bg-on-surface-variant/20 mb-4"></div>
+<div class="h-4 w-1/2 bg-on-surface-variant/20 mb-4"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparative Study Section -->
+<div class="bg-parchment-deep border border-outline-variant p-gutter flex flex-col md:flex-row gap-gutter items-center">
+<div class="flex-1">
+<span class="font-label-caps text-label-caps text-primary uppercase mb-2 block">Premium Feature</span>
+<h2 class="font-ebGaramond text-headline-md text-primary mb-4">Cross-Character Thematic Analysis</h2>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant leading-relaxed mb-6">
+                    Unlock our unique comparison engine to see how concepts of 'Honor', 'Sacrifice', and 'The Divine' evolve from the early Christian texts of the 5th century to the secular epics of the 12th.
+                </p>
+<div class="flex gap-4">
+<a href="{{ url_for('moderntraslations') }}" class="bg-primary text-on-primary px-6 py-3 font-semibold text-body-md hover:shadow-lg transition-all inline-block">Start Comparison</a>
+<a href="{{ url_for('studyguide') }}" class="bg-transparent border border-primary text-primary px-6 py-3 font-semibold text-body-md hover:bg-primary hover:text-on-primary transition-all inline-block">View Methodology</a>
+</div>
+</div>
+<div class="w-full md:w-1/3 aspect-square bg-surface border border-outline-variant/50 p-6 flex flex-col justify-center items-center gap-4 relative">
+<div class="absolute inset-0 opacity-[0.03] ruled-line"></div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">diversity_1</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary w-2/3"></div></div>
+</div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">history_edu</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-tertiary w-1/2"></div></div>
+</div>
+<div class="flex items-center gap-4 w-full">
+<div class="w-12 h-12 rounded-full bg-crimson-dark/10 flex items-center justify-center"><span class="material-symbols-outlined text-crimson-dark">auto_graph</span></div>
+<div class="h-2 flex-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-crimson-dark w-3/4"></div></div>
+</div>
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant mt-4">Analytic Neural Mapping v2.0</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+{% endblock %}

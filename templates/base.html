@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html class="scroll-smooth" lang="ka">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>{% block title %}Litera{% endblock %}</title>
-<meta name="description" content="{% block meta_description %}Litera publishes the Georgian literature texts on the school curriculum alongside modern-Georgian renderings and word-by-word glosses.{% endblock %}"/>
+<meta name="description" content="{% block meta_description %}Litera — Georgian literature for the national curriculum: texts, glosses, and study tools.{% endblock %}"/>
 <link rel="canonical" href="{% block canonical %}{{ request.url }}{% endblock %}"/>
 <meta property="og:site_name" content="Litera"/>
 <meta property="og:title" content="{{ self.title() }}"/>
@@ -24,15 +24,13 @@
 {% if config.TAILWIND_BUILT %}
 <link href="{{ url_for('static', filename='dist/app.css') }}" rel="stylesheet"/>
 {% else %}
-<!-- Development fallback. Run `npm run build:css` to serve the compiled stylesheet instead. -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" nonce="{{ g.csp_nonce }}"></script>
-<script src="{{ url_for('static', filename='tailwind-cdn-config.js') }}" nonce="{{ g.csp_nonce }}"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" nonce="{{ g.get('csp_nonce', '') }}"></script>
+<script src="{{ url_for('static', filename='tailwind-cdn-config.js') }}" nonce="{{ g.get('csp_nonce', '') }}"></script>
 {% endif %}
 
 <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
 {% block extra_head %}{% endblock %}
 </head>
-
 <body class="{% block body_class %}bg-surface font-body-md text-on-surface parchment-texture overflow-x-hidden min-h-screen flex flex-col{% endblock %}">
 
 <a class="skip-link" href="#main">Skip to content</a>
@@ -41,45 +39,42 @@
 <div class="scrolling-progress" id="progress-bar"></div>
 {% endblock %}
 
-<!-- Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant transition-all duration-300" id="main-nav">
-  <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter h-16 flex items-center justify-between gap-4">
-
-    <a class="flex items-center gap-2 shrink-0" href="{{ url_for('index') }}">
-      <img alt="Litera" class="h-9 w-9 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="36" height="36"/>
-      <span class="font-headline-md text-xl text-primary">Litera</span>
+<nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 transition-all duration-300" id="main-nav">
+  <div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto h-full gap-4">
+    <a href="{{ url_for('index') }}" class="flex items-center gap-3 shrink-0">
+      <img alt="Litera" class="h-10 w-10 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="40" height="40"/>
+      <span class="font-headline-md text-xl font-bold text-primary">Litera</span>
     </a>
-
-    <div class="hidden md:flex items-center gap-6 font-label-caps text-label-caps uppercase">
-      <a class="text-on-surface-variant hover:text-primary transition-colors" href="{{ url_for('literature.index') }}">Library</a>
-      <a class="text-on-surface-variant hover:text-primary transition-colors" href="{{ url_for('reader.vefxistyaosani_index') }}" lang="ka">ვეფხისტყაოსანი</a>
-      <a class="text-on-surface-variant hover:text-primary transition-colors" href="{{ url_for('shushaniki.reader', chapter=1) }}" lang="ka">შუშანიკის წამება</a>
-      <a class="text-on-surface-variant hover:text-primary transition-colors" href="{{ url_for('aphorisms') }}">Aphorisms</a>
-      <a class="text-on-surface-variant hover:text-primary transition-colors" href="{{ url_for('about') }}">About</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'index' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary{% endif %}" href="{{ url_for('index') }}">Welcome</a>
+      <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'literature.index' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary{% endif %}" href="{{ url_for('literature.index') }}">Library</a>
+      <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'about' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary{% endif %}" href="{{ url_for('about') }}">About</a>
+      <a class="font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 {% if request.endpoint == 'contact' %}text-primary font-bold border-b-2 border-primary py-1{% else %}text-on-surface-variant hover:text-primary{% endif %}" href="{{ url_for('contact') }}">Contact</a>
     </div>
-
     <div class="flex items-center gap-3 shrink-0">
       {% if current_user.is_authenticated %}
-        <span class="hidden sm:inline font-body-md text-sm text-on-surface-variant">{{ current_user.full_name }}</span>
-        <form action="{{ url_for('logout') }}" class="inline" method="post">
-          <input name="csrf_token" type="hidden" value="{{ csrf_token() }}"/>
-          <button class="font-label-caps text-label-caps uppercase text-primary hover:underline" type="submit">Log out</button>
+        <span class="hidden sm:inline font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">{{ current_user.full_name }}</span>
+        <form action="{{ url_for('logout') }}" method="post" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <button type="submit" class="border border-primary text-primary px-4 py-2 rounded-full font-label-caps text-label-caps uppercase tracking-widest font-bold hover:bg-primary hover:text-on-primary transition-all duration-300">
+            Log Out
+          </button>
         </form>
       {% else %}
-        <a class="font-label-caps text-label-caps uppercase text-primary hover:underline" href="{{ url_for('login') }}">Log in</a>
-        <a class="font-label-caps text-label-caps uppercase bg-primary text-on-primary px-4 py-2 rounded-lg hover:bg-crimson-dark transition-colors" href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}" class="hidden sm:inline font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest hover:text-primary transition-colors">Log In</a>
+        <a href="{{ url_for('register') }}" class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps uppercase tracking-widest font-bold hover:bg-crimson-dark transition-all duration-300 transform active:scale-95 shadow-lg">
+          Register
+        </a>
       {% endif %}
     </div>
-
   </div>
 </nav>
 
-<!-- Flash messages: one region for the whole site. -->
 {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="fixed top-20 left-1/2 -translate-x-1/2 z-[60] w-[min(92vw,32rem)] space-y-2" role="status" aria-live="polite">
+  {% if messages and request.endpoint not in ['login', 'register'] %}
+    <div class="fixed top-20 left-1/2 -translate-x-1/2 z-[60] w-[min(92vw,28rem)] space-y-2" role="status" aria-live="polite">
       {% for category, message in messages %}
-        <div class="auth-flash auth-flash-{{ category }}">{{ message }}</div>
+        <div class="auth-flash auth-flash-{{ category }} shadow-lg">{{ message }}</div>
       {% endfor %}
     </div>
   {% endif %}
@@ -89,55 +84,47 @@
 {% block content %}{% endblock %}
 </div>
 
-<!-- Footer -->
-<footer class="border-t border-outline-variant bg-surface-container-low">
-  <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-
-    <div>
-      <a class="flex items-center gap-2 mb-3" href="{{ url_for('index') }}">
-        <img alt="Litera" class="h-8 w-8 object-contain" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="32" height="32"/>
-        <span class="font-headline-md text-lg text-primary">Litera</span>
-      </a>
-      <p class="font-body-md text-sm text-on-surface-variant">Georgian curriculum texts, with modern-Georgian renderings and glossed vocabulary.</p>
+<footer class="bg-surface-container-low border-t border-outline-variant mt-auto">
+  <div class="max-w-container-max mx-auto py-section-gap px-margin-mobile md:px-gutter">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-12">
+      <div class="space-y-4">
+        <img alt="Litera" class="h-10 w-10 object-contain mb-4" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}" width="40" height="40"/>
+        <p class="text-on-surface-variant text-body-md">Dedicated to the National Georgian Curriculum. Empowering the next generation of scholars.</p>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest font-bold">Study Modules</h5>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('syllabus') }}">Syllabus</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('cheracteranalysis') }}">Character Analysis</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('moderntraslations') }}">Modern Translations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest font-bold">Resources</h5>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('studyguide') }}">Study Guides</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('examprep') }}">Exam Prep</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('practicetests') }}">Practice Tests</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest font-bold">Legal</h5>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('tos') }}">Terms of Service</a></li>
+          <li><a class="text-on-surface-variant hover:underline decoration-primary underline-offset-4" href="{{ url_for('privacypolicy') }}">Privacy Policy</a></li>
+        </ul>
+      </div>
     </div>
-
-    <div>
-      <h2 class="font-label-caps text-label-caps uppercase text-on-surface mb-3">Texts</h2>
-      <ul class="space-y-2 font-body-md text-sm text-on-surface-variant">
-        <li><a class="hover:text-primary" href="{{ url_for('literature.index') }}">Library</a></li>
-        <li><a class="hover:text-primary" href="{{ url_for('reader.vefxistyaosani_index') }}" lang="ka">ვეფხისტყაოსანი</a></li>
-        <li><a class="hover:text-primary" href="{{ url_for('shushaniki.reader', chapter=1) }}" lang="ka">შუშანიკის წამება</a></li>
-        <li><a class="hover:text-primary" href="{{ url_for('aphorisms') }}">Aphorisms</a></li>
-      </ul>
+    <div class="pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-on-surface-variant text-sm font-label-caps">© 2026 Litera. Dedicated to the National Georgian Curriculum.</p>
+      <div class="flex gap-6">
+        <a class="text-primary hover:opacity-70 transition-opacity" href="{{ url_for('contact') }}"><span class="material-symbols-outlined">alternate_email</span></a>
+      </div>
     </div>
-
-    <div>
-      <h2 class="font-label-caps text-label-caps uppercase text-on-surface mb-3">Project</h2>
-      <ul class="space-y-2 font-body-md text-sm text-on-surface-variant">
-        <li><a class="hover:text-primary" href="{{ url_for('about') }}">About</a></li>
-        <li><a class="hover:text-primary" href="{{ url_for('contact') }}">Contact</a></li>
-        <li><a class="hover:text-primary" href="https://github.com/G10rga/Litera" rel="noopener noreferrer" target="_blank">Source on GitHub</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="font-label-caps text-label-caps uppercase text-on-surface mb-3">Legal</h2>
-      <ul class="space-y-2 font-body-md text-sm text-on-surface-variant">
-        <li><a class="hover:text-primary" href="{{ url_for('tos') }}">Terms of Use</a></li>
-        <li><a class="hover:text-primary" href="{{ url_for('privacypolicy') }}">Privacy Policy</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="border-t border-outline-variant">
-    <p class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-6 font-body-md text-xs text-on-surface-variant">
-      Litera is an independent, non-commercial study project. Source texts are in the public domain; modern renderings and glosses are credited on each reader page.
-    </p>
   </div>
 </footer>
 
-<script src="{{ url_for('static', filename='main.js') }}" defer nonce="{{ g.csp_nonce }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}" defer nonce="{{ g.get('csp_nonce', '') }}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

@@ -18,12 +18,12 @@
             <span class="meta" lang="ka">
               {% if row.sections %}{{ row.sections }} თავი · {% endif %}{{ row.work.unit_count }} ერთეული
             </span>
-            <span class="meter" role="img" aria-label="{{ row.percent }}% განახლებული"><span style="--meter: {{ row.percent }}%"></span></span>
+            <span class="meter" role="img" aria-label="{{ row.percent }}% განახლებული"><span style="width: {{ row.percent }}%"></span></span>
             <span class="meta">{{ row.percent }}%</span>
           </li>
         {% endfor %}
       </ul>
-      <p class="meta meter-caption" lang="ka">
+      <p class="meta" style="margin-top:1.5rem" lang="ka">
         პროცენტი ასახებს, თავებიდან რამდენის განახლებული ტექსტი დამატებულია.
       </p>
     {% else %}

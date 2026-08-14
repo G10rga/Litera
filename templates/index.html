@@ -1,125 +1,184 @@
 {% extends "base.html" %}
-{% block title %}Litera — Georgian curriculum texts, read properly{% endblock %}
-{% block meta_description %}Read ვეფხისტყაოსანი and შუშანიკის წამება with a modern-Georgian rendering beside the original and archaic words glossed in place.{% endblock %}
-
+{% block title %}Litera | Master Georgian Literature{% endblock %}
+{% block body_class %}bg-surface font-body-md text-on-surface parchment-texture overflow-x-hidden min-h-screen flex flex-col{% endblock %}
 {% block content %}
-<main class="flex-1">
+<!-- Hero Section -->
+<header class="relative pt-32 pb-section-gap overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-10">
 
-  <!-- Hero -->
-  <section class="hero-gradient px-margin-mobile md:px-gutter pt-20 pb-section-gap">
-    <div class="max-w-container-max mx-auto max-w-[46rem] text-center">
-      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">
-        Old Georgian, read without a dictionary in your lap
-      </h1>
-      <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
-        Litera puts the original text and a modern-Georgian rendering side by side, and glosses the
-        archaic words where they stand. Everything on the site comes from the database — if a chapter
-        has not been prepared yet, the page says so.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <a class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-caps text-label-caps uppercase hover:bg-crimson-dark transition-colors" href="{{ url_for('reader.vefxistyaosani_index') }}">
-          Start reading
-        </a>
-        <a class="border border-primary text-primary px-6 py-3 rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-colors" href="{{ url_for('literature.index') }}">
-          Browse the library
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- What is actually here -->
-  <section class="px-margin-mobile md:px-gutter pb-section-gap">
-    <div class="max-w-container-max mx-auto">
-      <h2 class="font-headline-md text-headline-md text-primary mb-2">What is on the site</h2>
-      <p class="font-body-md text-on-surface-variant mb-10 max-w-2xl">
-        Four things, all of them backed by real text in the database.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <a class="bento-card block bg-surface-container-lowest border border-outline-variant rounded-xl p-8" href="{{ url_for('reader.vefxistyaosani_index') }}">
-          <span aria-hidden="true" class="material-symbols-outlined text-primary mb-4">menu_book</span>
-          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2" lang="ka">ვეფხისტყაოსანი</h3>
-          <p class="font-body-md text-on-surface-variant">
-            Chapter by chapter. Original quatrains on the left, the modern rendering on the right,
-            archaic words underlined and explained on hover.
-          </p>
-        </a>
-
-        <a class="bento-card block bg-surface-container-lowest border border-outline-variant rounded-xl p-8" href="{{ url_for('shushaniki.reader', chapter=1) }}">
-          <span aria-hidden="true" class="material-symbols-outlined text-primary mb-4">history_edu</span>
-          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2" lang="ka">შუშანიკის წამება</h3>
-          <p class="font-body-md text-on-surface-variant">
-            The oldest surviving work of Georgian literature, in twenty sections, with the same
-            two-column reader and a glossary from NPLG.
-          </p>
-        </a>
-
-        <a class="bento-card block bg-surface-container-lowest border border-outline-variant rounded-xl p-8" href="{{ url_for('literature.index') }}">
-          <span aria-hidden="true" class="material-symbols-outlined text-primary mb-4">library_books</span>
-          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">The library</h3>
-          <p class="font-body-md text-on-surface-variant">
-            Every other work that has been imported, with its source, revision and licence recorded,
-            and an honest percentage of how much has been modernised so far.
-          </p>
-        </a>
-
-        <a class="bento-card block bg-surface-container-lowest border border-outline-variant rounded-xl p-8" href="{{ url_for('aphorisms') }}">
-          <span aria-hidden="true" class="material-symbols-outlined text-primary mb-4">format_quote</span>
-          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Aphorisms</h3>
-          <p class="font-body-md text-on-surface-variant">
-            The collected aphorisms, numbered, for quoting in an essay without hunting for the line.
-          </p>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- How the reader works -->
-  <section class="bg-surface-container-low border-y border-outline-variant px-margin-mobile md:px-gutter py-section-gap">
-    <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-      <div>
-        <h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Two columns</h3>
-        <p class="font-body-md text-on-surface-variant">
-          The original is never rewritten or replaced. The modern rendering sits beside it so you can
-          check one against the other.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Glosses in place</h3>
-        <p class="font-body-md text-on-surface-variant">
-          Archaic words are marked in the text itself. Hover or focus one and you get the reading for
-          that passage, not a generic dictionary entry.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-label-caps text-label-caps uppercase text-primary mb-3">Sources shown</h3>
-        <p class="font-body-md text-on-surface-variant">
-          Each reader page prints where its text came from, which revision, and under what licence.
-          Chapters that have not been prepared say so instead of showing a placeholder.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Honest status -->
-  <section class="px-margin-mobile md:px-gutter py-section-gap">
-    <div class="max-w-container-max mx-auto max-w-[46rem]">
-      <h2 class="font-headline-md text-headline-md text-primary mb-4">Where the project is</h2>
-      <p class="font-body-md text-on-surface-variant mb-4">
-        Litera is a work in progress, maintained by one person. The two readers above work; the
-        library grows as texts are imported and modernised. There is no exam-question bank, no essay
-        generator and no AI tutor — if those arrive, they will appear here rather than being advertised
-        in advance.
-      </p>
-      <p class="font-body-md text-on-surface-variant">
-        Found a transcription error or a wrong gloss?
-        <a class="text-primary font-semibold hover:underline" href="{{ url_for('contact') }}">Tell me</a>
-        and it gets fixed at the source.
-      </p>
-    </div>
-  </section>
-
-</main>
+</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter relative z-10">
+<div class="max-w-[800px] text-center mx-auto space-y-6">
+<span class="inline-block px-4 py-1 rounded-full border border-primary text-primary font-label-caps text-label-caps uppercase tracking-[0.2em] mb-4">Exam Mastery Platform</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary leading-tight">
+                    Master the National Georgian Literature Exam with Ease.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[640px] mx-auto leading-relaxed">
+                    Structured summaries, deep character analysis, and expert essay guides for 12th graders. Designed for focus, academic rigor, and exam success.
+                </p>
+<div class="pt-8 flex flex-col md:flex-row gap-4 justify-center items-center">
+<a href="{{ url_for('syllabus') }}" class="w-full md:w-auto bg-primary text-on-primary px-10 py-4 rounded-lg font-label-caps text-label-caps font-bold uppercase tracking-widest hover:shadow-2xl transition-all duration-300 inline-block text-center">
+                        Start Learning Now
+                    </a>
+<a href="{{ url_for('syllabus') }}" class="w-full md:w-auto border-2 border-primary text-primary px-10 py-4 rounded-lg font-label-caps text-label-caps font-bold uppercase tracking-widest hover:bg-parchment-deep transition-all inline-block text-center">
+                        Explore Syllabus
+                    </a>
+</div>
+</div>
+<div class="mt-section-gap relative">
+<div class="bg-white/40 backdrop-blur-md border border-outline-variant p-2 rounded-xl shadow-2xl">
+<div class="bg-surface rounded-lg overflow-hidden border border-outline-variant aspect-[16/9] md:aspect-[21/9]">
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-definition wide shot of a minimalist study environment. A single classical book sits open on a light wooden desk, with soft sunlight streaming in from a high window onto the textured parchment pages. The atmosphere is academic, calm, and sophisticated, reflecting the Litera brand colors of deep burgundy and cream. Professional photography style, clean and focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAXeReBTZZq_Wh1mzOhWeAl8cEBwbQUQO_b69FrEz0kt1OjzYy78Z5GhsOqOogEcCqp-nggV6AHMjE0wJiRLvOZSS7clQHWf-PHz8LhOycpYcPtOog3eUxte9gFNQNWp4UUD3LEaK5_25gFBiscWPG4fwUgQfvDsH7sDXNexU8C4Rh8SZnqvaLyKhd4kCWQszGQFiiP9ExtuDpY30ztZTNrs01CY-rCngXxyhGrRErK5altHIpafOF9mbg4ZqtHHPoYE7kDIwSt8wA">
+</div>
+</div>
+<!-- Decorative elements -->
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-12 -left-12 w-48 h-48 bg-tertiary/10 rounded-full blur-3xl"></div>
+</div>
+</div>
+</header>
+<!-- Bento Feature Section -->
+<section class="py-section-gap bg-surface-container-low/50">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+<div class="mb-12 text-center md:text-left">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Academic Excellence Tools</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Everything you need to navigate the 12th-grade syllabus.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+<!-- Large Feature: Knight in the Panther's Skin -->
+<div class="md:col-span-8 bento-card bg-white border border-outline-variant rounded-xl p-8 flex flex-col justify-between overflow-hidden relative group transition-all duration-700 ease-out opacity-100 translate-y-0">
+<div class="relative z-10">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-primary-container">auto_stories</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4">Canto-by-Canto Breakdowns</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[400px]">
+                            Dive deep into "The Knight in the Panther's Skin" with stanza-level modern translations and thematic interpretations.
+                        </p>
+</div>
+<div class="relative z-10 mt-auto">
+<a class="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all" href="{{ url_for('vefxistyaosani') }}">
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Explore Vepkhistkaosani</span>
+<span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+<div class="absolute right-[-10%] bottom-[-10%] w-1/2 opacity-10 group-hover:opacity-20 transition-opacity">
+<img class="w-full object-contain" data-alt="A detailed digital illustration of ancient Georgian script, Mkhedruli, rendered as if glowing faintly on weathered parchment. The style is elegant and calligraphic, capturing the artistic heritage of Rustaveli's era. Warm ambient lighting, deep burgundy accents, and a scholarly, high-end museum aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeyoasQojvTtBWdlez2tlFvad6nBS1k2RWYKHM0Gaqf7z6wZcVE3x59SoucCEBGDptBwNkKzq8U_c1eRc0NSFd_v-APiitnSKBgcI8tHrQp6EPrciou1BL74ZWwbcqk7BnmP2fXZNsLDjTfzm2H7-2gxh5FoiBeUpHh6Q3w29p7Rgsevas8bOvcplfwNMb3yM5PydWkeuc2N4kP3yUiqrZdy4l1XTxXb_ziPLaBaVJN47qojLdqHteRQCkk4UF0LPiPGHh-Qmug_tV">
+</div>
+</div>
+<!-- Secondary: Hagiography -->
+<div class="md:col-span-4 bento-card bg-primary text-on-primary rounded-xl p-8 flex flex-col justify-between transition-all duration-700 ease-out opacity-100 translate-y-0">
+<div>
+<div class="w-12 h-12 bg-crimson-dark/50 border border-white/20 rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">church</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">Hagiography Decoded</h3>
+<p class="font-body-md text-body-md text-white/80">
+                            Theology and literary functions of martyrdom narratives made accessible.
+                        </p>
+</div>
+<div class="mt-auto">
+<span class="bg-white/10 px-3 py-1 rounded text-xs font-label-caps uppercase tracking-widest border border-white/20">Exam Priority</span>
+</div>
+</div>
+<!-- Feature: AI Study Assistant -->
+<div class="md:col-span-4 bento-card bg-surface-container border border-outline-variant rounded-xl p-8 flex flex-col justify-between transition-all duration-700 ease-out opacity-100 translate-y-0">
+<div>
+<div class="w-12 h-12 bg-tertiary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-tertiary-container">smart_toy</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">AI Study Assistant</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Instant answers to syllabus questions, grounded in exam-correct data.
+                        </p>
+</div>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-[10px] font-label-caps uppercase tracking-widest text-on-surface-variant">Active Beta</span>
+</div>
+</div>
+<!-- Feature: Character Profiles -->
+<div class="md:col-span-4 bento-card bg-white border border-outline-variant rounded-xl p-8 flex flex-col justify-between group transition-all duration-700 ease-out opacity-100 translate-y-0">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full border-2 border-primary p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A stylized, minimalist portrait of a noble Georgian literary character in traditional royal attire, using a modern digital vector art style with rich burgundy and gold tones. Elegant lines and sophisticated lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCfp1HuGu30FhxDBdDNl0Vf0uqZMsZRGhvNibk1Y-ueFeuqdKiM8zNaEIIIWJHS3Cj0kYbcT3tFmA8mELQjUcobSo6Aj_5ODzNa_YXDJ8G9LGRYOUPGq94IA-pmQRTPapfMlgFLgLXAqIHV71kz8gG142H_eQuiW38v3HiwG3NqI168GndtZ2okJ-rKVC5xk7K0JTK68XYD7tg37GBtuHbl0L3xonL1tKJ0XJ0A4GEqyA2PUr27_aMb7CQL3ckfCtdq_6uX_VWHqcm">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary">Avtandil</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                        Comprehensive profiles including motivations, arcs, and exam-relevant quotes.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-0.5 bg-parchment-deep text-[10px] border border-outline-variant rounded font-label-caps">LOYALTY</span>
+<span class="px-2 py-0.5 bg-parchment-deep text-[10px] border border-outline-variant rounded font-label-caps">BRAVERY</span>
+</div>
+</div>
+<!-- Feature: Essay Templates -->
+<div class="md:col-span-4 bento-card bg-surface-container-high border border-outline-variant rounded-xl p-8 flex flex-col justify-between transition-all duration-700 ease-out opacity-100 translate-y-0">
+<div>
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-container">edit_note</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Essay Templates</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Outlines modeled after past National Exam formats.
+                        </p>
+</div>
+<div class="h-2 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Study Sample / Split View Section -->
+<section class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+<div class="flex flex-col lg:flex-row gap-gutter items-center">
+<div class="w-full lg:w-1/2 space-y-6">
+<h2 class="font-headline-md text-headline-md text-primary">Bridge the Gap Between Eras</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Georgian literature is vast and beautiful, but its archaic language can be a hurdle during exam season. Litera provides the ultimate translation and analysis engine.
+                </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<span class="font-bold text-on-surface">Contextual Lookups:</span>
+<span class="text-on-surface-variant"> Instant explanations for archaic terms.</span>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<span class="font-bold text-on-surface">Modern Synthesis:</span>
+<span class="text-on-surface-variant"> Summaries written in accessible language.</span>
+</div>
+</li>
+</ul>
+</div>
+<div class="w-full lg:w-1/2">
+<!-- Text Breakdown Component -->
+<div class="bg-white border border-outline-variant rounded-xl shadow-xl overflow-hidden">
+<div class="bg-parchment-deep p-4 border-b border-outline-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-primary font-bold uppercase tracking-widest">Original Text</span>
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] font-bold">12th Century</span>
+</div>
+<div class="p-8 italic font-headline-sm text-headline-sm text-charcoal-muted leading-relaxed">
+                        "ოდეს ტურფა გაიზრდების, მას არ უნდა დაფარვაო,<br>
+                        შორს მყოფთაგან საჩინოა, როგორც ცა და მზის მოფენაო."
+                    </div>
+<div class="bg-surface-container-low p-6 border-t border-outline-variant">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined text-sm">translate</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest font-bold">Modern Analysis</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            A classic metaphor comparing true excellence and beauty to the sun. In the exam context, this passage is frequently used to discuss the inevitability of destiny and public recognition.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
 {% endblock %}

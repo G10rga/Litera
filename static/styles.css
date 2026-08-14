@@ -369,11 +369,9 @@ select:focus {
 
 
 /* ============================================================
-   READER MODULE — intentional reading-mode theme
-   Tokens also live in tailwind.config.js (parchment, ink,
-   reader-accent, reader-muted). The .reader scope keeps the
-   long-form reading experience on its own parchment palette
-   while marketing/auth pages use the crimson surface system.
+   READER MODULE
+   Shared by literature_index, literature_reader, shushaniki.
+   Scoped under .reader so it never leaks into Tailwind pages.
    ============================================================ */
 
 .reader {
@@ -486,8 +484,7 @@ select:focus {
     display: inline-block;
 }
 
-.reader .meter span { display: block; height: 100%; width: var(--meter, 0%); background: var(--accent); }
-.reader .meter-caption { margin-top: 1.5rem; }
+.reader .meter span { display: block; height: 100%; background: var(--accent); }
 
 /* ---- dual-column text layout ---- */
 .reader-columns {
