@@ -8,8 +8,8 @@
 <div class="hidden md:flex flex-col justify-between p-12 bg-primary text-on-primary relative overflow-hidden">
 <div class="z-10">
 <img class="w-16 h-16 mb-8 object-contain brightness-0 invert opacity-90" alt="Litera Logo" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
-<h2 class="font-headline-md text-headline-md mb-4 leading-tight">Preserving Wisdom, Facilitating Excellence.</h2>
-<p class="font-body-lg text-body-lg opacity-80 max-w-sm">Join a community of scholars dedicated to mastering classical texts through modern academic rigor.</p>
+<h2 class="font-headline-md text-headline-md mb-4 leading-tight">Optional account</h2>
+<p class="font-body-lg text-body-lg opacity-80 max-w-sm">Every text on Litera is readable without logging in. Registering reserves your name for reading features still being built.</p>
 </div>
 <div class="z-10">
 <div class="p-6 bg-primary-container rounded-lg border border-on-primary-container/20">
@@ -24,8 +24,8 @@
 <div class="p-8 md:p-12 flex flex-col justify-center bg-surface">
 <header class="mb-8 text-center md:text-left">
 <img class="w-12 h-12 mb-4 mx-auto md:mx-0 md:hidden object-contain" alt="Litera Logo" src="{{ url_for('static', filename='litera_book_monogram_logo.webp') }}"/>
-<h1 class="font-headline-md text-headline-md text-primary mb-2">Begin Your Scholarly Journey</h1>
-<p class="font-body-md text-on-surface-variant">Create your account to access our curated study guides and modern translations.</p>
+<h1 class="font-headline-md text-headline-md text-primary mb-2">Create an account</h1>
+<p class="font-body-md text-on-surface-variant">Takes a minute. No confirmation email is sent. See the <a class="text-primary hover:underline" href="{{ url_for('privacypolicy') }}">privacy policy</a>.</p>
 </header>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -45,11 +45,11 @@
 <input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus placeholder:text-outline/50" id="full_name" name="full_name" placeholder="ნიკოლოზ ბარათაშვილი" required type="text" value="{{ full_name or '' }}"/>
 </div>
 <div class="space-y-1.5">
-<label class="font-label-caps text-label-caps text-on-surface-variant block" for="email">Academic Email</label>
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="email">Email</label>
 <input class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus" id="email" name="email" placeholder="scholar@academy.edu" required type="email" value="{{ email or '' }}"/>
 </div>
 <div class="space-y-1.5">
-<label class="font-label-caps text-label-caps text-on-surface-variant block" for="grade">Academic Year / Grade</label>
+<label class="font-label-caps text-label-caps text-on-surface-variant block" for="grade">School year <span class="normal-case tracking-normal text-outline">(optional)</span></label>
 <select class="w-full px-4 py-3 rounded border border-outline-variant bg-surface-container-lowest font-body-md form-input-focus appearance-none" id="grade" name="grade">
 <option disabled {% if not grade %}selected{% endif %} value="">Select Your Level</option>
 <option value="9" {% if grade == '9' %}selected{% endif %}>Year 9 (Grade 9)</option>
@@ -71,7 +71,7 @@
 </div>
 <p class="font-body-md text-xs text-on-surface-variant">At least {{ password_min_length|default(12) }} characters.</p>
 <button class="w-full bg-primary text-on-primary font-label-caps text-body-md py-4 rounded-lg shadow-sm hover:bg-crimson-dark transition-all duration-200 active:scale-[0.98] mt-4 flex justify-center items-center gap-2" type="submit">
-<span>Register as Scholar</span>
+<span>Create account</span>
 <span class="material-symbols-outlined text-sm">history_edu</span>
 </button>
 <p class="text-center mt-6 font-body-md text-on-surface-variant">
