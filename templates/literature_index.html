@@ -1,36 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}ბიბლიოთეკა — Litera{% endblock %}
+{% block title %}Library — Litera{% endblock %}
 {% block meta_description %}Every work imported into Litera, with its author, length and how much of it has been modernised so far.{% endblock %}
+{% block body_class %}bg-surface text-on-surface font-body-md selection:bg-primary-fixed selection:text-primary min-h-screen flex flex-col{% endblock %}
 
 {% block content %}
-<div class="reader flex-1">
-  <main class="reader-shell">
-    <h1 class="reader-title" lang="ka">ბიბლიოთეკა</h1>
+<main class="pt-16">
+  <section class="relative overflow-hidden pt-24 pb-12 md:pt-28 hero-gradient">
+    <div class="absolute inset-0 parchment-texture -z-10"></div>
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter text-center">
+      <span class="font-label-caps text-label-caps text-primary tracking-widest block mb-4">THE COLLECTION</span>
+      <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4" lang="ka">ბიბლიოთეკა</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+        Every imported work, with source provenance and an honest percentage of how much has been modernised.
+      </p>
+    </div>
+  </section>
 
+  <section class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-gutter">
     {% if rows %}
-      <ul class="works">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
         {% for row in rows %}
-          <li>
-            <a href="{{ url_for('literature.start', slug=row.work.slug) }}" lang="ka">{{ row.work.title }}</a>
-            <span class="tag">{{ row.work.kind }}</span>
-            <span class="author" lang="ka">{% if row.work.author %}{{ row.work.author }}{% endif %}</span>
-            <span class="meta" lang="ka">
+          <a href="{{ url_for('literature.start', slug=row.work.slug) }}" class="group bg-white p-gutter rounded-xl border border-outline-variant hover:border-primary transition-all duration-300 hover:shadow-md block">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors" lang="ka">{{ row.work.title }}</h2>
+                {% if row.work.author %}
+                  <p class="font-body-md text-on-surface-variant mt-1" lang="ka">{{ row.work.author }}</p>
+                {% endif %}
+              </div>
+              <span class="shrink-0 px-3 py-1 rounded-full border border-outline-variant/50 font-label-caps text-label-caps text-on-surface-variant">{{ row.work.kind }}</span>
+            </div>
+            <p class="font-body-md text-on-surface-variant mb-4" lang="ka">
               {% if row.sections %}{{ row.sections }} თავი · {% endif %}{{ row.work.unit_count }} ერთეული
-            </span>
-            <span class="meter" role="img" aria-label="{{ row.percent }}% განახლებული"><span style="width: {{ row.percent }}%"></span></span>
-            <span class="meta">{{ row.percent }}%</span>
-          </li>
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full transition-all" style="width: {{ row.percent }}%"></div>
+              </div>
+              <span class="font-label-caps text-label-caps text-primary">{{ row.percent }}%</span>
+            </div>
+          </a>
         {% endfor %}
-      </ul>
-      <p class="meta" style="margin-top:1.5rem" lang="ka">
+      </div>
+      <p class="font-body-md text-on-surface-variant text-center mt-10 max-w-xl mx-auto" lang="ka">
         პროცენტი ასახებს, თავებიდან რამდენის განახლებული ტექსტი დამატებულია.
       </p>
     {% else %}
-      <div class="notice" lang="ka">
-        ბიბლიოთეკა ჯერ ცარიელია. ტექსტები მალე დაემატება.
+      <div class="bg-surface-container-low rounded-xl border border-outline-variant/30 p-12 text-center max-w-lg mx-auto">
+        <span class="material-symbols-outlined text-primary text-5xl mb-4">library_books</span>
+        <p class="font-body-lg text-on-surface-variant" lang="ka">ბიბლიოთეკა ჯერ ცარიელია. ტექსტები მალე დაემატება.</p>
       </div>
     {% endif %}
-  </main>
-</div>
+  </section>
+</main>
 {% endblock %}
