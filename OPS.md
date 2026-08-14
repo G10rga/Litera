@@ -18,6 +18,42 @@ Host-side steps that cannot live only in application code.
 5. Schedule automated dumps and **test a restore** quarterly.
 6. Keep a staging database; do not discover importer breakage in production.
 
+### Full reset (schema + all content)
+
+Use this when auth fails with 500 after a manual SQLite→Postgres copy. Do **not** import a `.db` file into Postgres; use Alembic + loaders instead.
+
+On the server (`~/litera`, venv active, `FLASK_CONFIG=production`, `.env` with `DATABASE_URL`):
+
+```bash
+cd ~/litera
+source .venv/bin/activate
+export FLASK_CONFIG=production
+
+# Destructive: drops all tables, migrates, loads CSV/MD content
+python scripts/reset_and_load_db.py --reset-schema
+
+# Or, if schema is already correct but content is missing:
+python scripts/reset_and_load_db.py --load-only
+
+# Row counts only:
+python scripts/reset_and_load_db.py --verify-only
+
+sudo systemctl restart litera.service
+```
+
+Load order (handled automatically by the script):
+
+1. `load_vefxistyaosani.py`
+2. `load_modern_chapters.py` → `static/Literature/modernised.md`
+3. `load_glossary.py` → `db_loaders/db_checkers/gloss_occurrences.csv`
+4. `load_literature.py --all`
+5. `load_shushaniki.py`
+6. `load_shushaniki_glossary.py`
+7. `load_shushaniki_modern.py`
+8. `load_aphorisms.py`
+
+After reset, register a test account at `/register` and confirm `/healthz` returns `{"status":"ok"}`.
+
 ## Email
 
 Configure SMTP (Resend / Postmark / SES) via `MAIL_*` in `.env.example`.

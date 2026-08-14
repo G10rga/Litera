@@ -581,6 +581,34 @@ def register_cli(app: Flask) -> None:
         _ensure_user_auth_columns()
         click.echo("Schema is up to date.")
 
+    @app.cli.command("load-db")
+    @click.option(
+        "--reset-schema",
+        is_flag=True,
+        help="Drop all tables and re-run migrations before loading.",
+    )
+    def load_db(reset_schema):
+        """Reload all literature content from db_loaders (Postgres production)."""
+        import subprocess
+        import sys
+
+        script = os.path.join(app.root_path, "scripts", "reset_and_load_db.py")
+        cmd = [sys.executable, script]
+        if reset_schema:
+            cmd.append("--reset-schema")
+        else:
+            cmd.append("--load-only")
+        subprocess.check_call(cmd)
+
+    @app.cli.command("verify-db")
+    def verify_db():
+        """Print row counts for main tables."""
+        import subprocess
+        import sys
+
+        script = os.path.join(app.root_path, "scripts", "reset_and_load_db.py")
+        subprocess.check_call([sys.executable, script, "--verify-only"])
+
     def _ensure_user_auth_columns() -> None:
         """Add password-reset columns to existing DBs that pre-date Alembic."""
         from sqlalchemy import inspect, text

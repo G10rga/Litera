@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 """Script to load Vefxistyaosani lines from CSV into the database."""
 
+import os
+import sys
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
+
 from app import app, db
 from models import VefxistyaosaniLine
 import pandas as pd
+
+CSV_PATH = os.path.join(PROJECT_ROOT, "static", "Literature", "vefxistyaosani.csv")
 
 
 def load_vefxistyaosani():
@@ -11,7 +19,7 @@ def load_vefxistyaosani():
     with app.app_context():
         try:
             # Read the CSV file
-            csv_path = '../static/literature/vefxistyaosani.csv'
+            csv_path = CSV_PATH
             print(f"Reading {csv_path}...")
             df = pd.read_csv(csv_path)
 
