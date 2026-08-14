@@ -29,25 +29,65 @@ def _run_loader(script: str, *args: str) -> None:
     subprocess.check_call(cmd, cwd=PROJECT_ROOT)
 
 
-def reset_schema() -> None:
-    from sqlalchemy import inspect, text
+def _drop_table(bind, table: str) -> None:
+    from sqlalchemy import text
 
+    with bind.begin() as conn:
+        conn.execute(text(f'DROP TABLE IF EXISTS "{table}" CASCADE'))
+
+
+def _clear_alembic_version(bind) -> None:
+    from sqlalchemy import text
+
+    with bind.begin() as conn:
+        conn.execute(text("DELETE FROM alembic_version"))
+
+
+def _drop_remaining_tables(bind) -> None:
+    from sqlalchemy import inspect
+
+    remaining = inspect(bind).get_table_names()
+    if not remaining:
+        return
+
+    print(f"Dropping remaining tables: {', '.join(remaining)}")
+    for table in remaining:
+        try:
+            _drop_table(bind, table)
+        except Exception as exc:
+            if table != "alembic_version":
+                raise RuntimeError(
+                    f"Could not drop table {table!r}: {exc}\n"
+                    "Ask a Postgres superuser to drop it, then re-run."
+                ) from exc
+            print("Cannot drop alembic_version; clearing revision rows instead…")
+            _clear_alembic_version(bind)
+
+    still = inspect(bind).get_table_names()
+    if still == ["alembic_version"]:
+        try:
+            _drop_table(bind, "alembic_version")
+        except Exception:
+            _clear_alembic_version(bind)
+        still = inspect(bind).get_table_names()
+
+    if still:
+        raise RuntimeError(
+            "Tables still present after reset: "
+            f"{', '.join(still)}. As postgres superuser run:\n"
+            "  sudo -u postgres psql -d YOUR_DB -c "
+            "'DROP TABLE alembic_version CASCADE;'"
+        )
+
+
+def reset_schema() -> None:
     from app import app, db
 
     print("Dropping all tables…")
     with app.app_context():
         bind = db.engine
-        if bind.dialect.name == "postgresql":
-            # Wipe Alembic history too (drop_all leaves alembic_version behind).
-            with bind.begin() as conn:
-                conn.execute(text("DROP SCHEMA public CASCADE"))
-                conn.execute(text("CREATE SCHEMA public"))
-                conn.execute(text("GRANT ALL ON SCHEMA public TO PUBLIC"))
-        else:
-            db.drop_all()
-            if "alembic_version" in inspect(bind).get_table_names():
-                with bind.begin() as conn:
-                    conn.execute(text("DROP TABLE alembic_version"))
+        db.drop_all()
+        _drop_remaining_tables(bind)
 
     print("Running flask db upgrade…")
     subprocess.check_call(["flask", "--app", "app", "db", "upgrade"], cwd=PROJECT_ROOT)
