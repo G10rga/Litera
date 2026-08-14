@@ -30,11 +30,25 @@ def _run_loader(script: str, *args: str) -> None:
 
 
 def reset_schema() -> None:
+    from sqlalchemy import inspect, text
+
     from app import app, db
 
     print("Dropping all tables…")
     with app.app_context():
-        db.drop_all()
+        bind = db.engine
+        if bind.dialect.name == "postgresql":
+            # Wipe Alembic history too (drop_all leaves alembic_version behind).
+            with bind.begin() as conn:
+                conn.execute(text("DROP SCHEMA public CASCADE"))
+                conn.execute(text("CREATE SCHEMA public"))
+                conn.execute(text("GRANT ALL ON SCHEMA public TO PUBLIC"))
+        else:
+            db.drop_all()
+            if "alembic_version" in inspect(bind).get_table_names():
+                with bind.begin() as conn:
+                    conn.execute(text("DROP TABLE alembic_version"))
+
     print("Running flask db upgrade…")
     subprocess.check_call(["flask", "--app", "app", "db", "upgrade"], cwd=PROJECT_ROOT)
 
