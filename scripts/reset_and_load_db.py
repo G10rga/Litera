@@ -7,7 +7,7 @@ Run from the project root with DATABASE_URL and FLASK_CONFIG=production set:
     python scripts/reset_and_load_db.py --reset-schema
     python scripts/reset_and_load_db.py --load-only   # schema already migrated
 
-Requires requirements-dev.txt (pandas) for CSV loaders.
+Requires requirements.txt (pandas) for CSV loaders.
 """
 
 from __future__ import annotations
