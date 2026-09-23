@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}ვეფხისტყაოსანი — თავი {{ chapter }} — Litera{% endblock %}
+{% block meta_description %}ვეფხისტყაოსანი, თავი {{ chapter }}: the original strophes beside a modern-Georgian rendering, with archaic words glossed in place.{% endblock %}
+
+{% block content %}
+{# Jinja for-loop scoping: a plain {% set %} inside the loop would not escape it,
+   so the position is accumulated on a namespace object. #}
+{% set total_chapters = chapters|length %}
+{% set ns = namespace(position=0) %}
+{% for c in chapters %}{% if c.number == chapter %}{% set ns.position = loop.index %}{% endif %}{% endfor %}
+{% set position = ns.position %}
+{% set percent = ((position / total_chapters) * 100)|round|int if total_chapters else 0 %}
+
+<!-- Chapter navigation, pinned directly under the global nav -->
+<nav aria-label="თავები" class="sticky top-16 z-40 bg-surface-container-low border-b border-outline-variant py-3 px-margin-mobile md:px-gutter">
+  <div class="max-w-container-max mx-auto flex flex-wrap items-center justify-between gap-4">
+
+    <div class="flex items-center gap-4">
+      <label class="font-label-caps text-label-caps uppercase text-on-surface-variant" for="chapter-select" lang="ka">თავი</label>
+      <div class="relative">
+        <select class="appearance-none bg-background border border-outline px-4 py-1.5 pr-10 rounded-lg font-body-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none cursor-pointer" data-chapter-select id="chapter-select">
+          {% for c in chapters %}
+            <option value="{{ url_for('reader.vefxistyaosani_chapter', chapter=c.number) }}" {% if c.number == chapter %}selected{% endif %}>
+              {{ c.number }}. {{ c.title or "—" }}{% if not c.modernised %} (დასამუშავებელი){% endif %}
+            </option>
+          {% endfor %}
+        </select>
+        <span aria-hidden="true" class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      {% if prev_chapter %}
+        <a aria-label="წინა თავი" class="flex items-center justify-center w-10 h-10 rounded-full border border-outline text-secondary hover:bg-primary hover:text-on-primary transition-all" href="{{ url_for('reader.vefxistyaosani_chapter', chapter=prev_chapter) }}" rel="prev">
+          <span aria-hidden="true" class="material-symbols-outlined">chevron_left</span>
+        </a>
+      {% else %}
+        <span aria-disabled="true" class="flex items-center justify-center w-10 h-10 rounded-full border border-outline text-secondary opacity-30">
+          <span aria-hidden="true" class="material-symbols-outlined">chevron_left</span>
+        </span>
+      {% endif %}
+      {% if next_chapter %}
+        <a aria-label="შემდეგი თავი" class="flex items-center justify-center w-10 h-10 rounded-full border border-outline text-secondary hover:bg-primary hover:text-on-primary transition-all" href="{{ url_for('reader.vefxistyaosani_chapter', chapter=next_chapter) }}" rel="next">
+          <span aria-hidden="true" class="material-symbols-outlined">chevron_right</span>
+        </a>
+      {% else %}
+        <span aria-disabled="true" class="flex items-center justify-center w-10 h-10 rounded-full border border-outline text-secondary opacity-30">
+          <span aria-hidden="true" class="material-symbols-outlined">chevron_right</span>
+        </span>
+      {% endif %}
+
+      {% if total_chapters %}
+        <span aria-hidden="true" class="h-6 w-px bg-outline-variant mx-2"></span>
+        <div class="flex items-center gap-2 text-secondary">
+          <span class="font-label-caps text-label-caps uppercase" lang="ka">დამავება</span>
+          <span class="w-32 h-1 bg-surface-variant rounded-full overflow-hidden" role="img" aria-label="თავი {{ position }} / {{ total_chapters }}">
+            <span class="block h-full bg-primary" style="width: {{ percent }}%"></span>
+          </span>
+          <span class="font-label-caps text-label-caps">{{ position }}/{{ total_chapters }}</span>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</nav>
+
+<main class="flex-1 pt-12 pb-20">
+  <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter relative">
+
+    <header class="text-center mb-16 max-w-2xl mx-auto">
+      <h1 class="font-headline-md text-display-lg-mobile md:text-display-lg text-primary mb-4" lang="ka">{{ title or "თავი " ~ chapter }}</h1>
+      <div class="flex justify-center items-center gap-4">
+        <span aria-hidden="true" class="h-px w-12 bg-outline-variant"></span>
+        <span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary" lang="ka">თავი {{ chapter }}</span>
+        <span aria-hidden="true" class="h-px w-12 bg-outline-variant"></span>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 relative">
+      <div aria-hidden="true" class="hidden md:block dual-column-divider"></div>
+
+      <!-- Original -->
+      <section class="space-y-12 mb-16 md:mb-0">
+        <div class="flex items-center justify-between border-b border-outline-variant pb-2 mb-8">
+          <h2 class="font-label-caps text-label-caps uppercase text-secondary" lang="ka">ორიგინალი</h2>
+          <a class="text-primary hover:underline font-label-caps text-label-caps uppercase" href="{{ url_for('vefxistyaosani_all') }}" lang="ka">ყველა სტროფი</a>
+        </div>
+
+        {% for s in strophes %}
+          <div class="flex gap-6" data-stanza>
+            <span class="pt-2 font-headline-md font-bold text-primary text-body-lg shrink-0">{{ s.number }}</span>
+            <p class="font-headline-md text-quote-display leading-relaxed text-charcoal-muted" lang="ka">
+              {% for line in s.lines %}{{ line|safe }}{% if not loop.last %}<br>{% endif %}{% endfor %}
+            </p>
+          </div>
+        {% else %}
+          <p class="font-body-md text-secondary italic" lang="ka">ამ თავში ტექსტი არ არის.</p>
+        {% endfor %}
+      </section>
+
+      <!-- Modern rendering -->
+      <section class="space-y-12">
+        <div class="flex items-center border-b border-outline-variant pb-2 mb-8">
+          <h2 class="font-label-caps text-label-caps uppercase text-secondary" lang="ka">გაშინაარსება</h2>
+        </div>
+        <div class="font-body-md text-body-lg leading-loose text-secondary space-y-8" lang="ka">
+          {% if modern_missing %}
+            <p class="italic text-secondary/60">ამ თავის გაშინაარსებული ტექსტი ბაზაში ჯერ არ არის.</p>
+          {% else %}
+            {% for p in modern_paragraphs %}
+              <p>{{ p }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </section>
+    </div>
+
+    <!-- Chapter meta -->
+    <div class="mt-16 pt-8 border-t border-outline-variant flex flex-wrap justify-center gap-8 text-secondary" lang="ka">
+      <span class="flex items-center gap-2">
+        <span aria-hidden="true" class="material-symbols-outlined text-primary text-sm">menu_book</span>
+        <span class="font-label-caps text-label-caps">{{ strophes|length }} სტროფი</span>
+      </span>
+      <span class="flex items-center gap-2">
+        <span aria-hidden="true" class="material-symbols-outlined text-primary text-sm">translate</span>
+        <span class="font-label-caps text-label-caps">{{ gloss_total }} განმარტებული სიტყვა</span>
+      </span>
+      <span class="flex items-center gap-2">
+        <span aria-hidden="true" class="material-symbols-outlined text-primary text-sm">history_edu</span>
+        <span class="font-label-caps text-label-caps">წყარო: {{ gloss_scheme }}</span>
+      </span>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

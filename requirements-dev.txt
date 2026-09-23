@@ -1,0 +1,8 @@
+-r requirements.txt
+
+# Importers in db_loaders/
+pandas>=2.2.2
+
+# Test + audit toolchain
+pytest>=8.2
+pip-audit>=2.7

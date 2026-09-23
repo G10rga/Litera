@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{{ work.title }}{% if section_label %} — {{ section_label }}{% endif %} — Litera{% endblock %}
+{% block meta_description %}{{ work.title }}{% if work.author %} by {{ work.author }}{% endif %} — the original text beside a modern-Georgian rendering.{% endblock %}
+
+{% block content %}
+<div class="reader flex-1">
+
+  <header class="reader-toolbar">
+    <h1 lang="ka">
+      {{ work.title }}
+      <span class="author">{% if work.author %}· {{ work.author }}{% endif %}</span>
+    </h1>
+
+    {% if chapters %}
+      <label class="sr-only" for="chapter-select">თავი</label>
+      <select data-chapter-select id="chapter-select">
+        {% for chapter in chapters %}
+          <option value="{{ url_for('literature.reader', slug=work.slug, section=chapter.number) }}"
+                  {% if chapter.number == section %}selected{% endif %}>
+            {{ chapter.label }}{% if not chapter.has_modern %} · დასამუშავებელი{% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    {% endif %}
+
+    {% if prev_section %}
+      <a class="reader-nav-link" href="{{ url_for('literature.reader', slug=work.slug, section=prev_section) }}" rel="prev" aria-label="წინა თავი">←</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">←</span>
+    {% endif %}
+    {% if next_section %}
+      <a class="reader-nav-link" href="{{ url_for('literature.reader', slug=work.slug, section=next_section) }}" rel="next" aria-label="შემდეგი თავი">→</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">→</span>
+    {% endif %}
+
+    <a class="reader-nav-link" href="{{ url_for('literature.index') }}" lang="ka">სია</a>
+  </header>
+
+  <main class="reader-wide">
+    <div class="reader-columns">
+
+      <section>
+        <h2 class="reader-col-title" lang="ka">ორიგინალი{% if section_label %} · {{ section_label }}{% endif %}</h2>
+
+        {% if units %}
+          {% for unit in units %}
+            <p class="{% if is_verse %}line{% else %}para{% endif %}{% if unit.is_dialogue %} dialogue{% endif %}" lang="ka">
+              {% if is_verse and unit.unit_index % 5 == 0 %}<span class="num">{{ unit.unit_index }}</span>{% endif %}{{ unit.text }}
+            </p>
+          {% endfor %}
+        {% else %}
+          <div class="notice" lang="ka">ამ თავში ტექსტი არ არის.</div>
+        {% endif %}
+      </section>
+
+      <div class="reader-rule" aria-hidden="true"></div>
+
+      <section>
+        <h2 class="reader-col-title" lang="ka">
+          განახლებული ტექსტი
+          {% if modern and modern.review_status != 'final' %}<span class="draft">{{ modern.review_status }}</span>{% endif %}
+        </h2>
+
+        {% if modern_missing %}
+          <div class="notice" lang="ka">
+            ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
+          </div>
+        {% else %}
+          {% for paragraph in modern_paragraphs %}
+            <p class="para" lang="ka">{{ paragraph }}</p>
+          {% endfor %}
+        {% endif %}
+      </section>
+
+    </div>
+
+    {% if notes %}
+      <footer class="reader-footnotes" lang="ka">
+        {% for note in notes %}
+          <p>{{ note.text }}</p>
+        {% endfor %}
+      </footer>
+    {% endif %}
+
+    <footer class="reader-provenance" lang="ka">
+      {% if work.composed %}{{ work.composed }} · {% endif %}
+      {% if work.subtitle %}{{ work.subtitle }} · {% endif %}
+      {{ units|length }} ერთეული
+      {% if work.source %}
+        · წყარო:
+        {% if work.url %}<a href="{{ work.url }}" rel="noopener noreferrer" target="_blank">{{ work.source }}</a>{% else %}{{ work.source }}{% endif %}
+        {% if work.revision %}(rev {{ work.revision }}){% endif %}
+      {% endif %}
+      {% if work.license %} · {{ work.license }}{% endif %}
+    </footer>
+  </main>
+
+</div>
+{% endblock %}

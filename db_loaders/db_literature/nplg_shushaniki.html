@@ -1,0 +1,2713 @@
+
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>შუშანიკის წამება</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&display=swap');
+        
+        :root {
+            --bg-color: #f5f5f5;
+            --container-bg: white;
+            --text-color: #1f2937;
+            --button-bg: #e2e8f0;
+            --button-hover: #cbd5e1;
+            --border-color: #e2e8f0;
+            --popup-bg: white;
+            --popup-shadow: rgba(0,0,0,0.1);
+            --word-hover: #f0f9ff;
+            --highlight-bg: #fef08a;
+            --current-result: #fde047;
+            --current-shadow: #fbbf24;
+            --link-bg: #f8fafc;
+            --container-shadow: rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --container-bg: #1f2937;
+            --text-color: #f9fafb;
+            --button-bg: #374151;
+            --button-hover: #4b5563;
+            --border-color: #4b5563;
+            --popup-bg: #374151;
+            --popup-shadow: rgba(0,0,0,0.3);
+            --word-hover: #1e3a8a;
+            --highlight-bg: #92400e;
+            --current-result: #b45309;
+            --current-shadow: #d97706;
+            --link-bg: #374151;
+            --container-shadow: rgba(0,0,0,0.3);
+        }
+        
+        body {
+            font-family: 'Noto Sans Georgian', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--bg-color);
+            line-height: 1.7;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+		
+.work-title {
+background: linear-gradient(135deg, #ffa726, #ff7043);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--container-shadow);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .navigation {
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: var(--container-bg);
+            z-index: 100;
+            padding: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .chapter-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: var(--button-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            white-space: normal;
+            text-align: left;
+            line-height: 1.2;
+            height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            background: var(--button-hover);
+        }
+        
+.button.active {
+  background: #ffa726;
+  color: white;
+}
+.annotation,
+.author-bio {
+  background: linear-gradient(135deg, #ffa726, #ff7043);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+        .button.highlight {
+            background: var(--highlight-bg);
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background: var(--button-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            min-width: 36px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--button-hover);
+            transform: scale(1.1);
+        }
+
+        .text-content {
+            white-space: pre-wrap;
+            font-size: 16pt;
+            line-height: 1.8;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .text-content.left {
+            text-align: left;
+        }
+
+        .text-content.justify {
+            text-align: justify;
+        }
+
+        .work-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .dictionary-word {
+            color: #2563eb;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            transition: all 0.2s ease;
+        }
+
+        .dictionary-word:hover {
+            background-color: var(--word-hover);
+            text-decoration-style: solid;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .dictionary-word {
+            color: #60a5fa;
+        }
+
+        .dictionary-popup {
+            position: absolute;
+            background: var(--popup-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--popup-shadow);
+            max-width: 300px;
+            z-index: 1000;
+            font-size: 14px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .dictionary-popup:empty {
+            display: none;
+        }
+
+        .dictionary-popup-word {
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .external-link {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: var(--link-bg);
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .external-link a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .external-link a:hover {
+            text-decoration: underline;
+        }
+
+        mark {
+            background-color: var(--highlight-bg);
+            padding: 2px 0;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        mark.current-result {
+            background-color: var(--current-result);
+            box-shadow: 0 0 0 2px var(--current-shadow);
+        }
+
+        .search-input {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    height: 36px;
+    background: var(--container-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            height: 36px;
+            background: var(--container-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .result-count {
+            color: #4b5563;
+            font-size: 0.9em;
+        }
+
+        [data-theme="dark"] .result-count {
+            color: #9ca3af;
+        }
+#prevResult, #nextResult {
+    background-color: white !important;
+    color: black !important;
+   border: 0px solid white !important;
+    width: 10px; /* აქ შეგიძლია მოარგო როგორც გინდა */
+	height: 0px;
+    padding: 0px 0px; /* შიდა სივრცე */
+    font-size: 6px; /* ტექსტის ზომაც მნიშვნელოვანია */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="work-title">
+<div style="float: right; width: 100px; height:38px">
+ <a href="http://www.nplg.gov.ge/civil/ganatlebis_platforma_I_safekhuri/Headlines.htm" target="_blank" rel="noopener noreferrer">
+   <a href="http://www.nplg.gov.ge/civil/ganatlebis_platforma_I_safekhuri/Headlines.htm" target="_blank" rel="noopener noreferrer">
+  <img src="https://www.nplg.gov.ge/images/logo.png" alt="" style="width: 50%; height: 32px"></a>
+</a>
+
+
+</div>
+  <a target="_blank" href="https://www.nplg.gov.ge/wikidict/index.php?title=%E1%83%A8%E1%83%A3%E1%83%A8%E1%83%90%E1%83%9C%E1%83%98%E1%83%99%E1%83%98%E1%83%A1_%E1%83%AC%E1%83%90%E1%83%9B%E1%83%94%E1%83%91%E1%83%90&oldid=236049"
+     style="text-decoration: none; font-size: 16px;">
+    იაკობ ცურტაველი <p>
+  </a>
+<a href="https://www.nplg.gov.ge/greenstone3/library/collection/saskolo/document/HASH8a65fd1212c9f60cfac285;jsessionid=713FB1C05E301A4E94F80002BFD15B0E?ed=1" target="_blank" style="text-decoration: none;">
+  შუშანიკის წამება
+</a>
+
+
+
+
+  </p>
+</div>
+
+
+
+        <div class="controls">
+            <button class="theme-toggle" id="themeToggle" title="დღე/ღამის რეჟიმი">☀️</button>
+            <select id="fontSize" class="select">
+                <option value="10">8pt</option>
+                <option value="10">10pt</option>
+                <option value="12">12pt</option>
+                <option value="14">14pt</option>
+                <option value="16">16pt</option>
+				<option value="16" selected>16pt</option>
+            </select>
+            <button class="button active" id="alignLeft">მარცხნივ</button>
+            <button class="button" id="alignJustify">გასწორება</button>
+            <input type="text" class="search-input" id="searchInput" placeholder="ძიება...">
+            <button class="button" id="prevResult"></button>
+            <button class="button" id="nextResult"></button>
+            <span class="result-count" id="resultCount"></span>
+        </div>
+
+
+        <div class="chapter-nav" id="chapterNavigation"></div>
+        <div id="content" class="text-content left"></div>
+    </div>
+
+    <div id="dictionaryPopup" class="dictionary-popup"></div>
+<span id="themeStatus" style="margin-left: 10px; font-weight: bold;"></span>
+<span id="themeStatus" style="margin-left:10px; font-weight:bold;"></span>
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  const themeStatus = document.getElementById('themeStatus');
+
+  // თემა ჩატვირთვისას
+  const savedTheme = sessionStorage.getItem('theme') || 'light';
+  body.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+
+  // თემა შეცვლის ღილაკზე
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', newTheme);
+    sessionStorage.setItem('theme', newTheme);
+    updateThemeUI(newTheme);
+  });
+
+  function updateThemeUI(theme) {
+   
+  }
+</script>
+
+    <script>
+
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Check for saved theme preference or default to light mode
+        const savedTheme = JSON.parse(sessionStorage.getItem('theme') || '"light"');
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeToggleIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            sessionStorage.setItem('theme', JSON.stringify(newTheme));
+            updateThemeToggleIcon(newTheme);
+        });
+
+        function updateThemeToggleIcon(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+            themeToggle.title = theme === 'dark' ? 'ღია რეჟიმზე გადართვა' : 'მუქი რეჟიმზე გადართვა';
+        }
+
+        // Font size functionality
+        const fontSizeSelect = document.getElementById('fontSize');
+        const content = document.getElementById('content');
+
+        fontSizeSelect.addEventListener('change', (e) => {
+            content.style.fontSize = e.target.value + 'pt';
+        });
+
+        // Text alignment functionality
+        const alignLeft = document.getElementById('alignLeft');
+        const alignJustify = document.getElementById('alignJustify');
+
+        alignLeft.addEventListener('click', () => {
+            content.className = 'text-content left';
+            alignLeft.classList.add('active');
+            alignJustify.classList.remove('active');
+        });
+
+        alignJustify.addEventListener('click', () => {
+            content.className = 'text-content justify';
+            alignJustify.classList.add('active');
+            alignLeft.classList.remove('active');
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const prevResult = document.getElementById('prevResult');
+        const nextResult = document.getElementById('nextResult');
+        const resultCount = document.getElementById('resultCount');
+
+        let searchResults = [];
+        let currentResultIndex = -1;
+
+        searchInput.addEventListener('input', performSearch);
+        prevResult.addEventListener('click', goToPreviousResult);
+        nextResult.addEventListener('click', goToNextResult);
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            clearHighlights();
+            
+            if (query.length < 2) {
+                resultCount.textContent = '';
+                return;
+            }
+
+            const text = content.textContent;
+            const regex = new RegExp(query, 'gi');
+            const matches = [...text.matchAll(regex)];
+            
+            if (matches.length === 0) {
+                resultCount.textContent = 'შედეგი ვერ მოიძებნა';
+                return;
+            }
+
+            searchResults = matches;
+            currentResultIndex = 0;
+            highlightMatches();
+            updateResultCount();
+            scrollToCurrentResult();
+        }
+
+        function highlightMatches() {
+            let html = content.innerHTML;
+            const query = searchInput.value.trim();
+            const regex = new RegExp(`(${query})`, 'gi');
+            
+            html = html.replace(regex, '<mark>$1</mark>');
+            content.innerHTML = html;
+            
+            const marks = content.querySelectorAll('mark');
+            marks.forEach((mark, index) => {
+                mark.setAttribute('data-result-index', index);
+                if (index === currentResultIndex) {
+                    mark.classList.add('current-result');
+                }
+            });
+        }
+
+        function clearHighlights() {
+            const marks = content.querySelectorAll('mark');
+            marks.forEach(mark => {
+                mark.outerHTML = mark.innerHTML;
+            });
+            searchResults = [];
+            currentResultIndex = -1;
+        }
+
+        function goToPreviousResult() {
+            if (searchResults.length === 0) return;
+            
+            currentResultIndex = currentResultIndex > 0 ? currentResultIndex - 1 : searchResults.length - 1;
+            updateCurrentResult();
+        }
+
+        function goToNextResult() {
+            if (searchResults.length === 0) return;
+            
+            currentResultIndex = currentResultIndex < searchResults.length - 1 ? currentResultIndex + 1 : 0;
+            updateCurrentResult();
+        }
+
+        function updateCurrentResult() {
+            const marks = content.querySelectorAll('mark');
+            marks.forEach((mark, index) => {
+                mark.classList.toggle('current-result', index === currentResultIndex);
+            });
+            updateResultCount();
+            scrollToCurrentResult();
+        }
+
+        function updateResultCount() {
+            if (searchResults.length > 0) {
+                resultCount.textContent = `${currentResultIndex + 1} / ${searchResults.length}`;
+            }
+        }
+
+        function scrollToCurrentResult() {
+            const currentMark = content.querySelector('mark.current-result');
+            if (currentMark) {
+                currentMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Empty content initially - ready for your text
+        content.textContent = '';
+
+        // Dictionary functionality with clickable words
+        const dictionaryPopup = document.getElementById('dictionaryPopup');
+        
+       // Function to make words clickable
+function makeWordsClickable(text) {
+    const words = Object.keys(initialDictionary);
+    let processedText = text;
+
+    // Sort by length (longest first) to avoid partial matches
+    words.sort((a, b) => b.length - a.length);
+
+    words.forEach(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        processedText = processedText.replace(regex, (match) => {
+            return `<span class="word dictionary-word" data-word="${match}">${match}</span>`;
+        });
+    });
+
+    return processedText;
+}
+
+// Show dictionary popup (default message)
+function showDictionary(word, x, y) {
+    dictionaryPopup.innerHTML = `
+        <span class="dictionary-popup-word">${word}</span>
+        <div>სიტყვის განმარტება აქ იქნება...</div>
+        <div class="external-link">
+            <a href="https://translate.google.com/?sl=ka&tl=en&text=${encodeURIComponent(word)}" target="_blank">
+                Google Translate-ში ნახვა
+            </a>
+        </div>
+    `;
+
+    dictionaryPopup.style.left = x + 'px';
+    dictionaryPopup.style.top = y + 'px';
+    dictionaryPopup.style.display = 'block';
+}
+
+// ანალოგიური ფუნქცია რეალური განმარტებისთვის
+function showDictionaryWithDefinition(word, definition, x, y) {
+    dictionaryPopup.innerHTML = `
+        <span class="dictionary-popup-word">${word}</span>
+        <div>${definition}</div>
+        <div class="external-link">
+            <a href="https://translate.google.com/?sl=ka&tl=en&text=${encodeURIComponent(word)}" target="_blank">
+                Google Translate-ში ნახვა
+            </a>
+        </div>
+    `;
+
+    dictionaryPopup.style.left = Math.min(x, window.innerWidth - 320) + 'px';
+    dictionaryPopup.style.top = (y + 10) + 'px';
+    dictionaryPopup.style.display = 'block';
+}
+
+// Popup close when clicking outside
+document.addEventListener('click', (e) => {
+    if (!dictionaryPopup.contains(e.target) && !e.target.classList.contains('dictionary-word')) {
+        dictionaryPopup.style.display = 'none';
+    }
+});
+
+// Dictionary word click handler
+content.addEventListener('click', (e) => {
+    if (e.target.classList.contains('dictionary-word')) {
+        const word = e.target.getAttribute('data-word');
+        const definition = initialDictionary[word];
+        if (definition) {
+            showDictionaryWithDefinition(word, definition, e.pageX, e.pageY);
+        } else {
+            showDictionary(word, e.pageX, e.pageY);
+        }
+    }
+});
+
+// Re-insert clickable words into content
+function updateContent() {
+    const textContent = content.getAttribute('data-original-text') || content.textContent;
+    if (textContent.trim()) {
+        const clickableText = makeWordsClickable(textContent);
+        content.innerHTML = clickableText;
+    }
+}
+
+// Watch content and reapply clickable words
+const observer = new MutationObserver(() => {
+    updateContent();
+});
+observer.observe(content, { childList: true, subtree: true, characterData: true });
+
+    </script>
+</body>
+</html>
+
+    <script>
+        // საწყისი ლექსიკონი - შეგიძლიათ ახალი სიტყვები დაამატოთ აქ
+        const initialDictionary = 
+		
+{
+
+"აწ":"აწე ახლა; აწეღა აი ახლა, ეს-ეს არის; აწყა აწღა, მხოლოდ ახლა, ახლა", 
+
+"დამტკიცებულად":"ნამდვილად, ჭეშმარიტად",
+
+"აღსასრული":"გარდაცვალება",
+
+"კარად სამეფოდ":"სამეფო კარი",
+
+"პიტიახში":"ერისთავი ქვეყნის გარკვეული ნაწილის მმართველი",
+
+"პირველ":"ადრე",
+
+"ქრისტიანე":"ქრისტიანი.",
+
+"სპაჲპეტისაჲ":"სარდალი",
+
+"რომლისათჳს ესე":"რომლის შესახებაც",
+
+"ვთქუთ":"ვთქვით",
+
+"სიყრმითგან თჳსით":"თავისი ბავშვობიდანვე",
+
+"მარადის":"მუდამ",
+
+"გულს ეტყჳნ":"წუხდა ხოლმე",
+
+"რაჲთამცა ცვალა":"რომ შეცვალოს",
+
+"იქმნამცა":"იქნეს.",
+
+"საწყალობელისა":"შესაბრალისისა",
+
+"ვითარმე ვინ თქუას":"ვინ უნდა თქვას",
+
+"ყოვლად განწირული":"სრულიად განწირული",
+
+"ვითარ":"როგორ, როგორც",
+
+"განაგდო":"მიატოვა",
+
+"სასოებაჲ":"იმედი",
+
+"სტიროდის მას":"დაიტირებს მას",
+
+"რომელსა":"რომელსაც",
+
+"ჭირი":"გასაჭირი, განსაცდელი",
+
+"ეხილვა":"ენახა",
+
+"პყრობილებაჲ":"პატიმრობა",
+
+"ქრისტჱსთჳს":"ქრისტეს გამო.",
+
+"რაჟამს":"როცა",
+
+"პატივისა მიღება":"თანამდებობის მიღება",
+
+"უვარის":"ყოფა - უარყოფა",
+
+"ყოვლით კერძოვე":"ყოველმხრივ, მთლიანად, სრულიად",
+
+"ესრეთ":"ასე, ამგვარად",
+
+"ეტყოდა":"ეუბნებოდა",
+
+"ვითარმედ":"რომ",
+
+"რომელი":"იგი - რომელიც, რაც",
+
+"ბუნებითი":"კანონიერი",
+
+"იგინი":"მათ",
+
+"ესრევე":"ასევე",
+
+"მოვაქცინე":"მოვაქცევ",
+
+"ვითარცა":"ესე - როგორც",
+
+"უქადებდა":"ჰპირდებოდა",
+
+"რომელი":"იგი არა აქუნდა ჴელთა შუშანიკისგან - რის თანხმობაც შუშანიკისგან არ გააჩნდა",
+
+"მოიწია":"მოვიდა",
+
+"ზრახვა":"ყო - განიზრახა",
+
+"რაჲთა აუწყოს":"რომ გააგებინოს",
+
+"წინამიეგებნენ":"შეეგებონ, შეხვდნენ",
+
+"აზნაური":"დიდი ფეოდალი",
+
+"ძე":"ვაჟიშვილი",
+
+"ვითარცა":"როგორც, როცა",
+
+"სოფლად შევიდეს":"ქვეყნად შევიდეს, დაბრუნდეს ქვეყანაში",
+
+"წარმოჰმართა":"გამოგზავნა",
+
+"სადიასპანო":"საელჩო",
+
+"კითხვაჲ ჰრქუა":"მოიკითა, მიესალმა",
+
+"უკუეთუ":"თუ",
+
+"ცხოველი":"ცოცხალი",
+
+"ცოცხალმცა ხართ":"ცოცხალი იყავით, იცოცხლეთ",
+
+"მოკითხვაჲ":"სალამი",
+
+"შენდავე მოიქეცინ":"შენვე დაგიბრუნდეს",
+
+"ვერ იკადრა სიტყუად მისა":"ვერ გაბედა მისთვის თქმა",
+
+"აფუცებდა":"აფიცებდა",
+
+"ჰკითხავდა":"ეკითხებოდა",
+
+"ჰრქუა":"უთხრა",
+
+"ვითარმედ":"რომ",
+
+"უვარ":"ყო - უარყო",
+
+"ქუეყანა":"მიწა",
+
+"დამართ":"დაბლა",
+
+"იტყოდა":"ამბობდა",
+
+"ატროშანი":"აქ: ცეცხლთაყვანისმცემლობა, მაზდეანობა",
+
+"შეერთო":"შეუერთდა",
+
+"ტაძარი":"სასახლე",
+
+"ეკლესიად შევიდა":"ეკლესიაში შევიდა",
+
+"თანამიიყვანა":"მიიყვანა",
+
+"წარადგინნა იგინი":"დააყენა ისინი",
+
+"საკურთხეველი":"სამსხვერპლო",
+
+"ესრეთ ილოცვიდა":"ასე ლოცულობდა",
+
+"შენ დაიცვენ ესენი":"დაიცავი ესენი",
+
+"განათლებული":"მონათლული",
+
+"ემბაზი":"ადგილი, სადაც ნათლავენ, ჭურჭელი, რაშიც ნათლავენ",
+
+"ყოფად ერთ სამწყსო ერთისა მწყემსისა":"რომ იქნენ ერთი მწყემსის (ქრისტეს) სამწყსო (მრევლი)",
+
+"ვითარცა":"როგორც, როცა",
+
+"მწუხრისა ჟამი":"საღამოს ლოცვა",
+
+"აღასრულეს":"დაამთავრეს",
+
+"მუნ შინა":"მასში",
+
+"სიმწარითა სავსე":"დარდით სავსე, დამწუხრებული",
+
+"მიეყრდნა ყურესა ერთსა":"კუთხეში დადგა, ერთ კუთხეს მიეყრდნო",
+
+"არა მუნ იყო":"იქ არ იყო ვანი - სამყოფელი",
+
+"კითხვად რაჲსმე სიტყჳსა":"რაღაცის საკითხავად",
+
+"თანავჰყვანდი":"წაყვანილი ვყავდი",
+
+"მყის":"მაშინვე, სწრაფად",
+
+"დიაკონი":"ეკლესიის მსახური",
+
+"შინაჲთ":"შინიდან",
+
+"აღვივსენით მწუხარებითა":"დიდად დავმწუხრდით",
+
+"ვტიროდეთ":"ვტიროდით",
+
+"ცოდვათა ჩუენთა წარმოჩინებისათჳს":"ვარსქენის დანაშაულს ხსნის ავტორი იმ დროის საზოგადოების ცოდვებით: ჩვენ რომ ცოდვილნი ვართ, იმიტომაც შეცდაო ვარსქენი",
+
+"ვტიროდე":"ვტიროდი",
+
+"ვარქუ":"ვუთხარი",
+
+"ღუაწლი დიდი":"დიდი შრომა, მძიმე საქმე, განსაცდელი",
+
+"შესლვად ხარ":"შეხვალ",
+
+"ეკრძალე სარწმუნოებასა ქრისტჱსსა":"მოერიდე (გაუფრთხილდი) ქრისტეს სარწმუნოებას",
+
+"ნუუკუე":"რომ, ეგებ",
+
+"მტერი":"ეშმაკი",
+
+"სრსჳლი":"სირსველი",
+
+"საძოვარი პოოს შენ თანა":"რომ არ შეცდე (რომ არ უარყო ქრისტიანობა)",
+
+"ეგრჱთ არს":"ეგრე არის",
+
+"მრქუა":"მითხრა",
+
+"ჩემდა მარტოჲსა":"მხოლოდ ჩემთვის",
+
+"ვარქუ":"ვუთხარი",
+
+"ჩუენი არა ხოლო თუ დედოფალი ოდენ იყავ":"არა მარტო ჩვენი დედოფალი იყავი",
+
+"გუხედევდ":"გვივლიდი",
+
+"ვითარ გეგულების":"როგორც ფიქრობ",
+
+"რაჲთა უწყოდი":"რომ ვიცოდე",
+
+"მკითხავ":"მეკითხები",
+
+"მტკიცედ სდგაა?":"მტკიცედ სდგახარ? მტკიცედ გწამს?",
+
+"ნუ იყოფინ ჩემდა":"ნუ დამემართება, მომივა",
+
+"თუმცა ვეზიარე":"რომ შევუერთდე",
+
+"მწარე გონებაჲ აქუს მას":"მძიმე (ბოროტი) ბუნება აქვს",
+
+"გუემა":"ცემა",
+
+"შეგაგდოს":"ჩაგაგდებს",
+
+"უმჯობჱს არს":"უმჯობესია",
+
+"ჩემდა":"ჩემთვის, ჩემკენ",
+
+"ჴელთა მისთაგან":"მისგან",
+
+"ჩემი და მისი შეკრებაჲ":"მასთან ჩემი შეთანხმება",
+
+"წარწყმედაჲ":"დაღუპვა",
+
+"რამეთუ":"რომ, რადგანაც",
+
+"მასმიეს":"გამიგონია",
+
+"განეყენენ":"გამშორდეს, მოშორდეს",
+
+"ვთქუ":"ვთქვი",
+
+"ესევითარი":"ასეთი",
+
+"სახლი მშჳდობისაჲ":"წყნარი ოჯახი",
+
+"ვითარ":"როგორ, როგორც",
+
+"საწყალობელ იქმნა":"საცოდავი გახდა",
+
+"ზრახვითა იყო იგი ვარსქენისათა":"ვარსქენის თანამოაზრე იყო",
+
+"ზაკუვით იტყოდა":"მოსატყუებლად ამბობდა",
+
+"უნდა":"უნდოდა",
+
+"მონადირება":"მოტყუება",
+
+"ცნა":"გაიგო, მიხვდა",
+
+"ზრახვაჲ":"განზრახვა",
+
+"მოიზღუდა თავი მისი მტკიცედ":"შორს დაიჭირა თავი",
+
+"მიცნობიეს":"შემიტყვია",
+
+"გეტყჳ":"გეუბნები",
+
+"ფიცხელი სიტყუა":"სასტიკი სიტყვა",
+
+"რამეთუ დედათა ბუნებაჲ იწრო არს":"ქალის ბუნება ნაზია",
+
+"გჳწოდა":"დაგვიძახა",
+
+"ხუცესი":"მღვდელი (სასულიერო პირი)",
+
+"სიხარულით შეგჳმთხჳნა":"სიხარულით გადაგვეხვია (შეგვხვდა)",
+
+"გურქუა":"გვითხრა",
+
+"ნუცაღა":"ნუ",
+
+"გძაგ":"გეჯავრები",
+
+"წარსწყმიდე":"დაიღუპე",
+
+"წარგუწყმიდენ":"დაგვღუპე",
+
+"მაშინღა":"მაშინ უკვე, მხოლოდ მაშინ",
+
+"იწყო სიტყუად":"დაიწყო ლაპარაკი",
+
+"რაჲსა":"რატომ",
+
+"ჴელ":"იწიფა - გაბედა",
+
+"ესევითარისა საქმედ":"ამისთანა საქმის გაკეთება",
+
+"აწ მივედით და არქუთ":"ახლა მიდით და უთხარით",
+
+"ვითარმედ":"რომ",
+
+"შენ ჩემი ხატი დაამჴუ და საგებელსა ჩემსა ნაცარი გარდაასხ":"შენ ჩემი მეუღლეობა უარყავი და ჩემს სარეცელს ნაცარი გადააყარე",
+
+"დაგიტევებიეს":"მიგიტოვებია",
+
+"სხუად წარსრულ ხარ":"სხვაგან წასულხარ",
+
+"აღჰმართნა სამარტჳლენი და ეკლესიანი აღაშჱნნა":"ააშენა ეკლესიები",
+
+"საქმენი განჰრყუნენ":"საქმეები გააფუჭე",
+
+"წმიდანი შემოიხუნა სახიდ თჳსა":"თავის სახლში წმინდანები შემოიყვანა (აქ: სიწმინდე შემოიტანა)",
+
+"დევნი შემოიხუენ":"ეშმაკები შემოიყვანე (აქ: უწმინდურება შემოიტანე)",
+
+"ჰრწმენა":"ირწმუნა",
+
+"ვითარცა":"როგორც, როცა",
+
+"შემოქმედი":"შემქნელი (აქ: ღმერთი)",
+
+"შეურაცხ–გყავ":"არად ჩაგაგდე",
+
+"მრავალი ტანჯვაჲ მოაწიო ჩემ ზედა":"ძლიერ დამტანჯავ",
+
+"მიუთხართ":"ვუამბეთ",
+
+"მან განიწყო გული":"განრისხდა",
+
+"იბრდღუენდა მისთჳს":"ამის გამო მძვინვარებდა",
+
+"ძმისცოლი":"რძალი",
+
+"აღდეგ და მოვედ":"ადექი და მოდი",
+
+"უკუეთუ არა":"თუ არა",
+
+"თრევით მოგითრიო":"მოგათრევ",
+
+"შევიდეს წინაშე დედოფლისა":"შევიდნენ დედოფალთან",
+
+"მრავალსა დასაჯერებელსა სიტყუასა ეტყოდეს":"ძლიერ ცდილობდნენ დაეთანხმებინათ",
+
+"კეთილად იტყჳთ":"კარგად ლაპარაკობთ",
+
+"გარნა ნუ დაგიჯერებიეს":"მაგრამ ნუ გჯერათ",
+
+"თუმცა მე მისა ცოლადღა ვიყავ":"რომ მე მისი ცოლი ვიქნები კიდევ",
+
+"მეგონა მე":"ვფიქრობდი",
+
+"ვითარმედ":"რომ",
+
+"ჩემდა":"ჩემთვის, ჩემკენ",
+
+"შემდგომად ორისა დღისა":"ორი დღის შემდეგ",
+
+"პური ვჭამოთ":"ვჭამთ",
+
+"ნუ ვის უფლიედ ჩუენ თანა შემოსლვად":"ნუ ვინ შემოვა ჩვენთან",
+
+"შემწუხრდა":"შეღამდა",
+
+"მოუწოდეს":"მოიწვიეს",
+
+"რაჲთამცა მოიყვანეს":"რომ მოეყვანათ",
+
+"ჟამი პურისაჲ":"ჭამის დრო",
+
+"რაჲთამცა მასცა აჭამეს":"რომ მასაც აჭამონ",
+
+"ძლით":"ძალით",
+
+"გემოჲ არა რაჲსაჲ იხილა":"არაფერი ჭამა",
+
+"რაჲთამცა იგი ხოლო შესუა":"რომ მხოლოდ ის დაელია",
+
+"რისხვით":"მრისხანედ",
+
+"ოდეს":"როდის, როცა",
+
+"ყოფილ არს":"ყოფილა",
+
+"თუმცა მამათა და დედათა ერთად ეჭამა პური":"რომ მამაკაცებსა და ქალებს ერთად ეჭამათ",
+
+"განყარა ჴელი":"ხელი გაიქნია",
+
+"დაითხია":"დაიღვარა",
+
+"იწყო":"დაიწყო",
+
+"უჯეროსა გინებად":"უხამსო გინება",
+
+"ფერჴითა":"ფეხით",
+
+"დასთრგუნვიდა":"თელავდა, სცემდა",
+
+"ასტამი":"ნაკვერჩხლის და ნაცრის გამოსაჩხრეკი",
+
+"ჩაჰფლა":"ჩაარტყა",
+
+"დაუბუშტა":"დაუსივა",
+
+"ყიოდა":"ყვიროდა, ღმუოდა",
+
+"იზახდა":"ყვიროდა",
+
+"ვითარცა ცოფი":"როგორც გიჟი",
+
+"შუელად აღდგა":"მოეშველა",
+
+"გუემა იგიცა":"სცემა მასაც",
+
+"მოხეთქა":"დაარტყა",
+
+"ჭირით":"გაჭირვებით",
+
+"გამოუღო":"გამოჰგლიჯა",
+
+"თესლ":"ტომი - ჯიში, შთამომავლობა",
+
+"სახლისა მაოჴრებელი":"ოჯახის დამქცევი, ამაოხრებელი",
+
+"სახელ–სდებდა":"უწოდებდა",
+
+"ბორკილთა შესხმაჲ":"ბორკილების დადება",
+
+"რაჲთამცა საკრველთა მათგან განეტევა":"რომ ბორკილთაგან გაეთავისუფლებინა",
+
+"განტევებაჲ":"გათავისუფლება",
+
+"კრძალულად დაცვაჲ":"საიდუმლოდ დაცვა",
+
+"ვითარმედ":"რომ",
+
+"ვითარ არს":"როგორ არის",
+
+"ვერ განსარინებელ არს":"ვერ გადარჩება",
+
+"თჳთ":"თვითონ",
+
+"დაუკჳრდა":"გაუკვირდა",
+
+"ნუმცა ვინ შევალს ხილვად მისა":"ნუვინ შევა მის სანახავად",
+
+"ნადირობად წარვიდა":"სანადიროდ წავიდა",
+
+"უუკუე ცნას":"რომ გაიგოს",
+
+"თუცა":"თუნდაც",
+
+"მისთჳს":"მის გამო",
+
+"ხატი":"სახე",
+
+"დაბძარული":"დახეთქილი",
+
+"აღუტევე ჴმაჲ და ვტიროდე":"ხმამაღლა ვტიროდი",
+
+"დასაბამი":"დასაწყისი",
+
+"შთახუეულ":"ჩაყრილი",
+
+"სალბუნი":"მალამო",
+
+"ჰე, ღა":"მე-თუ - ეგებ",
+
+"რამეთუ":"რომ, რადგანაც",
+
+"მოეძღუანა":"გამოეგზავნა",
+
+"იღუწიდეს":"ზრუნავდნენ",
+
+"ხუცეს":"მღვდელო (წოდებით ბრუნვა)",
+
+"ძალ":"მიც - შემიძლია",
+
+"გემოჲს":"ხილვად - აქ: ჭამა",
+
+"შთამუსრვილი":"ჩამტვრეული",
+
+"ვისწრაფდი გამოსვლად":"ვჩქარობდი გამოვსულიყავი",
+
+"ნუუკუე ითხოვდეს":"ეგებ ითხოვდეს",
+
+"არღარად მეჴმარების":"აღარაფრად მესაჭიროება",
+
+"ისწრაფი":"ჩქარობ",
+
+"იყოს შენ თანა":"გქონდეს",
+
+"ჩუენღა ამას განვიზრახევდით":"ვიდრე ჩვენ ამას ვლაპარაკობდით",
+
+"ყრმაჲ":"მსახური",
+
+"რაჲ გინებს":"რა გინდა",
+
+"უწესს":"ეძახის, იწვევს",
+
+"დამიკჳრდა":"გამიკვირდა",
+
+"რაჲსამე":"რატომ",
+
+"მიწესს":"მეძახის, მიწვევს",
+
+"ამას ჟამსა":"ამ დროს",
+
+"მივისწრაფე":"სწრაფად წამოვედი",
+
+"უწყია, ხუცეს":"იცი, მღვდელო",
+
+"ბრძოლად წარვალ":"საბრძოლველად მივდივარ",
+
+"ჰონები":"იმიერკავკასიელი მომთაბარე ტომები",
+
+"ოდეს":"როდის, როცა",
+
+"იპოოს ვინმე":"აღმოჩნდება ვინმე",
+
+"რომელმან განკაფოს":"ვინც გაცვეთს (აქ: ვინც მოიხმარს)",
+
+"მომართუ":"მომართვი",
+
+"უთხარ":"ვუთხარი",
+
+"მადლი მისცა ღმერთსა":"ღმერთს მადლობა შესწირა",
+
+"ყოველივე მომიძღუანა":"ყველაფერი გამატანა",
+
+"აღიხილა":"გასინჯა",
+
+"იპოვა ყოველი გებულად":"ყველაფერი უკლებლივ აღმოჩნდა",
+
+"რომელმან ესე შეიმკოს":"ვინც ამას შეიმკობს",
+
+"იძია":"მოძებნა",
+
+"მუნ დაეყუდა":"იქ გაჩერდა",
+
+"დაყო":"ამოქოლა",
+
+"საკუთარი":"მახლობელი",
+
+"აღვსება":"აღდგომა",
+
+"ეშმაკი თხრიდა გულსა მისსა":"ეშმაკი აღაგზნებდა (აღაშფოთებდა)",
+
+"მივიდა ეკლესიად":"მივიდა ეკლესიაში",
+
+"ეტყოდა":"ეუბნებოდა",
+
+"გამომეც":"მომეცი",
+
+"რაჲსა ეგრე იქმ":"რატომ აკეთებ მაგას?",
+
+"ბოროტი":"ცუდი",
+
+"რისხვით ეტყჳ":"მრისხანედ ელაპარაკები",
+
+"უხეთქნა":"დასცხო, დაარტყა",
+
+"იკადრა სიტყუად":"გაბედა ლაპარაკი",
+
+"ეკლესიით ვიდრე ტაძრადმდე":"ეკლესიიდან სასახლემდე",
+
+"კუბასტი":"სამოსელი",
+
+"წულილ":"წულილად - წვრილ–წვრილად",
+
+"მოიყვანეს იგი ტაძრად":"მოიყვანეს სასახლეში",
+
+"იტყოდა":"ამბობდა",
+
+"აჰა ეგერა":"აი",
+
+"გერგო":"გამოგადგა",
+
+"ვითარცა სცეს":"როცა დაარტყეს",
+
+"არარაჲ აღმოჴდა პირსა მისსა":"პირიდან არაფერი ამოსცდენია",
+
+"მაშინღა":"მაშინ უკვე, მხოლოდ მაშინ",
+
+"ურჩულო":"უშჯულო",
+
+"უბადოო":"უბედურო’  შენ მემცა შემიწყალეა?! - შენ შემიცოდებ?!",
+
+"ამოსდიოდა":"ჩამოსდიოდა",
+
+"უბრძანა დადებად":"უბრძანა, დაედოთ",
+
+"სენაკაპანი":"ციხის მცველი",
+
+"ტაძრით":"ეკლესიიდან",
+
+"უნდა":"უნდოდა",
+
+"რაჲთამცა ჰრქუა":"რომ ეთქვა",
+
+"თუალი ჰკიდა":"თვალი მოჰკრა",
+
+"სხუაჲ ვერღარაჲ სცალდა სიტყუად":"მეტის თქმა ვეღარ დასცალდა",
+
+"ესთენ ოდენ":"მხოლოდ ესღა",
+
+"დადუმნა":"გაჩუმდა",
+
+"სივლტოლად იწყო სწრაფით":"სწრაფად გაიქცა",
+
+"თმაგარდატევებული":"თმებჩამოშლილი",
+
+"შეურაცხთაგანი":"მდაბიო, უბრალო",
+
+"იკადრა":"გაბედა",
+
+"დაბურვა":"დახურვა",
+
+"მჴედრ შეუდგა უკუანა":"ამხედრებული მისდევდა",
+
+"იჴაჴდეს":"იკაწრავდნენ",
+
+"საწყალობელად":"შესაბრალისად",
+
+"დასთხევდეს ცრემლთა":"ცრემლს ღვრიდნენ",
+
+"შუშანიკისთჳს":"შუშანიკის გამო",
+
+"უკმოჰხედნა":"მოხედა",
+
+"ჯმნულმცა ვარ მე თქუენგან ამიერითგან":"ამიერიდან გშორდებით",
+
+"მიხილოთ":"მნახავთ",
+
+"ციხით":"ციხიდან",
+
+"მჴედრ მიმოდასდევნინ":"ამხედრებული დასდევდა",
+
+"მეოტ":"ჰყოფნ - დევნიდა, არბევდა",
+
+"მიიწინეს":"მიაღწიეს",
+
+"გამოსლვად ხარ":"გამოხვალ",
+
+"შენდა ეგდენ ყოფად არს ფერჴითა შენითა სლვაჲ":"ფეხით სავალი ეგღა დაგრჩა",
+
+"გარნა თუ ოთხთა გამოგიღონ":"არამედ ოთხი გამოგიტანს (მკვდარს)",
+
+"ვიტანჯო":"დავიტანჯები",
+
+"მუნ განვისუენო":"იქ ვიშვები",
+
+"ჰე, ჰე":"დიახ, დიახ",
+
+"ეტყოდა":"ეუბნებოდა",
+
+"გეტყჳ":"გეუბნები",
+
+"იხილენით თავნი თქუენნი":"მიჰხედეთ თქვენს თავს",
+
+"უბრალომცა ვარ":"უდანაშაულო ვიქნები",
+
+"რაჲ გიყო":"რასაც გიზამთ",
+
+"მოუწოდა":"დაუძახა",
+
+"აქამომდე ცოცხალღა არსა":"აქამდე ცოცხალია",
+
+"უფალო":"ბატონო",
+
+"სიკუდილდ კერძო":"სიკვდილისაკენ",
+
+"საგონებელ არს":"საფიქრებელია",
+
+"ნურა რაჲ გგლიან":"ნურა გენაღვლება",
+
+"უტე":"გაუშვი, დაე",
+
+"ჭურჭერი":"ნივთი",
+
+"ძნიად თავს იდვა შეტევებაჲ ჩემი":"ძლივს გადაწყვიტა ჩემი შეშვება",
+
+"რაჟამს":"როცა",
+
+"დაღამდეს":"დაღამდება",
+
+"მოვედ":"მოდი",
+
+"ტარიგი":"კრავი",
+
+"სძალი":"რძალი (იგულისხმება: ქრისტეს მოწამე)",
+
+"საკრველი":"ბორკილი",
+
+"ვერ დამითმო გულმან":"გულმა ვერ გამიძლო",
+
+"ვტიროდე ფრიად":"ვტიროდი ძლიერ (მწარედ)",
+
+"კეთილისა ამისთჳს":"ამ სიკეთის გამო",
+
+"სტირა, ხუცეს?":"სტირი, მღვდელო?",
+
+"ესეღა თუმცა მეცნა":"ეს რომ მცოდნოდა",
+
+"არამცა შემოგიტევე":"არ შემოგიშვებდი",
+
+"ვიწყე სიტყუად":"დავიწყე ლაპარაკი",
+
+"ვიჯმენ მისგან":"მოვშორდი მას",
+
+"წარვედ სწრაფით ვანად ჩემდა":"სწრაფად წავედი შემს სახლში",
+
+"ჩორდ წარემართა":"წავიდა ჩორში",
+
+"არა დახუდა":"არ იყო, არ დასწრებია, არ შესწრებია",
+
+"მიეწია":"დაეწია",
+
+"რაჲთამცა ბრძანა":"რომ ებრძანებინა",
+
+"საკრველთა მათგან განტევებაჲ":"ბორკილთაგან გათავისუფლება",
+
+"ფრიად აწყინა":"აქ: ბევრს ეხვეწა",
+
+"ოდენ":"მხოლოდ",
+
+"აღჰჴადა":"ახსნა, შეხსნა",
+
+"არა თავს":"იდვა  - არ მოისურვა, არ ინება",
+
+"ვიდრე აღსასრულამდე":"სიკვდილამდე",
+
+"ზედგომა":"დგომა (მღვიძარება)",
+
+"უწყინოდ":"დაუსრულებლად",
+
+"სულიერითა მით ქნარითა":"გალობით (აქ: ლოცვით)",
+
+"მოვიდოდეს":"მოდიოდნენ",
+
+"აღნათქუემი":"დანაპირები (აქ: შესაწირავი)",
+
+"რაჲ ვის უჴმდა":"ვისაც რა სჭირდებოდა",
+
+"განბორების სალმობა":"კეთრი",
+
+"რაჲთამცა დაუტევა მოგობაჲ":"რომ უარეყო ცეცხლთაყვანისმცემლობა",
+
+"თავს–იდვა ადრე":"ადრე - მალე, სწრაფად დათანხმდა",
+
+"მივედ იერუსალჱმდ":"წადი იერუსალიმში",
+
+"განსწმიდნე":"განიკურნები, განიწმინდები",
+
+"გულსმოდგინედ შეიწყნარა":"გულით ირწმუნა",
+
+"წარემართა გზასა მას":"წავიდა",
+
+"სალმობა":"სნეულება, ტკივილი",
+
+"ვითარ გარემოიქცა":"როცა მობრუნდა",
+
+"მოიწია მუნვე":"მოვიდა იქვე",
+
+"მოვიდა იგი წმიდისა შუშანიკისა":"მოვიდა წმინდა შუშანიკთან",
+
+"მადლისა გარდაჴდად":"მადლობის გადასახდელად",
+
+"წარვიდა სახიდ თჳსა":"წავიდა თავის სახლში",
+
+"განმრთელებული":"განკურნებული",
+
+"დიდი გულსმოდგინება":"დიდი სიბეჯითე, მონდომება",
+
+"ჴელთა აღიხუნა":"აიღო",
+
+"დავითნი":"ფსალმუნთა წიგნი, რომელიც ებრაელთა მეფეს დავითს (X-XI სს. ჩვ. წ.–მდე) მიეწერება",
+
+"ასერგასისი":"ასორმოცდაათი",
+
+"ფსალმუნი":"საგალობელი",
+
+"ზესკნელისა მის მეუფისა":"ღმერთის (იესო ქრისტე)",
+
+"სათნო":"მოსაწონი",
+
+"შვილნი იგი შენნი მიაქცინა მოგობასა":"შენს შვილებს ცეცხლთაყვანისმცემლობა მიაღებინა",
+
+"თავსა თჳსსა ქუე დამართ სცემდა":"თავს მიწას ურტყამდა",
+
+"სულთ":"ითქუნა - ამოიოხრა",
+
+"იყავნ ნებაჲ შენი":"შენი ნება იყოს",
+
+"დამიცევ საქმეთაგან მტერისათა":"დამიცავი ეშმაკის საქმეებისაგან",
+
+"დაბუშებული":"დასივებული",
+
+"მოეძღუანა":"გამოეგზავნა",
+
+"საზრდელი":"საჭმელი",
+
+"მოვიდიან":"მოდიოდნენ",
+
+"ხილვად დედისა თჳსისა":"თავისი დედის სანახავად",
+
+"რაჟამს მიაქცინეს":"აქ: როცა ქრისტიანობა ურყვეს",
+
+"ვერღარა იკადრეს":"ვერ გაბედეს",
+
+"ხილვად მისა":"მისი ნახვა",
+
+"მოვედ ტაძრად":"მოდი სასახლეში",
+
+"ჩორდ წარგცე შენ ანუ კარად":"ჩორში გაგგზავნი, ყარსში (?), ან ქტეზიფონში (სპარსეთის სამეფო კარზე)",
+
+"კარაული":"სახედარი",
+
+"მიჰრქუა ესრეთ":"ასე შეუთვალა",
+
+"უბადო":"უბედური",
+
+"უგულისჴმო":"უგუნური",
+
+"თუ მუნ კეთილსა რასმე შევემთხჳო":"ეგებ იქ კარგ რასმე შევხვდე, ბედს ვეწიო",
+
+"ბოროტსა ამას განვერე":"ამ ბოროტებას (უბედურებას) გადავურჩე",
+
+"გულსა ეტყოდა":"ფიქრობდა",
+
+"ვითარ":"იგი - როგორც",
+
+"ვითარმედ":"რომ",
+
+"ნუუკუე":"რომ, ეგებ",
+
+"მთავართაგანსა ვისმე ეცოლოს":"ვინმე მთავარს მისთხოვდეს",
+
+"მიერითგან":"იმ დროიდან",
+
+"არღარავინ მიავლინა მისა":"აღარავინ გაუგზავნა მას",
+
+"გუემა":"ცემა",
+
+"იტყოდა":"ამბობდა",
+
+"რაჲთამცა სათნო":"ეყო ღმერთსა - ღმერთის მოსაწონი ყოფილიყო",
+
+"საკუთარი":"მახლობელი",
+
+"ჩამოვედ ტაძრად":"ჩამოდი სასახლეში",
+
+"მარქუ":"მითხარი",
+
+"ცოცხალითა ფერჴითა არა გამოხვიდე შენ მაგიერ ციხით":"ცოცხალი ვერ გამოხვალ მაგ ციხიდან",
+
+"შემძლებელ ხარ":"შეგიძლია",
+
+"აღდგინება":"აყენება",
+
+"აღადგინე":"ააყენე (გააცოცხლე)",
+
+"რომელი ურდს დამარხულ არს":"რომელიც ურდშია დამარხული",
+
+"გარნა თუ მისა ვერ შემძლებელ ხარ აღდგინებად":"მაგრამ თუ მისი აყენება (გაცოცხლება) ვერ შეგიძლია",
+
+"ვერცა ჩემდა შემძლებელ ხარ განყვანებად":"ვერც ჩემი (ციხიდან) გაყვანა შეგიძლია",
+
+"გარნა თრევით გამითრიო":"თუ არ გამათრევ",
+
+"ნანდჳლვე ვთქუ":"ნამდვილად ვთქვი",
+
+"კეთილად":"კარგად",
+
+"მაგით სახით":"მაგ ხერხით (მაგგვარად)",
+
+"ეგულვებოდა":"ფიქრობდა, განზრახული ჰქონდა",
+
+"შეტყუვილი":"მიტყუება",
+
+"ზრახვაჲ":"განზრახვა",
+
+"გულსა მოეჴადა":"მოეფიქრებინა",
+
+"გგონიეს":"გგონია",
+
+"განუმზადნის სიტყუანი პირსა კაცისასა":"აქ: ღმერთი წინასწარ უმზადებს ადამიანებს სათქმელს",
+
+"რამეთუ იტყჳს თჳთ უფალი":"რადგანაც თვითონ ღმერთი ამბობს",
+
+"მე მიუგო სიტყუაჲ თქუენ წილ":"მე ვუპასუხებ თქვენ მაგიერ",
+
+"ჯეკმა დამაშურალობითა შრომათა მათ შინა":"დიდი, ძლიერი ტანჯვის, გასაჭირის ატანა",
+
+"სენი სნეულებისაჲ":"ავადმყოფობა",
+
+"წინაჲსწარ უღაღადებდი":"წინასწარ ვეუბნებოდი",
+
+"ვეტყოდე":"ვეუბნებოდი",
+
+"ვეტყოდე":"ვეუბნებოდი",
+
+"დაუმძიმებ ჴორცთა მაგათ ზედა":"აწუხებ სხეულს",
+
+"ვერ დაგითმონ":"ვერ გაგიძლებენ (ვერ აიტანენ ტანჯვას)",
+
+"ვერღარას შემძლებელ იყო ყოფად რაჲსმე საქმედ კეთილსა":"კარგი საქმის გაკეთებას ვეღარ შესძლებ",
+
+"ეგოდენი":"მაგდენი",
+
+"ზედგომა":"დგომა (მღვიძარება)",
+
+"ღამე ყოველ":"მთელი ღამე",
+
+"დაშრომა":"შრომა",
+
+"ფსალმუნება":"ფსალმუნთა გალობა",
+
+"არცაღა მცირედ სადა სცა ჴორცთა მისთა განსუენებაჲ":"არც ოდესმე ოდნავ შეუსვენია",
+
+"შეიქმნა და დადნა ვითარცა ავლი":"ნაცარს დაემსგავსა (აქ: ძლიერ გახდა)",
+
+"ერგასისი":"ორმოცდაათი",
+
+"დღისი":"დღისით",
+
+"ღამჱ":"ღამით",
+
+"დაჯდის":"დაჯდა ხოლმე",
+
+"მიიღის":"მიიღო ხოლმე",
+
+"გარნა":"მხოლოდ",
+
+"კჳრიაკე":"კვირა",
+
+"ეზიარის ჴორცსა და სისხლსა ქრისტჱს ღმრთისა ჩუენისასა":"ჭამდა ხოლმე პურს და ღვინოს დალევდა",
+
+"შექმნული":"შემზადებული",
+
+"ვიდრე აღვსებადმდე":"აღდგომამდე",
+
+"ვინაჲთგან":"რაც, რადგანაც",
+
+"პყრობილ":"ყვეს იგი ციხესა მას შინა - საპატიმროში ჩააგდეს",
+
+"სასთაულსა ზედა თავი არა მიდვის":"ბალიშზე თავს არ დებდა",
+
+"გარნა":"მხოლოდ",
+
+"ალიზაკი":"აგური",
+
+"დაიდვის სასთუნალ":"იდებდა სასთუმლად",
+
+"ქუესაგებელი":"ლოგინი",
+
+"გირჯაკი":"ქსოვილის ნაჭერი",
+
+"კაცთა თუალსა":"ხალხის დასანახავად",
+
+"სასთაულაკი":"მცირე ბალიში",
+
+"ხალენი":"ტყავი",
+
+"უცნ":"აქვს (აქ: ჰქონდა) ხოლმე",
+
+"კილიკი":"ქვეშ დასაფენი",
+
+"წარუგდებიედ":"დაფენილი ჰქონდა",
+
+"გრწყილი":"რწყილი",
+
+"მოუგონებელი":"ურიცხვი",
+
+"დაწერტილი":"დამუწუკებული",
+
+"დამშრშალი":"გამომშრალი, დამჭკნარი, გამხდარი",
+
+"დამღიერებული":"წყლულებით დაავადებული",
+
+"ჩარადოვანი":"კეთრიანი",
+
+"საკრველი":"ბორკილი",
+
+"დაუცხრომელად":"შეუსვენებლივ",
+
+"თხრამლი":"ჩირქი",
+
+"რომელი":"იგი - რომელიც, რაც",
+
+"ნუ მძიმე":"გიჩნ - ძნელად ნუ გეჩვენება",
+
+"მუნ იგი მატლი":"იქაური მატლი (წამება, რომელიც ურწმუნოებს მოელის საიქიოში)",
+
+"არა მოკუდების":"არ მოკვდება (არ დასრულდება)",
+
+"მოუგონებელად დიდად":"მეტისმეტად",
+
+"ვტიროდე":"ვტიროდი",
+
+"უმჯობჱს იყავნ":"უმჯობესია",
+
+"მცირედღა შეგერაცხაა საგუემელად?":"სატანჯველად მცირედ მიგიჩნევია? მატლთა მაგათთჳს - მაგ მატლთა გამო",
+
+"ქენებით":"ხვეწნით",
+
+"ნუვის თანა იტყჳ ძაძისა სამოსლისათჳს ცხორებასა ჩემსა":"ნუვის ეტყვი, რომ ძაძა მაცვია",
+
+"ადრე ყოფად არს დატევებაჲ უბადრუკთა ამათ ჴორცთა ჩემთაჲ":"მალე მოვკვდები",
+
+"შინაგან":"შიგნით",
+
+"გარეგან კაცთა თუალსა":"ხალხის დასანახავად",
+
+"ანტიოქიისა პალეკარტი":"ანტიოქიური წამოსასხამი",
+
+"მიახლებულ არს ნეტარი დედოფალი წმიდაჲ შუშანიკ სიკუდილდ":"სიკვდილის პირასაა წმინდა დედოფალი შუშანიკი",
+
+"მჴევალი":"მონა ქალი",
+
+"მივიდა ციხედ":"ციხეში მივიდა",
+
+"ხილვად":"სანახავად",
+
+"მარტჳლი":"მოწამე",
+
+"ვითარცა მიიწია":"როცა მივიდა",
+
+"მძლავრ":"ძალით",
+
+"სალმობა":"სნეულება, ტკივილი",
+
+"კეთილ ვარ":"კარგად ვარ",
+
+"ვითარ ღმერთსა უნებს":"როგორც ღმერთს სურს",
+
+"ყოველთა წარსავალსა მას გზასა მეც წარვალ":"მეც მოვკვდები, როგორც ყველა",
+
+"პირველი":"ადრინდელი",
+
+"სძალი":"რძალი (იგულისხმება: ქრისტეს მოწამე)",
+
+"რაჲთა მომიტევნეს":"რომ მომიტევოს",
+
+"ყრმებრ":"ბავშვურად",
+
+"ჰქმნე":"ჩაიდინე",
+
+"ღმერთმან მოგიტევნეს":"ღმერთმა გაპატიოს (ღმერთი გაპატიებს)",
+
+"მაგის სახისათჳს":"მაგის გამო",
+
+"მოვედ":"მოდი",
+
+"რომელი":"იგი - რომელიც, რაც",
+
+"არა რაჲმე სათნო იყოს ღმრთისა":"რაც ღვთის მოსაწონი არ იქნება",
+
+"არა ვქმნე":"არ ვიზამ",
+
+"უკუეთუ ეგე ეგრეთ ჰყო":"თუ ეს ასე ქნა (თუ ასე იზამ)",
+
+"უკუდავ მექმნე მე მაგით სიტყჳთა":"მახლობელი გამიხდები",
+
+"ღმერთმან შესძინენ დღეთა ცხორებისა შენისათა":"ღმერთმა გაახანგრძლივოს შენი სიცოცხლე",
+
+"შეატყუა":"შეატყო",
+
+"განვალეს წმიდაჲ იგი ჴორცთა ამათგან":"წმინდანი კვდებოდა",
+
+"მაკურთხე":"დამლოცე",
+
+"კაცი საწუთროჲსა":"ამქვეყნიური, სოფლისმოყუარე (წუთისოფლის მოყვარული)",
+
+"მოგჳტევენ":"გვაპატიე",
+
+"მოიჴსენებ":"გაიხსენებ",
+
+"მედგრობა":"გულგრილობა",
+
+"ჰყავთ წარმდებად":"ცუდად, უგულოდ ჰქენით",
+
+"იპოვა":"აღმოჩნდა",
+
+"რომელსამცა აქუნდა წყალობაჲ":"რომელიც მოწყალე იქნებოდა",
+
+"რომელმანმცა შეაჯერა":"რომელიც დაარწმუნებდა, დააჯერებდა",
+
+"თჳნიერ შენსა":"უშენოდ",
+
+"ფრიად დავშუერით":"ძლიერ ვეცადეთ",
+
+"გარნა არა იყო სმენაჲ":"მაგრამ არაფერი გაიგონა",
+
+"განვისაჯნეთ":"გავსამართლდებით",
+
+"მუნ":"იქ",
+
+"სადა":"იგი - სადაც",
+
+"არა არს თუალღებაჲ":"არ არის მიკერძოება",
+
+"მსაჯულთაჲსა და მეუფისა მის მეუფეთაჲსა":"ქრისტე",
+
+"რჩევაჲ":"სხვაობა, გარჩევა",
+
+"სწორი":"მართალი (თანასწორი)",
+
+"ვთქუათ":"ვიტყვით",
+
+"მიაგოს მას უფალმან":"ღმერთი გადაუხდის",
+
+"ვითარ":"როგორ, როგორც",
+
+"უჟამოდ ნაყოფნი ჩემნი მოისთულნა და სანთელი ჩემი დაშრიტა და ყუავილი ჩემი დააჭნო":"უდროოდ ჩემი ახალგაზრდობა და სილამაზე დაღუპა",
+
+"შუენიერებაჲ სიკეთისა ჩემისაჲ დააბნელა და დიდებაჲ ჩემი დაამდაბლა":"ჩამოახმო, სიკვდილის პირას მიმიყვანა",
+
+"ღმერთმან საჯოს მის შორის და ჩემ შორის":"ღმერთი გაგვასამართლებს მას და მე",
+
+"ლხინებაჲ ვპოვო":"შვებას მოვიპოვებ",
+
+"უგულისჴმოება":"უგუნურება",
+
+"უწყალოება":"შეუბრალებლობა",
+
+"ტიროდეს":"ტიროდნენ",
+
+"მარტჳლი":"მოწამე",
+
+"ღმერთმან მიგიტევენინ (ცოდვანი)":"ღმერთმა მოგვიტევოს ცოდვები",
+
+"რომელ":"რაჲ-იგი ჰყავთ - რაც ჩაიდინეთ",
+
+"მაშინღა":"მაშინ უკვე, მხოლოდ მაშინ",
+
+"ეზოჲ და პალატი":"სახლ-კარი",
+
+"ამცნებდა სლვად გზათა ღმრთისათა":"ასწავლიდა, ღვთის გზით იარონ",
+
+"ეტყოდა":"ეუბნებოდა",
+
+"ესე ყოველი ცხორებაჲ ვითარცა ყუავილი ველთაჲ წარმავალ არს":"ეს ცხოვრება მინდვრის ყვავილივით წარმავალია",
+
+"დაუდგრომელი":"არამყარი",
+
+"ვინ სთესა":"მოიმკო - ვინც დათესა - მოიმკო",
+
+"ვინ განაბნია გლახაკთათჳს":"შეიკრიბა - ვინც გლახაკები შეიწყალა (მათ ქონება დაურიგა), იგი გამდიდრდა",
+
+"რომელმან წარიწყმიდოს თავი თჳსი, მან პოოს იგი, რომელმან ადიდა იგი":"ვინც თავს დაიღუპავს, მას იპოვის, ვინც იგი ადიდა (ე.ი. ვინც ღვთის გამო მოკვდება, იგი ღმერთს იხილავს)",
+
+"უჯმნა":"გამოუშვა, გამოემშვიდობა",
+
+"მოყუასი":"მეგობარი",
+
+"დამაშურალ, სახლეულითურთ თანაყოფით იყვნეს":"ზრუნავდნენ ოჯახის წევრებთან ერთად",
+
+"იყვნეს... თანაზიარ":"თანაუგრძნობდნენ",
+
+"მადლობით წარჰგზავნიდეს ნავთსადგურისა მის მიმართ ქრისტჱსისა":"მადლობით აგზავნიდნენ სამუდამო სამყოფელში",
+
+"აზნაური":"დიდი ფეოდალი",
+
+"ზეპური":"დიდებული, დიდგვაროვანი",
+
+"დედაჲ":"ქალი",
+
+"უაზნო":"მდაბიო",
+
+"სოფლისა ქართლისანი":"საქართველო (ქართლი)",
+
+"ახოვანი მჴნე":"მხნე მებრძოლი",
+
+"მიჰვედრიდეს ქრისტესა":"ქრისტეს შეავედრებდნენ",
+
+"ითხოვდეს":"ითხოვდნენ",
+
+"ერთბამად":"ერთხმად",
+
+"საცოდ":"დასაცავად",
+
+"ნაკურთხევი":"დალოცვილი",
+
+"ხუცესმან აღივსენ წადილი თქუენი":"მღვდელმა შეგისრულოთ სურვილი",
+
+"მე რაჲმე":"რაჲ შემძლებელ ვარ - მე რის შემძლე ვარ (მე რა შემიძლია)? ქრისტემან აღგავსენინ თქუენ ყოვლითა კეთილითა - ქრისტემ აგავსოთ ყველაფერი კეთილით",
+
+"მოშუერით":"მოხვედით, გაისარჯეთ, შეწუხდით",
+
+"აჰა ესერა":"აი",
+
+"გზასა წარვალ საუკუნესა":"სამარადისო გზას",
+
+"ჭირისა ამის წილ":"გაჭირვების სანაცვლოდ",
+
+"მომმადლოს":"მომმადლებს",
+
+"მივემთხჳო მე დიდებასა":"მივიღებ დიდებას",
+
+"ჯმნული":"განშორებული",
+
+"ძლევისა მისთჳს":"გამარჯვების გამო",
+
+"შესწირვიდეს":"სწირავდნენ",
+
+"გამოვიდეს ციხით":"ციხიდან გამოვიდნენ",
+
+"წარვიდეს":"წავიდნენ",
+
+"მოუწოდა":"დაუძახა",
+
+"მადლსა მისცემდა":"მადლობას უხდიდა",
+
+"მოწლებისა მისისათჳს":"მისი სიკეთის გამო",
+
+"მამამძუძე":"აღმზრდელი",
+
+"შემვედრა":"შემავედრა",
+
+"უბრძანებდა დასხმად ადგილსა მას":"უბრძანებდა, იქ დაეკრძალათ",
+
+"ვინაჲცა":"იგი - საიდანაც",
+
+"უკუეთუ":"თუ",
+
+"ღირს რჲმე ვარ":"ღირსი ვარ",
+
+"უკუანაჲსკნელი ესე მეათერთმეტჱ მოქმედი ვენაჴისაჲ":"მორწმუნეთა შორის უკანასკნელი",
+
+"მაშინღა":"მაშინ უკვე, მხოლოდ მაშინ",
+
+"ადრე–ადრე":"სწრაფად",
+
+"მოიღო":"მოიტანა",
+
+"შესაგრაგნელად":"შესახვევად",
+
+"თხრამლი":"ჩირქი",
+
+"ყოველი კრებული":"მთელი მრევლი",
+
+"კეროვნი აღნთებული":"ანთებული სანთელი",
+
+"საკუმეველი სულნელი":"სურნელოვანი საკმეველი",
+
+"აღვიხუენით . . . ძუალნი":"ავიღეთ ძვლები (გვამი)",
+
+"გამოვიხუენით":"გამოვასვენეთ",
+
+"დავითის ქნარითა":"ფსალმუნებით",
+
+"განაქველნის მამანიცა და დედანიცა":"ამხნევებს კაცებს და ქალებს",
+
+"თჳსი იგი ძლიერებისა ძლევაჲ მიჰმადლის":"თავის მახლობლებს (მორწმუნეებს) გამარჯვებას მიანიჭებს",
+
+"აპნისი":"იანვარი",
+
+"აღუსებისა ზატიკი":"აღდგომის დღესასწაული",
+
+"ვარდობაჲ":"მაისი",
+
+"აღსრულებაჲ":"სიკვდილი",
+
+"კოზმან და დამიანე":"ეწამნენ კილიკიაში დიოკლიტიანე იმპერატორის დროს (III-IVსს.)",
+
+"განვაწესეთ":"დავაწესეთ",
+
+"რომლისა შუენის":"რომელსაც შვენის, შეეფერება",
+
+    
+}		;
+        // ლექსიკონის დამუშავება - გასუფთავება (სფეისების მოცილება)
+        const dictionary = {};
+        Object.keys(initialDictionary).forEach(key => {
+            dictionary[key.trim()] = initialDictionary[key];
+        });
+    // თავები
+ const chapters = [
+ 
+
+ 
+             
+  
+            {
+                title: "შუშანიკის წამება",
+                content: `<b>წამებაჲ წმიდისა შუშანიკისი, დედოფლისაჲ</b>
+                
+და აწ დამტკიცებულად გითხრა თქუენ აღსასრული წმიდისა და სანატრელისა შუშანიკისი:
+I. 
+იყო, მერვესა წელსა სპარსთა მეფისასა, კარად სამეფოდ წარემართა ვარსქენ პიტიახში, ძჱ არშუშაჲსი, რამეთუ პირველ იგიცა იყო ქრისტიანე, ნაშობი მამისა და დედისა ქრისტიანეთაჲ. და ცოლად მისა იყო ასული ვარდანისი, სომეხთა სპაჲსპეტისაჲ, რომლისათჳს-ესე მივწერე თქუენდა, მამისაგან სახელით - ვარდან, - და სიყუარულით სახელი მისი - შუშანიკ, მოშიში ღმრთისაჲ, ვითარცა-იგი ვთქუთ, სიყრმითგან თჳსით.
+
+და უკეთურებისა მის სახისა ქმრისა მისისაჲსა მარადის გულს-ეტყჳნ და ევედრებინ ყოველთავე ლოცვის-ყოფად მისთჳს. რაჲთამცა ცვალა იგი ღმერთმან სახისა მისგან უგუნურებისა და იქმნამცა გონიერებასა ქრისტესსა.
+
+ხოლო ამის უბადრუკისა და სამგზის საწყალობელისა ვარსქენისი ვითარმე ვინ თქუას ყოვლად განწირულისაჲ, ვითარ-იგი განაგდო სანატრელი სასოებაჲ ქრისტესი, ანუ ვინ არა სტიროდის მას, რომელსა არცა ჭირი ეხილვა, არცა შიში, არცა მახჳლი, არცა პყრობილებაჲ ქრისტესთჳს?!
+
+რამეთუ რაჟამს წარდგა იგი წინაშე სპარსთა მეფისა, არა თუ პატივისა მოღებისათვის, არამედ ძღუნად თავსა თჳსსა შესწირჳდა მეფისა მის მიმართ, უვარის-ყოფითა ჭეშმარიტისა ღმრთისაჲთა და თაყუანის-სცემდა ცეცხლსა, რამეთუ ყოველით კერძოვე თავი თჳსი ქრისტეჲსგან განაგდო.
+
+ხოლო საწყალობელი ესე ცოლსა ითხოვდა სპარსთა მეფისაგან, რაჲთამცა სათნო-ეყო მეფესა, და ესრეთ ეტყოდა, ვითარმედ: „რომელი-იგი ბუნებითი ცოლი არს და შვილნი, იგინიცა ესრევე მოვაქცინე შენსა სჯულსა, ვითარცა-ესე მე“. ამას უქადებდა, რომელი-იგი არა აქუნდა ჴელთა შუშანიკისაგან. მაშინ განიხარა მეფემან და ბრძანა ცოლად მისა ასული მეფისაჲ.
+
+II. 
+და იჯმნა მეფისაგან სპარსთაჲსა პიტიახშმან. და ვითარცა მოიწია იგი საზღვართა ქართლისათა, ქვეყანასა მას ჰერეთისასა, ზრახვა-ყო, რაჲთა აუწყოს და წინამიეგებნენ მას აზნაურნი და მისნი ძენი და მსახურნი მისნი, რაჲთა მათ გამო, ვითარცა გუელი, სოფლად შევიდეს. და წარმოჰმართა საიდასპანოჲთა ცხენითა მონაჲ თჳსი. და ვითარცა მოვიდა დაბასა, რომელსა სახელი ჰრქჳან ცურტავ.
+
+და ვითარცა მოიწია და შევიდა წინაშე შუშანიკისა, დედოფლისა ჩუენისა, კითხვაჲ ჰრქუა, ხოლო სანატრელმან შუშანიკ, ვითარცა წინაჲსწარმეტყუელმან ჰრქუა: „უკუეთუ სულითა ცხოველ არს იგი, ცოცხალმცა ხართ, იგიცა და შენცა. უკუეთუ სულითა მომკუდარ ხართ, მოკითხვაჲ ეგე შენი შენდავე მოიქეცინ!“. ხოლო კაცმან მან ვერ იკადრა სიტყუად მისა. ხოლო წმიდაჲ შუშანიკ აფუცებდა და ჰკითხჳდა დამტკიცებულად. ხოლო კაცმან უთხრა მართალი და ჰრქუა, ვითარმედ: „ვარსქენ უვარ-ყო ჭეშმარიტი ღმერთი“.
+
+ვითარცა ესმა ნეტარსა შუშანიკს, დავარდა ქუეყანასა ზედა და თავსა დამართ სცემდა და ცრემლითა მწარითა იტყოდა: „საწყალობელ იქმნა უბადრუკი ვარსქენ, რამეთუ უვარ-ყო ჭეშმარიტი ღმერთი და აღიარა ატროშანი და შეერთო იგი უღმრთოთა“.
+
+და აღდგა და დაუტევა ტაძარი თჳსი და ღმრთისმოშიშებით ეკლესიად შევიდა და თანა მიიყვანა სამნი იგი ძენი და ერთი ასული და წარადგინნა იგინი წინაშე საკურთხეველისა და ესრეთ ილოცვიდა და იტყოდა: „უფალო ღმერთო, შენნი მოცემულნი არიან და შენ დაიცვენ ესენი, განათლებულნი წმიდისაგან ემბაზისა, მადლითა სულისა წმიდისაჲთა, ყოფად ერთ სამწყსო ერთისა მწყემსისა უფლისა ჩუენისა იესუ ქრისტესა!“
+
+და ვითარცა მწუხრისა ჟამი აღასრულეს, სახლაკი ერთი მცირე პოვა მახლობელად ეკლესიასა და შევიდა მუნ შინა სიმწარითა სავსე და მიეყრდნა ყურესა ერთსა და მწარითა ცრემლითა ტიროდა.
+
+III. 
+ხოლო ეპისკოპოსი იგი სახლისა მის პიტიახშისაჲ, რომელსა სახელი ერქუა აფოც, არა მუნ იყო, არამედ კაცისა ვისამე წმიდისა ვანად მისრულ იყო კითხვად რაჲსამე სიტყჳსა. და მეცა, ხუცესი დედოფლისა შუშანიკისი, თანავჰყვანდი ეპისკოპოსსა მას. და მყის მოიწია ჩუენდა დიაკონი შინაჲთ და გჳთხრა ჩუენ ესე ყოველი - მოსლვაჲ პიტიახშისაჲ და საქმენი დედოფლისანი. ხოლო ჩუენ აღვივსენით მწუხარებითა და დიდითაი ტირილითა ვტიროდეთ განმწარებულნი ცოდვათ ჩუენთა წარმოჩინებისათჳს.
+
+ხოლო მე ვიჯმენ ადრე და მივიწიე დაბასა მას, რომელსაცა იყო ნეტარი შუშანიკ. და ვითარცა ვიხილე იგი განმწარებული, მეცა ვტიროდე მის თანავე. და ვარქვი ნეტარსა შუშანიკს: „ღუაწლსა დიდსა შესლვად ხარ, დედოფალო! ეკრძალე სარწმუნოებასა ქრისტესსა, ნუ-უკუე მტერმან, ვითარცა სრსჳლმან, საძოვარი პოოს შენ თანა“. ხოლო წმიდამან შუშანიკ მრქუა მე: „ხუცეს, და მეცა დიდსა ღუაწლსა განმზადებულ ვარ“. და მე ვარქუ მას: „ეგრჱთ არს. მჴნე იყავ, მოთმინე და სულგრძელ“. ხოლო მან მრქუა მე: „ჩემდა მარტოჲსა არიან ჭირნი ესე!“
+
+ხოლო მე ვარქუ მას: „ჭირნი შენნი ჭირნი ჩუენნი არიან და სიხარული შენი სიხარული ჩუენი არს. ჩუენი არა ხოლო თუ დედოფალი ოდენ იყავ, არამედ ჩუენ, ყოველთა, ვითარცა შვილთა, გუხედევდ“.
+
+და ვარქუ მე სანატრელსა მას: „ხუაშიადადრე, ვითარ გეგულების, მითხარ მე, რაჲთა უწყოდი და აღვწერო შრომაჲ შენი“. ხოლო მან მრქუა მე: „რასა მკითხავ ამას?“ დ მე მიუგე და ვარქუ მას: „მტკიცედ სდგაა?“ და მან მრქუა მე: „ ნუ იყოფინ ჩემდა, თუმცა ვეზიარე საქმეთა და ცოდვათა ვარსქენისათა!“ მე მიუგე და ვარქუ მას: „მწარე გონება აქუს მას, გუემასა და ტანჯუასა დიდსა შეგაგდოს შენ“. ხოლო მან მრქუა მე: „უმჯობეს არს ჩემდა ჴელთა მისთაგან სიკუდილი, ვიდრე ჩემი და მისი შეკრებაჲ და წარწყმედაჲ სულისა ჩემისაჲ, რამეთუ მასმიეს მე პავლჱს მოციქულისაგან: „არა დამონებულ არს ძმაჲ, გინა დაჲ, არამედ განეყენენ“. და მე ვთქუ: „ეგრეთ არს“.
+
+IV. 
+და ვიდრე ჩუენ ამას სიტყუასა შინა ვიყვენით, კაცი ერთი სპარსი მოვიდა და შევიდა იგი წინაშე ნეტარისა შუშანიკისა, და ტირილით იტყოდა: „ესევითარი სახლი მშჳდობისაჲ ვითარ საწყალობელ იქმნა და სიხარული მწუხარებად გარდაიქცა“. ხოლო ზრახვითა იყო იგი ვარსქენისითა და ზაკუვით იტყოდა ამას და უნდა მონადირებაჲ ნეტარისა მის. ხოლო წმიდამან მან ცნა ზაკუვითი იგი ზრახვაჲ მისი და მოიზღუდა თავი მისი მტკიცედ.
+
+და შემდგომად სამისა დღისა მოვიდა ვარსქენ პიტიახში. და უთხრა სპარსმან მან ფარულად და ჰრქუა: „მე ვითარ მიცნობიეს, ცოლი შენი განდგომილ არს შენგან. და მე გეტყჳ შენ: ნუ რას ფიცხელსა სიტყუასა ეტყჳ მას, რამეთუ დედათა ბუნებაჲ იწრო არს“.
+
+და ხვალისა დღე, ვითარ აღდგა პიტიახში, გჳწოდა ჩუენ, ხუცესთა, და მივედით. და სიხარულით შეგჳმთხჳნა და გვრქუა ჩუენ: „აწ ნუ რას მერიდებით მე ნუცა ღა გძაგ“. და ჩუენ მიუგეთ და ვარქუთ: „წარსწყმიდე თავი შენი და ჩუენცა წარგუწყმიდენ“. მაშინღა იწყო სიტყუად და თქუა: „რაჲსა ჴელ-იწიფა ჩემ ზედა ცოლმან ჩემმან ესევითარისა საქმედ? აწ მივედით და არქუთ, ვითარმედ შენ ჩემი ხატი დაამჴუ. და საგებელსა ჩემსა ნაცარი გარდაასხ. და შენი ადგილი დაგიტევებიეს და სხუად წარსრულ ხარ“. ხოლო წმიდამან შუშანიკ თქუა: „არა თუ მე აღმემართა ხატი იგი? და მემცა დავამჴუ! ხოლო მამამან შენმან აღჰმართნა სამარტჳლენი და ეკლესიანი აღაშჱნნა, და შენ მამისა შენისა საქმენი განრჰყუნენ და სხუად გარდააქციენ კეთილნი მისნი. მამამან შენმან წმიდანი შემოიხუნა სახიდ თჳსა, ხოლო შენ დევნი შემოიხუენ, მან ღმერთი ცათაჲ და ქუეყანისაჲ აღიარა და ჰრწმენა, ხოლო შენ ღმერთი ჭეშმარიტი უვარ-ჰყავ და ცეცხლსა თაყუანის-ეც, და ვითარცა შენ შემოქმედი შენი უვარ-ჰყავ, ეგრეცა მე შენ შეურაცხ-გყავ. და, თუ მრავალი ტანჯვაჲ მოაწიო ჩემ ზედა, მე არა ვეზიარო საქმეთა შენთა!“
+
+ხოლო ჩუენ ესე ყოველი მიუთხართ პიტიახშსა. ხოლო მან განიწყო გული და იბრდღუენდა მისთჳს.
+
+V. 
+მერმე მიავლინა ჯოჯიკ, ძმაჲ თჳსი, და ცოლი ჯოჯიკისი, ძმის ცოლი თჳსი, და ეპისკოპოსი სახლისა თჳსისაჲ და ჰრქუა მათ: „ესრეთ არქუთ: აღდეგ და მოვედ ადგილსა თჳსსა და ნუ ეგევითარი გონებაჲ გიპყრიეს, უკუეთუ არა, თრევით მოგითრიო!“
+
+და ვითარ მიიწინეს და შევიდეს წინაშე დედოფლისა და მრავალსა დასაჯერებელსა სიტყუასა ეტყოდეს მას, მაშინ წმიდამან შუშანიკ ჰრქუა მათ: „კაცნო ბრძენნო, თქუენ კეთილად იტყჳთ, გარნა ნუ დაგიჯერებიეს, თუმცა მე მისა ცოლადღა ვიყავ. მეგონა მე, ვითარმედ იგი ჩემდა მოვაქციო და ღმერთი ჭეშმარიტი აღიაროს, და აწ მე მაიძულებთ ამას ყოფად?! ნუ იყოფინ ესე ჩემდა! და შენ, ჯოჯიკ, არღარა ჩემი მაზლი ხარ და არცაღა მე შენი ძმისცოლი, არცა ცოლი შენი დაჲ ჩემი არს, რომელნი მის კერძო და მისთა საქმეთა ზიარ ხართ“. ჰრქუა მას ჯოჯიკ: „უწყი მე, აწ მოავლინნეს მსახურნი და თრევით წარგიყუანოს შენ“. ხოლო წმიდამან შუშანიკ ჰრქუა: „უკუეთუ შემკრას და მითრიოს, მიხარის, რამეთუ მით სახითა იყოს განჩინებაჲ ჩემი მისგან“.
+
+და ვითარცა ესმა ესე მისგან, ცრემლოოდეს ყოველნი და ჯოჯიკ აღდგა და ცრემლით გარე განვიდა.ხოლო წმიდამან შუშანიკ ჰრქუა ეპისკოპოსსა: „ვითარ მეტყჳ მე დაჯერებად ჩემდა, რამეთუ მან ღმერთი უვარ-ყო?!“ ხოლო ჯოჯიკ ევედრებოდა და ეტყოდა: „დაჲ ჩუენი ხარ შენ, ნუ წარსწყმედ სახლსა ამას სადედოფლოსა“. ჰრქუა მას წმიდამან შუშანიკ: „უწყი, ვითარმედ დაჲ ვარ და ერთგან განზრდილნი, ხოლო მაგას ვერ ვჰყოფ, ვითარმცა მოსისხლეობაჲ იქმნა, და თქუენ ყოველნი თანამდებ იქმნენით“.
+
+და ვითარცა ფრიად აურვებდეს მას, აღდგა წმიდაჲ და ნეტარი შუშანიკ და თანაწარიტანა ევანგელჱ თჳსი, და ტირილით ესრჱთ იტყოდა: „უფალო ღმერთო, შენ უწყი, ვითარმედ მე გულითად სიკუდილდ მივალ“.
+
+ესე თქუა და წარვიდა მათ თანა, და თანაწარიტანა ევანგელჱ თჳსი და წმიდანი იგი წიგნნი მოწამეთანი. და რაჟამს შევიდა იგი ტაძარსა მას, არა დაჯდა იგი თჳსსა მას გალიაკსა, არამედ სენაკსა შინა მცირესა. და აღიპყრნა ჴელნი თჳსნი ზეცად წმიდამან შუშანიკ და თქუა: „უფალო ღმერთო, არცა მღვდელთაგანი ვინ იპოვა მოწყალჱ. არცა ერისა კაცი ვინ გამოჩნდა შორის ერსა ამას. არამედ ყოველთა მე სიკუდილდ მიმითუალეს მტერსა ღმრთისასა ვარსქენს“.
+
+VI. 
+და შემდგომად ორისა დღისა მოვიდა მგელი იგი ტაძრად და ჰრქუა მსახურთა თჳსთა: „ოდეს მე და ჯოჯიკ და ცოლმან მისმან ერთად პური ვჭამოთ, ხოლო სხუასა ნუ ვინ უფლიედ ჩუენ თანა შემოსლვად“. და რაჟამს შემწუხრდა, მოუწოდეს ცოლსა ჯოჯიკისსა და ინებეს ერთად პურისა ჭამაჲ, რაჲთამცა მოიყვანეს წმიდაჲ შუშანიკცა. და ვითარცა მოიწია ჟამი პურისაჲ, შევიდეს ჯოჯიკ და ცოლი მისი წინაშე წმიდისა შუშანიკისა, რაითამცა მასცა აჭამეს პური, რამეთუ ყოველნი იგი დღენი უზმასა გარდაევლინეს. და ვითარცა მეტად აიძულეს და ძლით წარიყვანეს ტაძრად, ხოლო გემოჲ არარაჲსაჲ იხილა. ხოლო ცოლმან ჯოჯიკისმან მიართუა ღჳნოჲ ჭიქითა და აიძულებდა მას, რაჲთამცა იგი ხოლო შესუა. ჰრქუა მას წმიდამან შუშანიკ რისხვით: „ოდეს ყოფილ არს აქამომდე, თუმცა მამათა და დედათა ერთად ეჭამა პური?!“ და განყარა ჴელი და ჭიქაჲ იგი პირსა შეალეწა და ღჳნოჲ იგი დაითხია.
+
+მაშინ იყო უჯეროსა გინებად ვარსქენ და ფერჴითა თჳსითა დასთრგუნჳდა მას, და აღიღო ასტამი და უხეთქნა მას თავსა, და ჩაჰფლა, და თუალი ერთი დაუბუშტა. და მჯიღითა სცემდა პირსა მისსა უწყალოდ და თმითა მიმოითრევდა; ვითარცა მჴეცი მძჳნვარჱ, ყიოდა და იზახდა, ვითაცა ცოფი. მაშინ შუელად აღდგა ჯოჯიკ, ძმაჲ მისი, და იბრძოდეს, ვიდრემდის გუემა იგიცა, და თავსა მისსა მოხეთქა, და ჭირით, ვითარცა კრავი მგელსა, გამოუღო ჴელთა მისთა. და ვითარცა მკუდარი, იდვა წმიდაჲ შუშანიკ ქუეყანასა ზედა, და აგინებდა ვარსქენ თესლ-ტომსა მისსა და სახლისა მაოჴრებელად სახელ-სდებდა მას. და უბრძანა შეკრვაჲ მისი და ბორკილთა შესხმაჲ ფერჴთა მისთაჲ.
+
+და ვითარცა მცირედ და-რე-სცხრა გულისწყრომისაგან, მოვიდა სპარსი იგი და მჴურვალედ ევედრებოდა მას, რაჲთამცა საკრველთა მათგან განეტევა წმიდაჲ შუშანიკ. და ვითარ ფრიად ევედრებოდა, ბრძანა განტევებაჲ მისი და სენაკსა ერთსა შეყვანებაჲ და კრძალულად დაცვაჲ მისი ერთითა მსახურითა, და რაჲთა სხუაჲ არა ვინ შევიდეს ხილვად მისა, - არცა მამაკაცი, არცა დედაკაცი.
+
+VII. 
+და ვითარცა ცისკარ ოდენ იყო, იკითხა და თქუა მსახურისა მიმართ მისისა, ვითარმედ: „წყლულებისა მისგან ვითარ არს?“ ხოლო მან ჰრქუა მას: „ვერ განსარინებელ არს იგი“. მაშინ თჳთ შევიდა და იხილა იგი. და დაუკჳრდა დიდძალი იგი სიმსივნჱ მისი. და ამცნო მსახურსა მას და ჰრქუა: „ნუმცა ვინ შევალს ხილვად მისა“. და თჳთ ნადირობად წარვიდა.
+
+ხოლო მე აღდეგ და მივედ და ვარქუ მცველსა მას: „მე ხოლო მარტოჲ შემიტევე და ვიხილო წყლულებაჲ იგი მისი“. ხოლო მან მრქუა მე: „ნუუკუე ცნას და მომკლას მე?“ და მე ვარქუ მას: „უბადრუკო, არა მისი განზრდილი ხარა და, თუ მოგკლას შენ მისთჳს, რაჲ არს?“ მაშინ შემიტევა მე ფარულად.
+
+და ვითარ შევედ შინა, ვიხილე ხატი მისი დაბძარული და განსივებული, და აღუტევე ჴმაჲ და ვტიროდე. ხოლო წმიდამან შუშანიკ მრქუა მე: „ნუ სტირ ჩემთჳს, რამეთუ დასაბამ სიხარულისა იქმნა ჩემდა ღამჱ ესე“. და მე ვარქუ წმიდასა შუშანიკს: „მიბრძანე და მოგბანო სისხლი ეგე პირსა შენსა და ნაცარი, რომელი თუალთა შენთა შთახეულ არს, და სალბუნი და წამალი დაგდვა, რაჲთა ჰე, ღა-მე თუ განიკურნო“. ხოლო წმიდამან შუშანიკ მრქუა მე: „ხუცეს, მაგას ნუ იტყჳ, რამეთუ სისხლი ესე განმწმენდელ არს ცოდვათა ჩემთაჲ“.
+
+ხოლო მე მცირედ ვაიძულე მიღებად ჭამადი, რომელი მოეძღუანა სამოელ ეპისკოპოსსა და იოვანეს, რამეთუ ფარულად იღუწიდეს და ნუგეშინის-სცემდეს. მაშინ მრქუა მე წმიდამან შუშანიკ: „ხუცეს, ვერ ძალ-მიც გემოჲს-ხილვად, რამეთუ ყბანი და ზოგნი კბილნი შთამუსრვილ არიან“. მაშინ მივიღე მცირედ ღჳნოჲ და პური დავალბე და მცირედ გემოჲ იხილა. და მე ვისწრაფდი გამოსლვად.
+
+მაშინ მრქუა მე წმიდამან შუშანიკ: „ხუცეს, მიუძღუანოა საკაული ესე მისი, ნუუკუე ითხოვდეს, რამეთუ მე ამას ცხორებასა არღარა მეჴმარების!“ ხოლო მე ვარქუ: „ნუ რას ისწრაფი, იყოს შენ თანა“. და ჩუენღა ამას განვიზრახევდით, მოვიდა ყრმაჲ ერთი და თქუა: „იაკობ მანდა არსა?“ და მე ვარქუ, ვითარმედ: „რაჲ გინებს?“ და მან მრქუა: „უწესს პიტიახში. და მე დამიკჳრდა, თუ რაჲსა-მე მიწესს ამას ჟამსა?! და მივისწრაფე და მივედ და მან მრქუა მე: „უწყია, ხუცეს, მე ბრძოლად წარვალ ჰონთა ზედა? და ჩემი სამკაული მას არა დაუტეო. ოდეს იგი არა ჩემი ცოლი არს, იპოოს ვინმე, რომელმან განკაფოს იგი. მივედ და მომართუ იგი ყოველივე, რაჲცა-რაჲ არს!“ ხოლო მე მივედ და უთხარ წმიდასა შუშანიკს. ხოლო მან განიხარა ფრიად და მადლი მისცა ღმერთსა და ყოველივე მომიძღუანა. და მივართუ პიტიახშსა და მან მიიღო ჩემგან, აღიხილნა და იპოვა ყოველი გებულად. და კუალად თქუა: „მერმეცა იპოოს ვინმე, რომელმან ესე შეამკოს“.
+
+VIII. 
+და ვითარცა მოიწინეს დიდნი იგი მარხვანი, მივიდა ნეტარი იგი შუშანიკ მახლობელად წმიდასა ეკლესიასა და იძია მცირჱ სენაკი და მუნ დაეყუდა. და იყო სენაკსა მას მცირჱ სარკუმელი და დაყო იგი. და იყო ბნელსა მას შინა მარხვით და ლოცვით და ტირილით. და ჰრქუა ვინმე პიტიახშსა საკუთარმან მისმან, ვითარმედ: „ამათ წმიდათა მარხვათა ნუ რას ერტყჳ მას“.
+
+და ვითარ მოიწია აღვსებისა ორშაბათი და მოვიდა პიტიახში ბრძოლისა მისგან ჰონთაჲსა, ეშმაკი თხრიდა გულსა მისსა. და აღდგა და მივიდა ეკლესიად და ეტყოდა ეპისკოპოსსა მას აფოცს: „გამომეც ცოლი ჩემი, რად განმაშორებ ჩემგან?“ და იწყო გინებად და გმობად ღმრთისა სასტიკად. ხოლო ხუცესმან ერთმან ჰრქუა მას: „უფალო, რაჲსა ეგრე იქმ, და იტყჳ ეგრეთ ბოროტსა და აგინებ ეპისკოპოსსა, და წმიდასა შუშანიკს რისხვით ეტყჳ?“ ხოლო მან უხეთქნა კუერთხითა ხუცესსა მას ზურგსა. და მან ვერღარა იკადრა სიტყუად.
+
+და ეგრეთ წმიდაჲ შუშანიკ თრევით მოითრია თიჴათა შიგან და ეკალთა ზედა ეკლესიით ვიდრე ტაძრადმდე, ვითარცა მკურადი, მიერთრია; და ადგილდ-ადგილდ ქუე ძეძჳ დაეფინა. და თჳთ ფერჴნი დაიდგნის ძეძუსა მას ზედა, და კუბასტნი შუშანიკისნი და ჴორცნი წულილ-წულილად დაებძარნეს ძეძუსა მას. და ეგრეთ მოიყვანეს იგი ტაძრად.
+
+და უბრძანა შეკრვაჲ მისი და ცემაჲ. ბოროტებდა და იტყოდა: „აჰა, ეგერა, არა გერგო შენ ეკლესიაჲ შენი და არცა ზურგნი ეგე შენნი ქრისტიანენი, და უფალი იგი მათი!“
+
+და ვითარცა სცეს კუერთხსა სამას ოდენ, არა რაჲ აღმოჴდა პირსა მისსა ვაებაჲ, არცა კუნესაჲ. მაშინღა ჰრქუა წმიდამან შუშანიკ ურჩულოსა ვარსქენს: „უბადოო, შენღა თავი თჳსი არა შეიწყალე და განსდეგ ღმრთისაგან, შენ მემცა შემიწყალეა?!“
+
+და ვითარცა იხილა დიდძალი იგი სისხლი, რომელ დამოსდიოდა ჩჩჳლთა მათ ჴორცთა მისთა, მაშინ უბრძანა დადებაჲ ჯაჭჳ ქედსა მისსა. და უბრძანა სენეკაპანსა ერთსა, რაჲთა წარიყვანონ წმიდაჲ შუშანიკ ციხედ და საპყრობილესა ბნელსა შეაყენონ იგი, და მოკუდეს.
+
+IX. 
+დიაკონი ვინმე ერთი მის ეპისკოპოსისაჲ დგა წმიდისა შუშანიკის თანა მას ჟამსა, რომელსა გამოჰყვანდა იგი ტაძრით, და უნდა, რაჲთამცა ჰრქუა, თუ: „მტკიცედ დეგ!“ და თუალი ჰკიდა პიტიახშმან, სხუაჲ ვერღარაჲ სცალდა სიტყუად, ესთენ ოდენ ჰრქუა: „მტკი...“ და დადუმნა ხოლო და სივლტოლად იწყო სწრაფით.
+
+მაშინ წარმოიყვანეს და მოჰყვანდა წმიდაჲ შუშანიკ უჴამური და თმაგარდატევებული, ვითარცა ერთი ვინმე შეურაცხთაგანი, და ვერვინ იკადრა თავდა მისსა დაბურვად, რამეთუ პიტიახში იგი მჴედრ შეუდგა უკუანა კუალსა მისსა და აგინებდა მას მრავლითა გინებითა.
+
+და მივიდოდა წმიდისა მის თან ამბოხი მრავალი დედებისა და მამაბისაჲ, სიმრავლჱ ურიცხჳ, რამეთუ უკუანა შეუდგეს, ჴმაჲ აღემაღლა და ტიროდეს და იჴაჴდეს ღაწუთა მათთა და საწყალობელად დასთხევდეს ცრემლთა მათთა წმიდისა შუშანიკისთჳს. ხოლო წმიდამან შუშანიკ უკმოჰხედნა ერსა მას და ჰრქუა მათ: „ნუ სტირთ, ძმანო ჩემნო და დანო ჩემნო და შვილნო ჩემნო, არამედ ლოცვასა მომიჴსენეთ. და ჯმნულმცა ვარ მე თქუენგან ამიერითგან, რამეთუ არღარა მიხილოთ ცოცხალი გამოსრული ციხით“. და ვითარცა იხილა პიტიახშმან ამბოხი იგი და ტირილი მამათა და დედათაჲ, მოხუცებულთა და ყრმათაჲ, მჴედრ მიმოდასდევნინ და მეოტ-ჰყოფნ მათ ყოველთა. და ვითარცა მიიწინეს ჴიდსა მას ციხისასა, ჰრქუა პიტიახშმან წმიდასა შუშანიკს: „შენდა ეგდენ ყოფად არს ფერჴითა შენითა სლვაჲ, რამეთუ ცოცხალი არღარა გამოსლვად ხარ, გარნა თუ ოთხითა გამოგიღონ“.
+
+და ვითარცა შევიდეს ციხედ, პოვეს სახლაკი ერთი ჩრდილოჲთ კერძო, მცირჱ და ბნელი, და მუნ შეაყენეს წმიდაჲ იგი. და ჯაჭჳ იგი, რომელ ედვა ქედსა მისსა ზედა, ეგრეთვე ედვა, და დაჰბეჭდა ურჩულომან ვარსქენ ბეჭდითა თჳსითა. ხოლო წმიდამან შუშანიკ თქუა: „მე ამას მხიარულ ვარ, რაჲთა აქა ვიტანჯო და მუნ განვისვენო“. ხოლო პიტიახშმან ჰრქუა მას: „ჰე, ჰე, განისუენე!“
+
+მაშინ დაადგინნა მცუელნი მის ზედა და ამცნო მათ, რაჲთა სიყმილითა მოკლან იგი. და ესრეთ ეტყოდა მათ: „გეტყჳ თქუენ, უკუეთუ ვინმე შევიდეს მისა, მამაკაცი, გინა დედაკაცი, იხილენით თავნი თქუენნი და ცოლნი და შვილნი და სახლნი თქუენნი! უბრალომცა ვარ, რაჲ გიყო თქუენ!“ მაშინ გამოვიდა ციხით.
+
+X. 
+და მესამესა კჳრიაკესა მოუწოდა მცველსა ერთსა, და ჰკითხა მას და ჰრქუა: „აქამომდე ცოცხალღა არსა საწყალობელი იგი?“ ხოლო მან ჰრქუა: „უფალო, სიკუდილდ კერძო უფრო საგონებელ არს, ვიდრე სიცოცხლით, რამეთუ შიმშილითა უფროჲს ხოლო მოკუდების, რამეთუ არა რას მიიღებს საზრდელსა“. ხოლო მან ჰრქუა: „ნურა რაჲ გგლიან, უტე, მოკუდეს!“
+
+ხოლო მე მრავლითა ვედრებითა ვარქუ მცველსა მას და უქადე ჭურჭერი ერთი სამისოჲ. და ძნიად თავს-იდვა შეტევებაჲ ჩემი და მრქუა მე: „რაჟამს დაღამდეს, მოვედ შენ ხოლო მარტოჲ“. და ვითარ შემიყვანა მცველმან მან და ვიხილე ტარიგი იგი ქრისტესი შუენიერად, ვითარცა სძალი, შემკული საკრველთა მათგან, და მე ვითარ ვერ დამითმო გულმან, ვტიროდე ფრიად. ხოლო წმიდამან შუშანიკ მრქუა მე: „კეთილისა ამისთჳს სტირა, ხუცეს?“ ხოლო მცველმან მან მრქუა მე: „ესეღა თუმცა მეცნა, არამცა შემოგიტევე შენ“. ხოლო მე ვიწყე სიტყუად და განმტკიცებად მისა, რავდენი ღმერთმან მომცა მე სიტყუად. და ვიჯმენ მისგან და წარვედ სწრაფით ვანად ჩემდა.
+
+ხოლო პიტიახში ჩორდ წარემართა. და ჯოჯიკ, ძმაჲ მისი, არა დახუდა, ოდეს საქმჱ ესე იქმნა წმიდისა შუშანიკისა ზედა. და ვითარ მოიწია ჯოჯიკ, უკუანა სდევდა პიტიახშსა. და მიეწია მას საზღვართა ჰერეთისასა, და ევედრებოდა მას ფრიად, რაჲთამცა ბრძანა საკრველთა მათგან განტევებაჲ მისი. და ვითარ ფრიად აწყინა, ბრძანა განტევებაჲ საკრველთაგან ოდენ. და ვითარ მოვიდა ჯოჯიკ, აღჰჴადა ჯაჭჳ იგი ქედსა მისსა, ხოლო ბორკილთაჲ არა თავს-იდუა წმიდამან შუშანიკ ვიდრე აღსასრულამდე მითურთ. რამეთუ ექუსი წელი ციხესა მას შინა აღესრულა და წესიერებითა საღმრთოჲთა ყუაოდა: მარხვითა მარადის, მღჳძარებითა, ზედგომითა, თაყუანის-ცემითა უწყინოდ და კითხვითა წიგნთაჲთა მოუწყინებელად: განაბრწყინა და განაშუენა ყოველი იგი ციხე სულიერითა მით ქნარითა.
+
+XI. 
+და მიერითგან განითქუა ყოველსა ქართლსა საქმჱ მისი. და მოვიდოდეს მამანი და დედანი აღნათქუემთა შესაწირად და, რაჲ ვის უჴმდა, მიემადლებოდა წმიდითა ლოცვითა ნეტარისა შუშანიკისითა, რომელსა მისცემდა მას კაცთმოყუარე ღმერთი: უშვილოთა - შვილი, სნეულთა - კურნება, ბრმათა - თუალთა ახილვაჲ.
+
+იყო ვინმე დედაკაცი ერთი სპარსი მოგჳ, რომელსა განბორებისა სალმობაჲ აქუდა. და მოვიდა იგი წმიდისა შუშანიკისა, ხოლო იგი ასწავებდა მას, რაჲთამცა დაუტევა მოგობაჲ იგი და იქმნა ქრისტიანე. ხოლო დედაკაცმან მან თავს-იდვა ადრე-ადრე. და იგი ასწავებდა დედაკაცსა მას და ეტყოდა, ვითარმედ: „მივედ იერუსალჱმდ და განსწმიდნე განბორებისა მისგან შენისა“. და მან გულსმოდგინედ შეიწყნარა და წარემართა გზასა მას სახელითა უფლისა ჩუენისა იესუ ქრისტესითა. და განიკურნა იგი სალმობისა მისგან. და ვითარ გარემოიქცა იგი სიხარულითა დიდითა და მოიწია მუნვე, მოვიდა იგი წმიდისა შუშანიკისა მადლისა გარდაჴდად და წარვიდა სახიდ თჳსა სიხარულით განმრთელებული.
+
+XII. 
+ხოლო წმიდამან შუშანიკ ნაცვლად ჭიჭნაუხტისა საქმისა დიდითა გულსმოდგინებითა ჴელთა აღიხუნა დავითნი და მცირედთა დღეთა შემდგომად ასერგასისნი იგი ფსალმუნნი დაისწავლნა, რომლითა-იგი დღჱ და ღამჱ ზესკნელითა მის მეუფისა მიმართ სათნოსა მას გალობასა შესწირვიდა ცრემლით.
+
+და უთხრეს ნეტარსა შუშანიკს, ვითარმედ: „შვილნი იგი შენნი მოაქცინა მოგობასა“. მაშინ იწყო თაყუანის-ცემად ღმრთისა მიმართ ტირილითა დიდითა და თავსა თჳსსა ქუე დამართ სცემდა, სულთ-ითქუნა და თქუა: „გმადლობ შენ, უფალო ღმერთო ჩემო, რამეთუ იყვნესვე არა ჩემნი, არამედ შენნი მოცემულნი იყვნეს. ვითარცა გნებავს, იყავნ ნებაჲ შენი, უფალო, და დამიცევ მე საქმეთაგან მტერისათა“.
+
+და მე მივედ და ვიხილე წმიდაჲ შუშანიკ დამშრშალი და დაბუშებული ტირილითა. და მოეძღუანა წმიდასა მას ეპისკოპოსსა საზრდელი, და ვითარ ფრიად ვაიძულე, მცირედ ოდენ გემო იხილა და ვჰმადლობდით ღმერთსა. და ვიდრე მუნ ჟამამდე მოვიდიან შვილნი იგი მისნი ხილვად დედისა თჳსისა, ხოლო რაჟამს მიექცნეს და უვარ-ყვესცა ღმერთი, ვერღარა იკადრეს ხილვად მისა, არამედ სახელიცა მისი სძაგდა სმენად.
+
+XIII. 
+და მერმე მოციქულნი მოავლინნა პიტიახშმან და ჰრქუა: „ანუ ნებაჲ ჩემი ყავ და მოვედ ტაძრად, უკუეთუ არა მოხჳდე შინა, ჩორდ წარგცე შენ, ანუ კარად, კარაულითა“. ხოლო წმიდამან შუშანიკ მიჰრუქა ესრეთ: „უბადოვო და უგულისხმოვო, ხოლო მე თუ კარად, ნუ ჩორდ წარმცე, ვინ უწყის, თუ მუნ კეთილსა რასმე შევემთხჳო და ბოროტსა ამას განვერე“. და გულსა ეტყოდა პიტიახში იგი სიტყუათა მათთჳს, ვითარ-იგი ჰრქუა მას, ვითარმედ: - ვინ უწყის, თუ კეთილსა რასმე მივემთხჳო, - ვითარმედ ნუუკუე მთავართაგანსა ვისმე ეცოლოს, და მიერითგან არღარავინ მიავლინა მისა. ხოლო წმიდაჲ შუშანიკ ბოროტთა მათ გუემათა დათმენათათჳს იტყოდა, რაჲთამცა სათნო-ეყო ღმერთსა.
+
+ხოლო პიტიახშმან გამოირჩია ძუძუჲსმტე მისი საკუთარი, რაჲთა მოიყვანოს იგი ტაძრად. და ვითარცა ჰრქუა კაცმან მან: „ისმინე ჩემი და ჩამოვედ ტაძრად, და ნუ აოჴრებ სახლსა მას თქუენსა“, ჰრქუა მას წმიდამან შუშანიკ: „არქუ მას უღმრთოსა, ვითარმედ: „შენ მომკალ და მარქუ მე: ცოცხალიღა ფერჴითა არა გამოხჳდე შენ მაგიერ ციხით. ხოლო აწ, უკუეთუ შემძლებელ ხარ მკუდარსა აღდგინებადმ პირველად დედაჲ შენი აღადგინე, რომელი ურდს დამარხულ არს, გარნა თუ მისა ვერ შემძლებელ ხარ აღდგინებად, ვერცა ჩემდა შემძლებელ ხარ განყვანებად, გარნა თრევით განმითრიო“.
+
+და ვითარცა მიუთხრა პიტიახშსა სიტყუაჲ იგი, მან თქუა: „ნანდჳლვე ვთქუ ეგე“.
+
+და მეორესა დღესა შემო-ვინმე-ვიდა და ჰრქუა წმიდასა შუშანიკს: „კეთილად მიუგე მას სიტყუაჲ იგი, რამეთუ მაგით სახით ეგულვებოდა შეტყუვილი შენი, და მას სხუაჲ ზრახვაჲ გულსა მოეჴადა სიბოროტისაჲ შენთჳს“. წმიდამან შუშანიკ ჰრქუა მას: „და შენ ღმერთი ძილსა შინა ნუ გგონიეს, რომელმან განუმზადნის სიტყუანი პირსა კაცისასა. რამეთუ იტყჳს თჳთ უფალი: „მე მიუგო სიტყუაჲ თქუენ წილ“.
+
+XIV.
+ და ვითარცა აღივსებოდა მეექუსე იგი წელი საპყრობილესა მას შინა, ჯეკმა დამაშურალობითა შრომათა მათ შინა სიმჴნისა მისისათა სენი სნეულებისაჲ მოიწია მას ზედა, რომელსა-იგი წინასწარ-უღაღადებდი და ვეტყოდე, ვითარმედ: „ნუ ჯეკმა, რამეთუ დაუმძიმებ ჴორცთა მაგათ ზედა, რამეთუ ვერ დაგითმონ და მერმე ვერღარას შემძლებელ იყო ყოფად რასმე საქმედ კეთილსა ეგოდენითა მაგით ფიცხლად მარხვითა და მარადის ზედგომითა და ღამე ყოველ დაშრომითა, ფსალმუნებითა და გალობითა“. და არცაღა მცირედ სადა სცა ჴორცთა მისთა განსუენებაჲ, და შეიქმნა და დადნა, ვითარცა ავლი.
+
+ხოლო დიდთა მათ მარხვათა აღუსებისათა ერგასისთა მათ დღეთა ექუსთა წელთა შინა, არცა დღისი, არცა ღამე არა დაჯდის ქუე, არცა დაიძინის, არცა საჭმელი რაჲ მიიღის, გარნა დღესა ხოლო კჳრიაკესა ეზიარა ჴორცსა და სისხლსა ქრისტეს ღმრთისა ჩუენისასა. და მცირედ ოდენ წუენაკი მსხლისა შექმნული, იგიცა მცირედ, მიიღის, ხოლო პურისა გემო არა იხილის ვიდრე აღუსებადმდე.
+
+და მიერ დღითგან, ვინაჲთგან პყრობილ-ყვეს იგი ციხესა მას შინა, სასთაულსა ზედა თავი არა მიდვის, გარნა ალიზაკი ერთი დაიდვის სასთუნალ. და ქუესაგებელად იყო გირჯაკი ერთი ძუელი. და კაცთა თუალსა სასთაულაკი ერთი ხალენისაჲ უცნ სასთუნლით კერძო. და თაყუანის-საცემელად კილიკი ერთი მცირე ქუე წარუგდებიედ. და გრწყილი და ტილი მოუგონებელი ადგილსა მას დასხმულ იყო.
+
+ჟამსა ზაფხულისასა ცეცხლებრ შემწუელი და მჴურვალებაჲ მზისაჲ, ქარნი ხორშაკნი და წყალნი მავნებელნი, მკჳდრნიცა მის ადგილისანი სავსენი სენითა, წყლითა განსივებულნი და განყჳთლებულნი, დაწერტილნი და დამშრშალნი და დამღიერებულნი, ჩარადოვანნი, პირმსივანნი და დღემოკლედ ცხოვრებულნი, და მოხუცებული არა ვინ არს მათ ქუეყანათა. და ესრეთსა მას ციხესა შინა ექუს წელ პყრობილ იყო და მძიმეთა მათ საკრაველთა შინა ადიდებდა ღმერთსა.
+
+XV. 
+და ვითარცა მეშჳდე წელი დადგებოდა, მოიწია წმიდისა და სამგზის სანატრელისა შუშანიკის ზედა წყლულებაჲცა ჴორცთა მისთაჲ. და დაუცხრომელად შრომათა მათ გამო დაუსივდეს ფერჴნი მისნი და თხრამლი აღმოსდიოდა ადგილდ-ადგილდ. და წყლულებანი დიდ-დიდნი იყვნეს, და მატლიცა დასხმულ იყო წყლულთა მათ, რომელ-იგი აღიღო ჴელითა თჳსითა, და მიჩუენებდა მე და ჰმადლობდა ღმერთსა და თქუა: „ხუცეს, ნუ მძიმე-გიჩნ ესე, რამეთუ მუნი იგი მატლი უდიდეს არს და არა მოკუდების“. და მე ვითარცა ვიხილე მატლი იგი, მოუგონებელად დიდად მწუხარე ვიყავ და ვტიროდე ფრიად; კუალად მრქუა მე რისხვით: „ხუცეს, რად მწუხარე ხარ, ვიდრე უკუდავთა მათ მატლთა შეჭმასა უმჯობჱს იყავნ ამათ მოკუდავთა შეჭმაჲ აქავე, ამას ცხოვრებასა“. და მე მიუგე და ვარქუ: „ძაძისა სამოსელი მცირედღა შეგერაცხაა საგუემელად? და აწ მატლთა მაგათთჳს მხიარულ ხარ!“ და მან მრქუა მე ქენებით: „ნუ ვის თანა იტყჳ ძაძისა სამოსლისათჳს ცხორებასა ჩემსა, რამეთუ ადრე ყოფად არს დატევებაჲ უბადრუკთა ამათ ჴორცთა ჩემთაჲ“. რამეთუ შინაგან ძაძა ემოსა, და არავინ იცოდა ჩემსა გარეშე, ხოლო გარეგან კაცთა თუალსა ანტიოქიისა პალეკარტი ემოსა.
+
+XVI. 
+და ვითარცა ესმა ჯოჯიკს, ვითარმედ მიახლებულ არს ნეტარი დედოფალი წმიდაჲ შუშანიკ სიკუდიდ, წარვიდა და თანაწარიყვანნა ცოლი და შვილნი და მონა-მჴევალნი მისნი და მივიდა ციხედ ხილვად სანატრელისა შუშანიკ მარტჳლისა. და ვითარცა მიიწია, მძლავრ შე-ხოლო-ვიდა, და თაყუანის-სცა პატიოსანსა ჯუარსა და მოიკითხა წმიდაჲ შუშანიკ. თანადაუჯდა და ჰკითხვიდა სალმობათა მათთჳს. ხოლო წმიდამან მან ჰრქუა: „კეთილ ვარ, ვითარ ღმერთსა უნებს, არამედ ყოველსა წარსავალსა მას გზასა მეცა წარვალ“.
+
+ხოლო ჯოჯიკ მსწრაფლ აღდგა ზე და პირველთა მათ უწესოთა საქმეთა აღუვარებდა და ევედრებოდა წმიდასა შუშანიკს და ეტყოდა: „სძალო და მხევალო ქრისტესო, ითხოვე ღმრთისაგან, რაჲთა მომიტევენ მე მრავალნი შეცოდებანი ჩემნი“. ხოლო წმიდამან შუშანიკ ჰრქუა მას: „თუ შენ სხუად სახედ, ყრმებრ, არარაჲ ჰქმნე, ღმერთმან მოგიტევნეს შენ“. და ჯოჯიკ ჰრქუა: „მაგის სახისათჳს მოვედ მე შენდა, რაჲთა, რომელი-იგი არა რაჲმე სათნო ეყოს ღმერთსა, არა ვქმნე“. წმიდამან შუშანიკ ჰრქუა: „უკუეთუ ეგრე ჰყო შენ, უკუდავ მექმნე მე მაგით სიტყჳთა და ღმერთმან შესძინენ დღეთა ცხოვრებისა შენისათა“.
+
+და მერმე, ვითარ შეატყუა ჯოჯიკ, ვითარმედ მას დღესა განვალს წმიდაჲ იგი ჴორცთა ამათგან, ჰრქუა: „მაკურთხე მე და ცოლი ჩემი, მჴევალი შენი, და შვილნი ჩემნი და მონა-მჴევალნი ჩემნი. და თუ რაჲმე შეგცოდეთ, ვითარცა კაცთა საწუთროჲსათა და სოფლისმოყუარეთა, მოგჳტევენ და ნუ მოიჴსენებ მედგრობათა ჩუენთა“. ხოლო წმიდამან შუშანიკ ჰრქუა ჯოჯიკს და ცოლსა მისსა: „ჰყავთ წარმდებად საქმე ესე ჩუენი, რამეთუ არავი იპოვა კაცთაგანი, რომელსამცა აქუნდა წყალობაჲ და ტკივილი ჩემთჳს, რომელმანცა შეაჯერა უღმრთოსა მას საწუთროსა მეუღელსა“. ხოლო მათ ჰრქუეს: „ჩუენ თჳნიერ შენსა ფრიად დავშუერით, გარნა არა იყო სმენაჲ, არცა სიტყუაჲ“. მაშინ ჰრქუა წმიდამან შუშანიკ: „განვისაჯნეთ მე და ვარსქენ პიტიახში მუნ, სადა-იგი არა არს თუალ-ღებაჲ წინაშე მსაჯულისა მის მსაჯულთაჲსა და მეუფისა მის მეუფეთაჲსა, სადა არა არს რჩევა მამაკაცისა და დედაკაცისა, სადა მე და მან სწორი სიტყუაჲ ვთქუათ წინაშე ღმრთისა ჩუენისა იესუ ქრისტესა. მიაგოს მას უფალმან, ვითარ მან უჟამოდ ნაყოფნი ჩემნი მოსთულნა და სანთელი ჩემი დაშრიტა და ყუავილი ჩემი დააჭკნო და შუენიერებაჲ სიკეთისა ჩემისაჲ დააბნელა და დიდებაჲ ჩემი დაამდაბლა. ღმერთმან საჯოს მის შორის და ჩემ შორის. ხოლო მე აწ ამას ვჰმადლობ ღმერთსა, რამეთუ ტანჯვითა მისითა მე ლხინებაჲ ვპოვო და გუემათა და თრევათა მისთათჳს მე განსუენებასა მივემთხჳო და უგულისჴმოებისა და უწყალოებისა მისისათჳს მე წყალობასა მოველი იესუ ქრისტეს მიერ, უფლისა ჩემისა“.
+
+ხოლო იგინი ამას ყოველსა ზედა სიტყუასა მისსა ტიროდეს მწარედ და ჰრქუეს: „მოგჳტევენ ბრალნი ჩუენნი და გუარკურთხენ, წმიდაო მოწამეო და მარტჳლო სანატრელო ქრისტეს ღმრთისაო“. ხოლო წმიდამან შუშანიკ ჰრქუა: „ღმერთმან მოგიტევენინ, რომელ-რაჲ-იგი ჰყავთ“. მაშინღა აკურთხნა ჯოჯიკ და ცოლი მისი და შვილნი მისნი და მონა-მჴევალნი მისნი, და ყოველი ეზოჲ და პალატი მისი. და ამცნებდა სლვად გზათა ღმრთისათა და ეტყოდა, ვითარმედ: „ესე ყოველი ცხორებაჲ, ვითარცა ყუავილი ველთაჲ, წარმავალ არს და დაუდგრომელ და, ვინ სთესა, მოიმკო, და, ვინ განაბნია გლახაკთათჳს, შეიკრიბა, და რომელმან წარიწყმიდოს თავი თჳსი, მან პოოს იგი, რომელმან ადიდა იგი“. და უჯმნა და გამოგზავნნა იგინი მშჳდობით.
+
+XVII. 
+მერმე შომდგომად ჯოჯიკისა, მოიწია თავი იგი ეპისკოპოსთაჲ დამოველ და იოანე ეპისკოპოსი, მისივე მოყუასი, რომელ0იგი იყვნეს განმამტკიცებელ და დიდად დამაშურალ, სახლეულითურთ თანაყოფით იყვნეს, მონა და მონაწილე იყვნეს და თანაზიარ შრომათა მისთა, მადლობით წარჰგზავნიდეს ნავთსადგურისა მის მიმართ ქრისტესისა. მსგავსად მისვე სახისა აზნაურნი დიდ-დიდნი და ზეპურნი დედანი, აზნაურნი და უაზნონი სოფლისა ქართლისანი მოვიდეს ეგრეთვე, რომელნი-იგი გულსმოდგინებით მონაწილე ყოფილ იყვნეს შრომათა მათ მისთა, სანატრელობით, ვითარცა ახოვანსა მჴნესა, მიჰვედრიდეს ქრისტესა.
+
+და თხოვასა ერთსა ითხოვდეს მისგან ყოველნი იგი ეპისკოპოსნი და აზნაურნი ერთბამად, რაჲთა ბორკილი იგი ფერჴთაჲ ბრძანოს საცოდ და ნაკურთხევად ყოველითათჳს, რომლისათჳსცა ჰრქუა წმიდამან შუშანიკ, ვითარმედ: „მე რაჲ ვარ, არაღირსი ესე? ხოლო ღმრთისმოყუარებისა თქუენისათჳს ხუცესმან აღავსენ წადილი თქუენი მაგის სახისათჳს. ხოლო მე რაჲმე-რაჲ შემძლებელ ვარ? არამედ ყოვლად სავსემან ქრისტემან აღგავსენინ თქუენ ყოვლითა კეთილითა, რომელნი-ესე ჩემთჳს მოშუერით და ეზიარენით ვნებათა ამათ ჩემთა და ჭირთა და ტანჯვათა. ხოლო მე, საყუარელნო, აჰა, ესერა, წინაგანმზადებულსა მას ჩემსა გზასა წარვალ საუკუნესა. ჭირისა ამის წილ ჩემისა ქრისტემან მომმადლოს მე სიხარული, სატანჯველთა ამათ წილ - განსუენებაჲ; გუემათა ამათ ჩემთა და თრევათა და შეურაცხებათა - მივემთხჳო მე დიდებასა და პატივსა ცათა შინა დაუსრულებელსა“. და იგინი, ჯნმულნი, ცრემლითა სავსენი, ძლევისა მისთჳს დიდებასა ღმრთისა მიმართ შესწირვიდეს. და გამოვიდეს ციხით და წარვიდეს.
+
+XVIII. 
+და მოიწია დღე იგი წოდებისა მისისაჲ და მოუწოდა ეპისკოპოსსა მისისა სახლისასა აფოცს და მადლსა მისცემდა მისა მიმართ მოწლეობისა მისისათჳს. ვითარცა მამასა და მამამძუძესა, შემვედრა მე, კაცი ცოდვილი და გლახაკი ესე. და შეჰვედრებდა ნეშტთა მათ ძუალთა მისთასა და უბრძანებდა დასხმად ადგილსა მას, ვინაჲცა-იგი პირველად გამოითრიეს და ეტყოდა: „უკუეთუ ღირს რაჲმე ვარ უკუანაჲსკნელი ესე მეათერთმეტე მოქმედი ვენაჴისაჲ, იყვენით ყოველნი კურთხეულ უკუნისამდე ჟამთა“.
+
+და ჰმადლობდა ღმერთსა და თქუა: „კურთხეულ არს უფალი ღმერთი ჩემი, რამეთუ მშჳდობით მასა ზედა დავწევ და დავიძინე“. და შეჰვედრა სული თჳსი უფალსა ყოველთა შემწყნარებელსა.
+
+XIX. 
+და მაშინღა ადრე-ადრე მოიღო სანატრელმან მან ეპისკოპოსმან იოვანე შესაგრაგნელად მჩუარი წმიდაჲ წმიდათა მათ და პატიოსანთა ნაწილთა მისთა. და ეგრეთ სხუათა მათ აღვიღეთ გუამი იგი ფრიად დამაშურალი და დაჭმული მატლთაგან, და განბანეთ იგი მატლისა მისგან მიწოვანისა და თხრამლისაგან, და შევჰმოსეთ მჩურითა მით.
+
+და მაშინღა ეპისკოპოსთა მათ ორთავე, იოვაენ და აფოც, ვითარცა ჴართა მჴნეთა დაუღლვილითა სულიერითა და კეროვნითა აღნთებულითა საკუმეველითა სულნელითა აღვიხუენით პატიოსანნი ძუალნი და გამოვიხუენით წმიდასა მას ეკლესიასა. და დავჰკრძალენით წმიდანი იგი და დიდებულნი და პატივცემულნი ნაწილნი წმიდისა შუშანიკისნი განმზადებულსა მას ადგილსა. და მას ღამესა ანგელოზთა სახედ ღამე იგი გავათიეთ და დავითის ქნარითა მით ყოვლადძლიერსა ღმერთსა და ძესა მისსა, უფალსა ჩუენსა, იესუ ქრისტესა, ვადიდებდით, რომელი ყოვლითა ყოველთა მიმართ შემძლებელ არს და განაქველნის მამანიცა და დედანიცა, და თჳსთა მათ თჳსი იგი ძლიერებისა ძლევაჲ მიჰმადლის ყოველთა. რომელნი ეძიებენ მას ერთითა გულითა.
+
+XX. 
+და არს დასაბამი ტანჯვათა მათ წმიდისა შუშანიკისთაჲ თუესა აპნისისასა, მერვესა თჳსასა, და დღესა ოთხშაბათსა; და მეორედ გუემაჲ მისი - შემდგომად აღუსებისა ზატიკსა დღესა ორშაბათსა, და კუალად ტანჯვაჲ ვარდობისა თუესა ათცხრამეტსა და აღსრულებაჲ მისი - თუესა იკდონბერსა ათჩჳდმეტსა, საჴსენებელსა წმიდათა მათ და სანატრელთა მოწამეთა კოზმან და დამიანეთა.
+
+და დღე ხუთშაბათი იყო, რომელსა განვაწესეთ საჴსენებელი წმიდისა შუშანიკისი სადიდებელად და საქებელად ღმრთისა, მამისა და ძისა და სულისა წმიდისა, რომელსა შუენის დიდებაჲ უკუნითი უკუნისამდე, ამენ.
+
+
+
+`
+},
+
+
+{
+                title: "ასევე შეგიძლიათ წაიკითხოთ",
+                content: `<b>იაკობ ცურტაველის “შუშანიკის წამება”</b>:
+
+<a href="http://www.nplg.gov.ge/bios/ka/00000887/" target="_blank" style="text-decoration: none; font-size: 0.9em;">თამაზ ჭილაძე</a>
+
+თხუთმეტი საუკუნის წინათ საქართველოში დაიწერა რომანი - იაკობ ცურტაველის “შუშანიკის წამება”, რომელიც დღესაც დიდი ინტერესით იკითხება, როგორც ადამიანთა ბობოქარი ვნებების წიგნი, თავისი დრამატიზმით და ხასიათების სიმძაფრით ანტიკური ტრაგედიების სიმაღლეზე რომ დგას.
+
+ეს რომანი და მასთან ერთად მრავალი სხვაც, რომლებიც ძველ ქართულ პროზას წარმოადგენს, დღეს კიდევ ერთხელ გვაგრძნობინებს, თუ როგორ ჰგვანან ადამიანები ერთიმეორეს და როგორ ვიბრძოდით ჩვენ მთელი ისტორიის მანძილზე ყველაზე დიდი წმინდანობის - ადამიანობის დასამკვიდრებლად.
+
+ლიტერატურის ისტორიამ ბევრი მაგალითი იცის, როცა ნაწარმოები მისი გამოქვეყნებიდან დიდი ხნის მერე იქნა ნამდვილად წაკითხული. ბევრი სიტყვა თუ ფრაზა უეცრად აკიაფდა. ან ნიჟარასავით გადაიხსნა, თითქოს ადრე ტექსტში არც კი იყო და ახლა ჩვენს თვალწინ დაიბადაო. აიბადა და მთელ ნაწარმოებს შუქი მოჰფინა. ამავე დროს, იმის მაგალითიც ბევრია, რომ დიდი ხნის მერე ნაწარმოების აზრი და განწყობილება სრულიად საპირისპირო კონცეფციით წარმოუდგენიათ.
+
+სერგეი ავერინცევს თავის მეტად საინტერესო ნარკვევში “ლიტერატურული ტრადიციების გზაჯვარედინებზე” ასეთი ფაქტი მოჰყავს: ლუკიანეს უწერია: ”მახვილი იმიტომ არსებობს, ამქვეყნად მონა რომ არ იყოსო”. იაკობინელებმა ეს სიტყვები გვარდიელების ხმლებზე დააწერეს, რადგან ისინი ტირანიის საწინააღმდეგო მოწოდებად მიიჩნიეს. ლუკიანეს კი თურმე ამ სიტყვებში თვითმკვლელობა უგულისხმია.
+
+მაინც არ უნდა გავამტყუნოთ იაკობინელები, მათ ხომ ამ სიტყვებში დაინახეს ის, რისი დანახვაც ეწადათ, რის დასანახადაც მზად იყვნენ! ტექსტის ისე წაკითხვა, როგორც ლუკიანემ დაწერა, იაკობინელებისათვის წარმოუდგენელი იყო ამავე დროს ეს სრულებითაც არ არის მოულოდნელი და საკვირველი. აი, რას ამბობს პასკალი: “მონტენში კი არა, ჩემსავე თავში ვპოულობ ყოველივე იმას, რასაც მის ნაწერებშ ვკითხულობო”.
+
+იაკობინელებმა ლუკიანეს ტექსტში საკუთარი გულის წადილი ამოიკითხეს და ეს ლუკიანეს (ისევე როგორც მეორე შემთხვევაში - მონტენს! ) კი არ ამცირებს, არამედ მისი ნაწარმოების უკვდავებაზე მეტყველებს, რაც გამოიხატება იშვიათ უნარში - მისცეს ყველას მისი საკადრისი სულიერი საზრდო, გაუნაწილოს თავის წიაღში დანთქუმი სიმდიდრე, გააღვივოს და წაათამამოს მასთან ნაზიარევი ადამიანის შემოქმედებითი ინიციატივა, რათა, თუ პასკალის გენიალურ სენტენციას ისევ გამოვიყენებთ, ყველამ თავის პიროვნებაში აღმოაჩინოს მონტენი.
+
+ამრიგად, შეიძლება ითქვას, რომ იაკობინელები სრულებითაც არ ცდებოდნენ, როცა ლუკიანეს სიტყვებს ასე კითხულობდნენ. ოველი სიტყვის წიაღში ცხოვრობს მეორე სიტყვა, უფრო სწორად - მეორე მნიშვნელობა ამ სიტყვისა, რომელიც, სავარაუდებელია, თვითონ ავტორმაც კი არ იცოდეს. თუმდაც მზოლოდ და მხოლოდ იმიტომ რომ წერის დროს ამაზე არ ფიქრობდა. სიტყვა კი ხესავით იზრდება და თავის ჭეშმარიტ არსს თანდათანობით აჩენს. ასე რომ, არავინ არ არის დაზღვეული, ნაწარმოების კითხვისას იაკობინელების როლში აღმოჩნდეს, მაგრამ ეს არც ისე სამარცხვინოა, გაცილებით მიუღებლად მიმაჩნია ის ფაქტი, რომ ერთი ან ორი მეცნიერის მიერ ოდეზღაც წაკითხული ტექსტი, ოდესღაც გამოტანილი მსჯავრი ნაწარმოებზე, დღემდე ბატონობს ჩვენს ლიტერატურაში, როგორც შეურყეველი, კანონზომიერებული დოგმა.
+
+“შუშანიკის წამება” ამ ფრაზით. იწყება: “და აქ დამტკიცებულად გითხრა თქუენ აღსასრული წმიდისა და სანატრელისა შუშანიკისი”. სწორედ ამ ფრაზამ ზოგიერთ ჩვენს თვალსაჩინო მკვლევარს აფიქრებინა, ტექსტი ჩვენამდე არასრული სახით არის მოღწეულიო. ამ ბოლო დროს ასეთი შეხედულება კიდევ ერთხელ გამოთქვა აკადემიკოსმა ალექსანდრე ბარამიძემ სტატიაში “ათას ხუთასი წლის ძეგლი” (“ლიტერატურული საქართველო”, 16 ივლისი, 1976 წელი).
+
+აკადემიკოსი წერს: “ტექსტი ჩვენამდე ნაკლულად არის მოღწეული. თხრობა იწყება მოულოდნელი განცხადებით: “და აწ დამტკიცებულად გითხრა თქუენ აღსასრული ჭმიდისა და სანატრელისა შუშანიკისი”. მაშასადამე, შემორჩენილია თხზულების ის ნაწილი, სადაც გადმოცემულია შუშანიკის აღსასრულის ამბავი. ადრე კი ტექსტი უფრო სრული უნდა ყოფილიყო. ამას ისიც გვაფიქრებინებს, რომ ცოტათი ქვემოთ იკითხება, შუშანიკი იყო “მოშიში ღმრთისაი, ვითარცა იგი ვთქუთ, სიყრმითგან თვისით”, შუშანიკის სიყრმის თაობაზე კი ტექსტის გადარჩენილ ნაწილში არაფერია თქმული”.
+
+ასეთი შეხედულება ბუნებრივად გამომდინარეობს აკადემიკოს ა. ბარამიძის მეორე მოსაზრებიდან, რომლის მიხედვითაც “შუშანიკი” “მხატვრულ-ბიოგრაფიული ხასიათის ნაწარმოებად” არის მიჩნეული. ბიოგრაფია კი, რასაკვირველია, მოითხოვს ამბის დასაწყისსა და დასასრულს.
+
+ამ შემთხვევაში გადამწყვეტი მნიშვნელობა ენიჭება იმ ფაქტს, რომ “შუშანილი” “წამებაა” და არა “ცხოვრება”.
+
+თუ ტექსტს კარგად დავაკვირდებით, თუ გავითვალისწინებთ იაკობის სტილის თავისებურებას, მისი წეირს მანერას, დავრწმუნდებით, რომ ასეთი დასაწყისი ბუნებრივია “წამებისათვის”. აკობ ცურტაველისათვის ხომ ამბის ძირითადი მომენტებია საინტერესო, ყველაზე დაძაბული, დრამატული კვანძები. მისთვის საინტერესოა არა საერთოდ დროის სივრცე, რომელშიაც განფენილია ამბავი, არამედ, სპორტული ტერმინი რომ ვიხმაროთ - “სუფთა დრო”.
+
+იაკობი ისე თავისუფლად გადადის ერთი სიტუაციიდან მეორეზე, რომ ზოგმა შეიძლება იფიქროს - ტექსტს არა მარტო დასაწყისში, სხვაგანაც აკლია რაღაცაო. ოვიყვან ორ მაგალითს: როდესაც ვარსქენი სპარსეთიდან დაბრუნდება, მეორე დღესვე (“და ხვალისა დღე ვითარ აღდგა პიტიახში”) მოიხმობს თავისთან ხუცებს, მათ შორის იაკობსაც, და აი რას ეტყვის: “აწ ნუ რას მერიდებით მე და ნუხაცა გძაგ”. დამეთანხმებით, რომ ასეთი საუბარია მოულოდნელია რჯულგამოცლილი კაცისაგან.
+
+საქმე ის არის, რომ ჩვენ (და არც არავინ) არ ვიცით, რა მოხდა იმ დილით პიტიახშის სასახლეში, რაზე მორიგდნენ ვარსქენი და ხუცესი (რაღაცაზე კი ნამდვილად მორიგდნენ, მორიგდნენ თუ შეთანხმდნენ), მაგრამ ამჟამად სხვა რამ გვაინტერესებს: ვარსქენი ხუცებს უბრალო შიკრიკებივით გააგზავნის შუშანიკთან, დაარწმუნეთ, შინ დაბრუნდესო. ტექსტში გამოტოვებულია მთელი ამბავი ხუცების წამოსვლისა, შუშანიკთან მისვლისა, ამბის გადაცემისა, რასაც რომელიმე (განსაკუთრებით დღევანდელი) ბელეტრისტი მთელ თავს დაუთმობდა. აქ კი - “წამებაში” - ვარსქენის სიტყვების მერე პირდაპირ შუშანიკის პასუხი მოდის: “.. და თუ მრავალი ტანჯვაი მოაწიო ჩემ ზედა, მე არ ვეზიარო საქმეთა შენთა”. მეორე მაგალითი ზუსტადაა აღნიშნული ნიკოლოზ ჯანაშიას საყურადღებო ნაშრომში: “შუშანიკის წამების” ანტონისეული რედაქცია, (“მრავალთავი” 4.გამომც. “მეცნიერება”, თბილისი, 1975 წ.).
+
+მე მხოლოდ ერთხელ კიდევ დიდი სიამოვნებოთ გავიხსენებ ამ უბრწყინვალეს პასაჟს: ხუცებისაგან შუშანიკის პასუხს რომ მოისმენს (“ხოლო ჩუენ ესე ყოველი მიუთხართ პიტიახშსა”) , ვარსქენი შუშანიკთან ახლა თავის ძმას, რძალსა და ეპისკოპოს აფოცს გაგზავნის. და აქ იწყება ერთ-ერთი შესანიშნავი ადგილი რომანისა, რომელსაც, თავს ნებს მივცემ და მთლიანად მოგიყვან: “და ვითარ მიიწვიეს და შევიდეს წინაშე დედოფლისა და მრავალსა დასაჯერებელსა სიტყუასა ეტყოდეს მას, მაშინ წმიდამა შუშანიკ ჰრქუა მათ: “კაცნო ბრძენნო, თქუენ კეთილად იტყვით, გარნა ნუ დაგიჯერებიეს, თუმცა მე მისი ცოლადღ ვიყავ. ეგონა მე, ვითარმედ იგი ჩემად მოვაქციო და ღმერთი ჭეშმარიტი ახიაროს, და აწ მე მაიძულებთ ამა ყოფნად? ნუ იყოფენ ესე ჩემდა! და შენ ჯოჯიკ, არღარა ჩემი მაზლი ხარ. და არღარა მე შენი ძმის ცოლი, არცა ცოლი შენი დაი ჩემი არს, რომელნი მისკერძო და მისთა საქმეთა ზიარ ხართ”. რქუა მას ჯოჯიკ: “უწყი მე, აწ მოავლინნეს მსახურნი და თრევით წარგიყვანოს შენ”. ხოლო წმიდამ შუშანიკ ჰრქუა: “უკუეთუ შემკრას და მითრიოს, მიხარის, რამეთუ მით სახითა იყოს განჩინებაი ჩემი მისგან”.
+
+და ვითარცა ესმა მისგან, ცრემლოოდეს, ყოველნი. და ჯოჯიკ აღდგა და ცრემლით გარე განვიდა. ხოლო წმიდამან შუშანიკ ჰრქუა ეპისკოპოსსა: “ვითარ მეტყვი მე დაჯერებად ჩემდა, რამეთუ მან ღმერთი უვარყო?!” ხოლო ჯოჯიკ ევედრებოდა და ეტყოდა: “დაი ჩუენი ხარ შენ, ნუ წარსყმედ სახლსა ამას სადედოფლოსა”. რქუა მას წმიდამან შუშანიკ: “უწყი, ვითარმედ დაი ვარ და ერთგან განზრდილნი, ხოლო მაგას ვერ ვჰყოფ, ვითარცა მოსისხლეობაი იქმნა, და თქუენ ყოველნი თანამდებ იქმნენით”. ამ პატარა მონაკვეთში უამრავი მეტად საინტერესო დეტაილ და ნიუანსია, თუნდაც ის რად ღირს, რო ეპისკოპოსი აფოცი ცდილობს დაარწმუნოს შუშანიკი - ურჯულო ქმართან დაბრუნდიო, ამიტომაცაა გაკვირვებული შუშანიკი, შენ მაინც როგორ მეუბნევი ამასო. ველაფერი ეს კარგადა აქვს შენიშნული ნიკილოზ ჯანაშიას, რომელიც ჩვენთვის ამჟამად საინტერესო საკითხსაც ეხება და ამბობს: “როგორც ვხედავთ, იაკობი ჯერ ამბობს ცრემ მორეული ჯოჯიკი გარეთ გავიდაო, შემდეგ კი ისევ ჩართავს მას საუბარშ, რომ სპეციალურად არ აღნიშნავს მის უკან შემობრუნებას”. და დასძენს: “ჩვენთვის ეს მშვენიერი მაგალითა იაკობის გასაოცარო ოსტატობისაო”.
+
+დიახ, ეს მწერლის ოსტატობის დამამტკიცებელია და არა ის, რომ ტექსტი ჩვენამდე “ნაკლულადაა” მოღწეული. ასეთი ხერხი თანამედროვე პოეტურ პროზაში თითქმის ჩვეულებრივ მოვლენადაა ქცეული, მაგრამ მისი არსებობა უძველესი ქართული პროზის ძეგლში მხოლოდ ავტორის გენიალობაზე მეტყველებს,. კადემიკოსი კორნელი კეკელიძე წერს: “შეიძლება უფრო ახლოს ვიქნეთ სიმართლესთან, თუ ვიფიქრებთ, რომ იაკობს დაწერილი ჰქონდა რაღაც ისტორიული შრომა, რომელშიც შუშანიკის შესახებ გაკვრით იყო ლაპარაკი. ისე როგორც გაკვრით იხსენიებს მას მემატიანე”. (“ქართული ლიტერატურის ისტორია”, ტ. 1. აკადემიის გამომცემლობამ, 1954 წ.) ასე, მართლაც, “შეიძლება უფრო ახლოს ვიქნეთ სიმართლესთან”.
+
+ახლა, რაც შეეხება ფრაზას “ვითარცა იგი ვთქუთ”! სხვათა შორის ანტონმა, ამ ტექსტის ერთ-ერთმა რედაქტორმა, ეს ფრაზა ამოიღო. რადგან გრძნობდა, რომ ტექსტს კლებით არაფერი აკლდა, ზედმეტი, ჩამატებული გრაზა კი ბევრი იყო (იხ. ნ. ჯანაშიას დასახელებული ნაშრომი). იაკობ ცურტაველი აღზრდილია წინაქრისტიანული ქარტული ლიტერატურის ტრადიციებზე. ის ისე თავისუფლად ფლობს მასალას (ვგულისხმობ ფაქტის გადმოცემის ხარისხს), რომ მას უსათუოდ გავლილი აქვს მეტად საინტერესო სკოლა მწერლობისა, რომელიც საგრძნობლად განსხვავდება ბიზანტიური საეკლესიო მწერლობის სკოლისაგან, ამიტომაცაა, რომ ამ ფაქტის გაუთვალისწინებლობამ ჩვენ მიგვიყვანა საერთოდ აგიოგრაპიული მწერლობის წინააღმდეგ გალაშქრებამდე, იმაზე კი არ ვიფიქრეთ, რომ ეს ნაწარმოები (და არა მარტო ეს!) ეკუთვნის მსოფლიო აგიოგრაფიული მწერლობის ქართულ ფრთას, ძალიან ორიგინალურსა და, შეიძლება ითქვას, უნიკალურ მოვლენას.
+
+ჟანრი კი აქ ქმნის მწერალს (თუმცა გარკვეულად მოქმედებს მასზე), არამეს მწერალი ქმნის მნიშვნელოვნად ამა თუ იმ ჟანრს. მიტომაც არ შეიძლება ჟანრის კულტად ქცევა. ამის თაობაზე მეტად საინტერესო სტატია გამოაქვეყნა ცნობილმა მწერალმა ვახტანგ ჭელიძემ “ჩარჩოები” (იხ. გაზეთი “ლიტერატურული საქართველო”, 23, 1976 წ.) .
+
+რასაკვირველია. კატეგორიულად არ შეიძლება ითქვას, რომ “შუშანიკის წამება” აგიოგრაფიული ჟანრის ყველა ნიშანს ატარებს (როგორც ქვემოთ დავინახავთ. არც შეიძლება, ასე რომ ყოფილიყო), მაგრამ იმის უარყოფა, რომ ის ამ ჟანრს არ ეკუთვნის, იგივეა, რომ უარვყოთ საერთოდ ამ ჟანრის მნიშვნელობა. ეს კი თავის მხრივ იქნებოდა მეტად მაქსიმალისტური მიდგომა საკითხისადმი.
+
+პატივცემული ვ. ჭელიძე თავის სტატიაში გადმოგვცემს აგიოგრაფიული მწერლობის “ტიპიური ნიმუშის” (მოთხრობა წმინდა ალექსიზე) მოკლე შინაარსს.
+
+ჩვენ არავითარი უფლება არა გვაქვს, არ ვერწმუნოთ პატივცემულ მწერალს, რომ “შუშანიკი” მხატვრული ღირსებებით გაცილებით მაღლა დგას, ვიდრე “წმინდა ალექსის ცხოვრება”. აგრამ აქ უფრო პრინციპული საკითხი ჩნდება: მხოლოდ იმის გამო, რომ ისინი მხატვრული ღირსებებით განსხვავდებიან ერთმანეთისგან, შეგვიძლია მათი სხვადასხვა ჟანრისათვის მიკუთვნება? ფრო სავარაუდებელია, რომ ამ შემთხვევაში ხელთა გვაქვს ერთი ჟანრის ორი, არათანაბარი ღირსების ნაწარმოები. აქ საქმე ტალანტის ხარისხს უფრო ეხება, ვიდრე ჟანრს.
+
+მაგრამ ნუთუ მართლა ასეთი უფერული ნაწარმოებია “ალექსის ცხოვრება”? ვახტანგ ჭელიძე ასე გვიყვება წმინდა ალექსის ამბავს: “დიდი ხნის წანწალის შემდეგ ალექსი რომში დაბრუნდა და უბადრუკ ადამიანს მამის სახლში შეივრდომებენ, რაღა თქმა უნდა, მას ვეღარავინ იცნობს. ჩვიდმეტი წელი გაატარა ალექსიმ მამის სახლში - მოთმინებით იტანდა თავისივე მსახურებისაგან უკიდურეს დამცირებას, შეურაცხყოფას..” აქედან ხომ ის დასკვნაც შეიძლება გამოვიტანოთ, რომ ეს ალექსი მეტად საინტერესო, ძლიერი და ნიჭიერი კაცი ყოფილა. ყო, იცხოვრო ჩვიდმეტი წელი მახლობლებს შორის და ვერ გიცნონ, ვერ შეგამჩნიონ, ეს არც ისე უბრალო რამ არის. უნებურად გვახსენდება ოდისევსი, რომელიც ასევე ცხოვრობდა მახლობლებს შორის შეუმჩნევლად, ოღონდ გაცილებით ცოტა ხანს და, რასაკვირველია, სხვა მიზნით. ოდისევსს კი “მოკვდავთა შორის უჭკვიანესს” ეძახდნენ.
+
+მართალი ბრძანდება ვახტანგ ჭელიძე, როცა წერს: “განა დაკნინება არ იქნება, ბახის გენიალური ქმნილებანი, თუნდაც ბეთჰოვენის მესები, - მხოლოდ იმის გამო, რომ საფუძვლად ლიტყრგიის ტექსტები უდევს, - საკულტი-საეკლესიო მუსიკის ჟანრის ვიწრო ჩარჩოში მოვამწყვდიოთ და მასში თავისუფალი ადამიანის უმაღლესი იდეალებისაკენ სწრაფვის საგალობელი ვერ შევნიშნოთ?” ამასთანავე, თუკი მათ გენიალურობას შევამჩნევთ, თუ ბიგრძნობთ “თავისუფალი ადამიანის უმაღლესი იდეალებისაკენ სწრაფვას”, ეს ხომ იმას ნიშნავს, იმის აღიარებაა, რომ ამ ჟანრის ჩარჩოებშიც შეიძლება შეიქმნას “ადამიანის უმაღლესი იდეალებისაკენ სწრაფვის საგალობელი”!
+
+კაცობრიობის მოძრაობა მომავლისაკენ, მისი ინტელექტის დიადი მდინარება რთულია და მტავალმხრივი. ჩვენი დიდი მხატვარი ლადო გუდიაშვილი თავის “მოგონებების წიგნში” წერს: “ადამიანი წარსულისაკენ ხშირად იმიტომ იხედება, რომ სწორედ იქ უნდა დაინახოს ის სხივი, მის ამქვეყნიურ ცხოვრებას მომავალთან რომ დააკავშირებს”. ჩვენ შეგვიძლია (და ვაკეთებთ კიდეც) ჩვენი საქმიანობისაგან სრულიად განსხვავებულ სფეროში აღმოვაჩინოთ ჩვენთვის ხელსაყრელი, გამოსადეგი, სადღეისო თუ ხვალის პრობლემებისათვის აუცილებელი მაგალითები. გავიხსენოთ წარსულის დიდი გაკვეთილები ადამიანის საქმიანობის ყველა სფეროდან.
+
+აგიოგრაფიაში კი, მართლაც გასაოცარი მაგალითებია ადამიანური სიმტკიცის, ნებისყოფის და, რაც მთავარია, სხვების ნაცვლად წამების ატანის, სხვებისთვის თავის გაწირვისა. აქ ისიც არის მნიშვნელოვანი, რომ ჩვენ ვხედავთ ერთი ადამიანის დაუშრეტელ ენერგიეს, ერთი ადამიანის უნარს, ერთი ადამიანის ძალას, რომელიც ბევრისა და ბევრის მაგივრად უპირისპირდება ბოროტებას. და თუ ჩვენ დღეს მის ქმედებას ჩამოვაშორებთ რელიგიურ-მისტიკურ საბურველს, ხელთ შეგვრჩება ცოცხალი გაკვეთლი ადამიანის სულის სასიკეთო ძალისხმევისა.
+
+ვიცით რა, რომ ყოველი დიდი აზრი ტანჯვით იბადება, აღტაცებულნი ვართ რა დიდი პოეტებისა და ფიოსოფოსების ნაწარმოებებით, მაინც ჩვენს შორის ძნელად მოიძებნება ვინმე, მათი მიპარი ხვედრის გაზიარების მომხრე რომ ყოფილიყო. მაგრამ ადამიანის ქმედებას, აზრს ერთი თვისება აქვს - ყველას ეკუთვნის, ყველასია!
+
+გიოგრაფიული მაგალითები, რასაკვირველია, წვეთია კაცობრიობის საერთო ცხოვრების ოკენანეში, რაც თავისთავად სრულებითაც არ ნიშნავს იმას, რომ ჩვენი უყურადღებობა დაიმსახუროს, არც ისინი უნდა დაგვავიწყდეს, როდესაც სრულიად განსხვავებულად (მაგრამ მაინც მონათესავე!) შემთხვევებს ვიხსენებთ ადამიანის საქმინობის სრულიად სხვა სფეროებიდან. დამერწმუნებით, ძნელი სათქმელია სოკრატეს უკანასკნელი სიტყვები: “თუმცა უკვე დროა წავიდეთ: მე - რათა მოვკვდე, თქვენ _ რათა იცოცხლოთ”! მაგრამ ეს სიტყვები მთელი კაცობრიობის ამონათქვამია, მთელი კაცობრიობის ღირსებაზე მეტყველებს. ამერიკელმა კოსმონავტმა ნეილ არმსტრონგმა თქვა: “მთვარეზე პატარა ნაბიჯი ადამიანისა - მთელი კაცობრიობის გიგანტური ნახტომიაო”.
+
+საქმე ის არის, რომ ქართული აგიოგრაფიული მწერლობა ძალიან, ანდა საგრძნობლად მაინც, განსხვავდებიდა ბიზანტიური აგიოგრაფიული მწერლობისაგან. ამ შემთხვევაში ეროვნული მწერლობის ტრადიციებმა (რომლებშიც უთუოდ ძლიერი იყო) თითქმის გადამწყვეტი როლი ითამაშა და ჩვენ მივიღეთ თვისობრივად სრულიად ახალი, სრულიად თვითმყოგფადი აგიოგრაფიული მწერლობა თუ ბიზანტიურ აგიოგრაფიულ მწერლობაში ბელეტრისიტიკა ჭარბობს (ანდა მიდრეილება აქვს ბელეტრისტიკისადმი), ქართული აგიოგრაფიული მწერლობა პოეზიის სამფლობელოა, აქ პოეზია მბრძანებლობს, სწორედ ეს გახლავთ მისი მრავალპლანიანობის საფუძველი.
+
+დიდი ილია ამბობდა: “როგორც ცალკე კაცის გული, ისე გული ერისა ბევრში სხვა ცალკე ერის გულს არა ჰგავს. მის გამო გულისთქმაც, გულის გამომეტყველებაც სულ სხვა არის ხოლმე და ყოველ ერს თავისი კილო, თავისი ჰანგი აქვს ამ სხვადასხვაობისათვისო”. თანამედროვე კულტურული მსოფლიო ჩვენს აგიოგრაფიულსა თუ ჰიმნოგრაფიულ მწერლობას სამართლიანად თვლის ქრისტიანულ რელიგიასთან დაკავშირებული ადრეული მოვლენების ამსახველ, შესანიშნავი ნიმუშებით მდიდარ მწერლობად, რაც მეტყველებს ჩვენი ერის იმდროინდელ მეტად მაღალ კულტურულ დონეზე.
+
+ნიკოლოზ ჯანაშია ნარკვევში “შუშანიკია წამების” ანტონისეული რედაქცია” წერს: “იმის მიხედვით, თუ რა დაუმატა, რა დააკლო, ან რა შეცვალა ანტონმა “წამებაში”, შეგვიძლია ვიმაჯელოთ, თუ რა აკლდა, ან რა არ სჭირდებოდა მას, როგორც აგიოგრაფიულ ნაწარმოებს ანტონის თვალსაზრისით”. დაწვრილებით იხილავს რ აიმ ცვლილებეს, რომლებიც შეუტანია ანტონს “წამების” ტექსტში, მკვლევარი დაასკვნის: “სწორედ ის ცვლილებები, რომლებიც შეუტანია ანტონს, რათა აგიოგრაფიული ჟანრის ფარგლებში მოექცია იაკობის თხზულება, გვიჩვენებს რაოდენ სცილდება ეს უკანასკნელი აღნიშნულ ჟანრს და რაოდენ ჭეშმარიტად მაღალი ლიტერატურული ღირსებები აქვს მას”. უნდა შევნიშნოთ. რომ ამ ნარკვევში ნიკოლოზ ჯანაშიავ საეჭვოდ მიიჩნევს აგიოგრაპიული ჟანრის ლიტერატურულ შესაძლებლობებს.
+
+თუ კარგად შევისწავლით იმ ცვლილებეს, რომლებიც ანტონს “წამების” ტექსტში შეუტანია დავინახავთ, რომ ანტონს (ერთ-ერთ პირველთაგანს ჩვენს ლიტერატურაში!) შეუმჩნევია, რომ ეს გენიალური ნაწარმოებია და რომ ეს გენიალური ნაწარმოები აშკარად აგიოგრაფიული ჟანრის მოთხოვნებს არ აკმაყოფილებს, ანდა, უფრო სწორად - აგიოგრაფიული ჟანრის მოთხოვნებს ბრმად არ მისდევს. კათალიკოსმა ალბათ იგრძნო, რომ რომელიმე ლიტერატურული მიმდინარეობის ტიპიური ნიშნები უფრო მომდევნო მწერლების ნაწარმოებებში უნდა ვეძებოთ, ვიდრე ამ მიმდინარეობის დამწყების შემოქმედებაში. Pროფესიონალი ლიტერატორის ალღომ სწორ დასკვნამდე მიიყვანა ანტონი, მაგრამ ის მაინც შეცდა, როცა მიმდინარეობის მამამთავრის ნაწარმოებშიც ამ ტიპიური ნიშნების გადმოტანას შეეცადა.
+
+მე ამჟამად არ მაინტერესებს არც იმის განსჯა, რამდენად მართალი იყო კათალიკოსი, არც მისი შრომის შედეგი, ოღონდ ის ფაქტი კი საყურადღებოა, რომ, როგორც ეს აღნიშნული აქვს ნიკოლოზ ჯანაშიას, ანტონმა ანტონმა არსებოთად პირველმა წაიკითხა “შუშანიკი” ისე, როგორც ამ ნაწარმოებს ეკადრებოდა, მან პირველმა შემაჩნია ამ წიგნის ადამიანური ხასიათი. ანტონმა დაინახა გასაოცარი სინაზე იქ, სადაც სხვები მხოლოდ სიმკაცრეს ხედავდნენ, დაინახა ცრემლის იქით ღიმილი და ღიმილის იქით ცრემლი. იხილა მრისხანების ჯავშანში შემალული სათნოება და სიკეთის ლეჩაქით თავდახურული მზაკვრობა.
+
+ანტონმა კიდევ ერთხელ დაამტკიცა ძველისძველი სიბრძნე, რომ რასაც აბრძვი, კარგად უნდა იცოდე და გესმოდეს კიდეც. შტრიქონები, რომლებსაც ანტონი შლიდა და ასწორებდა, გვაუწყებს და წარმოგვიდგენს ორი პიროვნების - მწერლისა და მისი რედაქტორის - შეხვედრის მეტად მნიშვნელოვან მომენტს, გვიჩვენებს ერთის გენიალობას და აღნიშნავს მეორეს უნარს ამ გენიალობის შეცდომისას. თუკი გავითვალისწინებთ ანტონის მრწამსს, მის რელიგიურ სიმტკიცეს და მის ორთოდოქსალურ დამოკიდებულებს მწერლობისადმი, ეს, მართლაც, საყურადღებო ფაქტია ჩვენი ლიტერატურის ისტორიაში.
+
+აღსანიშნავია, რომ ანტონი უფაქიზეს ფსიქოლოგიურ ნიუანსებსა და დეტალებს ამჩნევს. ამავე დროს, ძალზე საინტერესოა და საკვირველიც კი ამ ეკლესიის მამისაგან ადამიანთა ვნებების სიღრმეთა ასეთი ცოდნა. ამ ვნებათა ლაბირინთების საიდუმლოებათა ასეთი წვდომა.
+
+ანტონმა დაამტკიცა: მიუხედავად იმისა, რომ ყველაზე ნაკლებად ავლენდა აგიოგრაფიული მწერლობის ნიშნებს, ეკლესიისათვის სასურველი იყო სწორედ “შუშანიკის წამება” ყოფილიყო აგიოგრაფიული ნაწარმოები. მარტო იმიტომ კი არა, რომ ეკლესიას ეწადა გენიალური ნაწარმოები თავის იარაღად ექცია, არამედ იმიტომაც, რომ ასეთი სურვილის საფუძველს თვითონ ნაწარმოებიც იძლეოდა! ამ ნაწარმოებში, მართალია, სრულიად განსხვავებულად და, მე ვიტყოდი - ახლებურად, მაინც იდგა წმინდანობის პრობლემა. და თუ წმინდანსა და მის ჯალათს ერთმანეთი უყვარდათ, ანდა, ყოველ შემთხვევაში, აშკარად ებრალებოდათ (რის კვალსაც ანტონი დაუნდობლად შლიდა), ეს კიდევ არ იყო საკმარისი საფუძველი იმისათვის, რომ ეკლესიას მასზე სულ ჩაექნია ხელი და ეთქვა: “ამაოდ დაშვრაო” ისე, როგორც ეს რუსთაველის მიმართ თქვა.
+
+გენიის ერთ-ერთი დამახასიათებელი ნიშანი სითამამეა. სწორედ ეს ანსხვავებს იაკობს სხვა აგიოგრაფებისაგან, რის გაუთვალისწინებლობამაც, ჩემი აზრით. ზოგიერთ მეტად სერიოზულ ლიტერატორს აფიქრებინა, “წამება” აგიოგრაფიულ მწერლობას არ ეკუთვნისო. უნდა ითქვას, ეს სრულებიტაც არ არის მოულოდნელი, იმდენად აშკარაა ამ ნაწარმოებში აგიოგრაფიული მწერლობისათვის სავალდებულო კანონების რღვევა. მაგრამ ამ საკითხებს მეორე მხარეც აქვს: როცა არღვევდა იმდროინდელ ქრისტიანულ სამყაროში ყველა მწერლისათვის სავალდებულო კანონებს აგიოგრაფიისას, იაკობი პარალელურად ქმნიდა ახალს, ქართული აგიოგრაფიული მწერლობისათვის სავალდებულო კანონებს. პირველეს ყოვლისა კი, უარყოფდა ბელეტრისტიკას და ამკვიდრებდა მოეზიას.
+
+მწერლობაში, ისევე როგორც ადამიანის საქმიანობის ყველა სფეროში, უარყოფა მხოლოდ და მხოლოდ მაშინ არის მნიშვნელოვანი, მაშინ იძენს დიალექტიკურ ხასიათს, როცა გულისხმობს ახლის წარმოშიბასა და განვითარებას. ამრიგად, ქართული აგიოგრაფიული მწერლობა თვისობრივად განსხვავდებოდა, ვთქვათ, ბერძნული აგიოგრაფიისაგან. ასევე, ალბათ, სომხური აგიოგრაფიისგანაც, თუმცა ამით სრულებითაც არ მინდა უარვყო ერთის ან მეორის უეჭველი ღირსებები. ოღონდ ეს კაია, მათთან შედარებით იმდროინდელ ქართულ მწერლობას პირობითად თუ შეიძლება ვუწოდოთ აგიოგრაფიული, რადგან უამრავი შეხების წერტილი აქვს საერო მწერლობასთან. შეხების წერტილი კი არა - თავის თავში შეიცავს როგორც საეკლესიო, ასევე საერო ხასიათის მწერლობას და, ამდენად, როდესაც ვაღიარებთ ქართული აგიოგრაფიული მწერლობის არსებობას, ვაღიარებთ ქართული საერო მწერლობის არსებობასაც. ეს ერთდროული ფაქტია.
+
+ვახტანგ ჭელიძის მღელვარე სტატიამ (“ჩარჩოები”) ბევრი თანამგრძნობი გაიჩინა, ბევრს “რჯული” და “რწმენა” გამოაცვლევინა, რაც, თავიათავად, მის ღირსებაზე ლაპარაკობს, მაგრამ, ჩემი აზრით, მაინც სადავო უნდა იყოს ამ მეტად საყურადღებო სტატიის ავტორის ის პოზიცია, რომელიც კატეგორიულად უარყოფს აგიოგრაფიული ნაწარმოებების მაღალმხატვრულ ღირსებებს. ვახტანგ ჭელიძე წერს: “აგიოგრაფიული ნაწარმოების გმირთა ასეთი ზოგადი დახასიათების მიხედვითაც კი შეგვიძლია ვივარაუდოთ ამ ნაწარმოებათა სტემატურობა, ერთფეროვნება და საერთოდ დაბალი დონე”.
+
+ეს საკმაოდ გავრცელებული შეხედულებაა, რომელიც ქართული აგიოგრაფიის მაგალითზე არ მტკიცდება და, სხვათა შორის, არ მტკიცდება არც ბერძნული აგიოგრაფიის მწერლობის მაგალითზე. აი რას წერს ბერძნული აგიოგრაფიული მწერლობის სპეციალისტი თატიანა პოპოვა სტატიაში “ანტიკური ბიოგრაფია და ბიზანტიური აგიოგრაფია”: “კომპოზიციისა და სიუჟეტური მოტივების სქემატურობამ წარმოშვა საერთო გავრცელებული შეხედულება ცხოვრებებზე, როგორც ნაკლებორიგინალურ ნაწარმოებეზე, რომლებსაც, უმრავლეს შემთხვევაში, არ გააჩნიათ განსაკუთრებული მხატვრული ღირსებანი. ასეთი შეხედულების მცდარობა ნათელი გახდება შემდგომში”.
+
+სტატიის ავტორი, მართლაც, ასრულებს თავის დაპირებს და უამრავი მეტად მეტყველი მაგალითის მოშველებით წარმოგვიდგენს ბიზანტიური აგიოგრაფიული ლიტერატურის მაღალმხატვრულ ღირსებებს. ამასთანავე გვარწმუნებს, რომ ბიზანტიელი აგიოგრაფები არ იყვნენ ამ ჟანრის კანონებით შეზღუდულნი და ამბობს: ამავე ჟანრის წიაღში მრავალი მიმდინარეობა არსებობდაო.
+
+უსათუოდ აქვს მნიშვნელობა იმ ნიუანსს, რომ ტ. პოპოვა ლაპარაკობს შედარებით გვიანდელ აგიოგრაფიაზე, რომელმაც თავისი კლასიკური, კანონიზირებული სახე მხოლოდ მეექვსე საუკუნეში მიიღო. “შუშანიკის წამება” კი მეხუთე საუკუნეში დაიწერა, ამიტომ მას აგიოგრაფიული მწერლობისათვის საერთო კანონით ვერ მივუდგებით. მით უმეტეს, რომ ასეთი კანონი, ასეთი საერთო ნიშანი მაშინ, როცა ის იწერებოდა, რაც არსებობდა. ის, რომ ” შუშანიკი” არ ჰგავს, ანდა განსხვავდება სხვა უკვე კანონიზირებული აგიოგრაფიული ნაწარმოებებისაგან, არ ნიშნავს იმას, რომ ამ ჟანრს არ ეკუთვნის. თუ შეიძლება ითქვას ” წამება” ამ მწერლობის მაჭრობის პერიოდის ძეგლია, ამიტომაცაა ძნელი მასში აგიოგრაფიული ჟანრის კანონთა კარკასის განჭვრეტა, უფრო სწორი ვიქნებით, თუ ვიტყვით, რომ მასში ამ კარკასის მხოლოდ ჩანასახი არსებობს. “შუშანიკი” არა მარტო ბერძნული, სომხური, ან სირიული აგიოგრაფიული ძეგლებისგან განსხვავდება, არამედ განსხვავდება მომდევნო ქართული აგიოგრაფიული ძეგლებისგანაც, მაგრამ ამავე დროს ფაქტია, რომ ის მათი წინამორბედია.
+
+ვახტანგ ჭელიძე წერს: “ურთიერთ კეთილმყოფელი გავლენა, რაღა თქმა უნდა, ჩვეულებრივი მოვლენაა ყველა ქვეყნისა და ხალხის კულტურისათვის. ეს კულტურის ცალკეულ დარგთა განვითარების ბუნებრივი და კანონიერი გზაა. ასეთი სასურველი გავლენით მუდამ მდიდრდება და ვითარდება ამა თუ იმ ხალხის თვითმყოფადი კულტურა”.
+
+ცნობილი მთარგმნელი განაგრძობს (სწორედ მთარგმნელობაა ურთიერთ გამდიდრებისა და გავლენის ყველაზე აქტიური და ნაცადი ფორმა!): “ეს სულ სხვა საკითხია, აქ ლაპარაკია იმ კოსმოპოლიტურ განწყობილებაზე, რომელიც ნიჰილისტური პატოის გარკვეულ პერიოდში უგულებელყოფდა ყოველგვარ თვითმყოფადს, და უსათუოდ გავლენას ეძებდა იქ, სადაც აშკარა იყო მისი აღმოცენების ეროვნული ნიადაგი. ალბათ კვლევის ასეთი კოსმოპოლიტური მეთოდის შედეგად ჩამოყალიბდა და დამკვიდრდა ის მცდარი კინცეფცია, რომ V-XI საუკუნეებში შექმნილი და ჩვენამდე მოღწეული ყველა ლიტერატურული ძეგლი უსათუოდ ჰაგიოგრაფულია.. იმ უბრალო მიზეზის გამო, რომ მეზობელი ქვეყნების ლიტერატურაში ამ დროს ჰაგიოგრაფიულ ჟანრს ვხედავთ.. მეთორმეტე საუკუნიდან კი სპარსული ლიტერატურის გავლენით ჩვენში საერთო ლიტერატურე ჩაისახა და განვითარდა. ამითვე იყო ნაკარნახევი “ვეფხისტყაოსნის” სიუჟეტის სპარსეთში ძიების პატოის, რამაც კურიოზული ხასიათიც კი მიიღო და რაც ისე ძლიერი გამოდგა, რომ ინერციით ლამის დღემდე მოდის”..
+
+უდავიდ სწორია ვახტანგ ჭელიძე, როცა “ვეფხისტყაოსნის” სიუჟეტის სპარსეთში მაძიებელთა წინააღმდეგ ილაშქრებს. მართლაც, კურიოზული ხასიათისაა ეს ძიება და, მართლაც, დღესაც მოიპოვებიან ადამიანები, რომელთა გულშიაც ძიების ეს დაუმცხრალი ჟინი (რასაც ობიექტურობის მარკით გვთავაზობენ) ჯერაც არ ჩამცხრალა. სენი არიან მეცნიერებიც, ნებით თუ უნებლიეთ, ჩვენს ლიტერატურას ეპიგონოზმის ჭაობში ეწევიან.
+
+რასაკვირველია, არ შეიძლება მხოლოდ პიროვნული თავისებურებებით, თუ უცნაური იდეის აკვიატებით ავხსნათ მათი მისწრაფება, რომ სპარსული დაინახონ იქ, სადაც ქართული ნიადაგი, ფესვი, თესლი აშკარაა. ეს, ჩემი აზრით, უპირველეს ყოვლისა, შედეგია ჩვენი ზოგიერთი მეცნიერების (ანდა მთელი სკოლისაც კი) მიერ არჩეული მცდარი მეთოდისა, მცდარისა იმიტომ, მას საფუძვლად ედო ცალმხრივი მიდგომა ლიტერატურული ნაწარმოებისადმი, ამ ნაწარმოების ზერელე, მხოლოდ როგორც განსაზღვრული ფაქტობრივი ინფორმაციის შემცველი წყაროს გაცნობა, ძიებისა თუ შესწავლის სფეროდან პოეზიის, როგორც ადამიანის ფსიქოლოგიის, ასამიანის სულის მოძრაობის ზუსტად აღმნიშვნელი ფენომენის -სრული გამოთიშვა, სიუჟეტური ქარგების ხელოვნური შედარება და დაკავშირება, განსაზღვრულ ეპოქაში მსგავს სიუჟეტთა წარმოქმნის საერთო კანონთა ძიების შედეგად არასწორი დასკვნების გამოტანა.
+
+ამრიგად, ვახტანგ ჭელიძე მართებულად ებრძვის ეპიგონობას, ებრძვის პროვინციალისმს მეცნიერებაში, მართებულად აყენებს ჩვენი ლიტერატურის თვითმყოფადობის საკითხს, მაგრამ უნდა ვთქვათ, რომ “ვეფხისტყაოსნის” სპარსული სიუჟეტის მოძიება და მეხუთე - მეთერთმეტე საუკუნეების ქართული მწერლობის აგიოგრაფიულობის საკითხი ორი სხვადასხვა პოლუსია და, ჩემი აზრით, მათი ერთ სიბრტყეზე დაყენება მართებული არ უნდა იყოს.
+
+ვახტანგ ჭელიძის სტატიის პათოსი ძალიან მახლობელია ჩემთვის, გარდა ამისა, სტატიის პოზიცია და, გამსაკუთრების მოსაზრებანი, ცნობილი მთარგმნელისა იმდენად ახალია და მნიშვნელოვანი. რომ მეტისმეტი სითამამეა ალბათ ჩვენგან მათთან კამათი. თავის გასამართლებლად (უფრო გასამხნევებლად!) ერთი მწერლის სიტყვებს გავიხსენებ: “რაც უფრო ძლიერია აზრი, მით უფრო მეტ ძალას ჰმატებს მოკამათესო”.
+
+მაშ ასე, ვახტანგ ჭელიძეს მიაჩნია, რომ აგიოგრაფიული ნაწარმოებები “სქემატური” , “ერთფეროვანი” და “საერთოდ დაბალი დონისაა”, ამიტომაცაა იგი წინააღმდეგი, რომ მეხუთე - მეთერთმეტე საუკუნის ქართული მწერლობა ამ ჟანრს მივაკუთვნით.
+
+უკვე ავღნიშნე, რომ აგიოგრაფიული შესახებ სხვა, რადიკალურად განსხვავებული აზრიც არსებობს. ეს არის უმთავრესად ამ მწერლობის სპეციალისტთა აზრი, მათ, ვისაც უფრო (ჩემთან შედარებით!) მიუწვდებათ ხელი ამ ჟანრის ყოველ საიდუმლოსა და ჩემთვის (ბერძნული ენის არამცოდნისათვის!) ძნელად შესამჩნევ ნიუანსებზე.
+
+ჩვენ, როგორც პატივცემული ვ. ჭელიძე აღნიშნავს, ზოგჯერ, მართლაც, გადამეტებით ვიცით ხოლმე გავლენების მნიშვნელობის წარმოდგენა, მაგრამ გავლენების მნიშვნელობის საერთდ უგულებელყოფაც ხომ მეორე უკიდურესობაა? ლიტერატურულ გავლენებს “ჩარჩოებში” თვითონ პატივცემული ი.ჭელიძეც ძალიან დიდ მნიშვნელობას ანიჭებს, ოღონდ როგორც კი საქმე ქართული და ბერძნული აგიოგრაფიის კავშირს შეეხება, მაშინვე გადაჭრით უარყოფს ყოველგვარ გავლენას, იმდენად, რომ საეჭვოდ, საეჭვოდ კი არა, კატეგორიულად შეუძლებლად თვლის ჩვენში აგიოგრაფიული მწერლობის არსებობას.
+
+მე ასეთი კამათისათვის მეტად უეფეკტო, აშკარად უხეირო პოზიცია ავირჩიე. საჭადრაკო ტერმინი რომ ვიხმარო - “შავებით ვთამაშობ”, მაგრამ აქვს ჩემს პოზიციას ერთგვარი უპირატესობა. რადგან იზიარებს ტრადიციულ შეხედულებას, ის თავიდანვე უდავოდ მიიჩნევს “წამების” იმდროინდელი მსოფლიო ლიტერატურის ორბიტაზე არსებობის ფაქტს, ბერძნული, ეთიოპური, სირიული, სომხური ლიტერატურის თანადროულობისა და თავისთავადობის აღიარებას. ღოცა ვაღიარებ გავლენას, ამით ვაღიარებ ქართული ლიტერატურის სიძლიერეს.
+
+თავს ნებას მივცემ და კიდევ ერთხელ გავიხსენებ აკადემიკოს კორნელი კეკელიძის აზრს: “დღეს ვერც ერთი მკვლევარი, რომელიც სპეციალურად სწავლობს ამგვარ მწერლობას, ქართულ მასალებს გვერდს ვერ აუვლის”. ეს კი იმას ნიშნავს, რომ ქართული “ამგვარი მწერლობა” თავის მხრივ გავლენას ახდენდა სხვა ქვეყნის ლიტერატურაზე.
+
+როგორც ვიცით, ბერძნული სიტყვა “მარტვირი” ქართულად ნიშნავს “მოწამეს”. “შუშანიკის წამებაში” ეს სიტყვა ისეა “მორჯულებული”, გაქართულებული (“და მივიდა ციხედ ხილვად სანატრელისა შუშანიკ მარტვილისა..”), რომ შეიძლება ვიფიქროთ, სხვა ქართულ ლიტერატურულ ძეგლებშიც (რომლებიც ჩვენამდე არ არის მოღწეული) უკვე ხშირად იყო ნახმარი ამ მნიშვნელობითო. ეს კი იმას ამტკიცებს, რომ იაკობზე ადრეც იცნიბდნენ ჩვენში ბერძნული აგიოგრაფიის ნიმუშებს, კერძოდ, მის ერთ-ერთ სახეობას - “მარტვირს”, ამ შემთხვევაში მთავარი ის არის, ეტყობა, ჩვენი სალიტერატურო ენა იმდენად იყო უკვე მომძლავრებული, რომ უცხო სიტყვას თავისუფლად და ითავისებდა (ეს სიტყვა - “მარტვილი” - დღემდე, რატომღაც, ყველაზე უფრო ქართული სიტყვა მგონია!).
+
+ცნობილია, თუ რა დიდი განსხვავებაა გავლენასა და ეპიგონობას შორის. Gგავლენა რომ განიცადო, თვითონ უნდა გქონდეს მძლავრი ხერხემალი, მაგარი კუჭი და მდიდარი სული.
+
+ამ თვალსაზრისით საინტერესოა იმავე თატიანა პოპოვას სიტყვები, რომლითაც ის თავის სტატიას ამთავრებს: “აღორძინების ეპოქის სიახლოვემ ახალი ძალა შეჰმატა ბიზანტიური ლიტერატურის ამ ჟანრს, რომელმაც საკმაოდ მნიშვნელოვანი გავლენა იქონია ყველა სლავურ ლიტერატურაზე”.
+
+რასაკვირველია, ეს კოსმოპოლოტიზმი კი არა, ობიექტური, მეცნიერული მიდგომაა საკითხისადმი, რითაც სრულებითაც არ მცირდება თუნდაც დიდი რუსული ლიტერატურე. პირიქით, წარმოჩენილია მისი ფესვები ძველი, საერთო ევროპული კულტურის წიაღში. ჩვენ კი, შეიძლება ითქვას (შეიძლება კი არა - ფაქტია!) კიდევ უფრო ძველი ურთიერთობა გვაქვს ბიზანტიულ ლიტერატურასთან, და ეს ურთიერთობა (თავისი მრავალწახნაგოვნებითა და სირთულით) ამტკიცებს ქართული კულტურის ევროპულობას, ევროპასთან უძველეს კავშირს, საერთო ინტელექტუალურ სტიმულებს. ყველაფერი ეს იზრდებოდა, მდიდრდებოდა, ვითარდებოდა და დაგვირგვინდა დიადი რუსთაველით. მერე კი, ჩვენი ისტორიის საბედისწერო განვითარების გამო, ეს კავსირი გაწყდა და ჩვენ აღმოვჩნდით ჩვენთვის უცხო - აღმოსავლური კულტურის გავლენის სფეროში., რომელთანაც არავითარი კავშირი არა აქვს “ვეფხისტყაოსანს”, რომლის მონათესავე სიუჟეტის სპარსეთში ამაოდ მძებნელებს ასე სამართლიანად კიცხავს ვახტანგ ჭელიძე.
+
+“შუშანიკის წამებაში” აგიოგრაფიული მწერლობის გავლენის პოვნა ადვილია, რადგან ის აშკარად ამ ჟანრის ნაწარმოებია, მაგრამ ამ რომანში გაცილებით საინტერესოა წმინდა ქართული წინაქრისტიანული ლიტერატურის ფესვების დაძებნა, თუმცა ყურადღებიანი მკითხველისათვის არც ეს არის ძნელი. ჩემი აზრით, აგრეთვე საინტერესოა აღნიშვნა ამ რომანზე კონკრეტული წიგნის გავლენისა. ეს წიგნი “სახარებაა”, რომელიც იმ დროისათვის არცთუ ისე დიდი ხანია, რაც ქართულადაა თარგმნილი, შეიძლება ეს პროცესი იაკობის თვალწინაც კი მიმდინარეობდა, ან დასრულდა და ის თავბრუდამხვევი გრძნობა, რომელიც მშობლიურ ენაზე მისმა წაკითხვამ წარმოშვა, ჯერ კიდევ არ განელებულა.
+
+ფაქტია, რომ ამ ხუცესმა “სახარებიდან” ისეთი რამ გადმოიტანა მწერლობაში, რაც ეკლესიას ხელს არ აძლევდა, მაგრამ ჩვენი ლიტერატურის განვითარებისათვის კი მეტად მნიშვნელოვან ფაკტორად შეიძლება მივიჩნიოთ. აკობმა ან მეტად საინტერესო ლიტერატურულ სახელოსნოში გაიწაფა ხელი ლაკონიური სტილისა მეტყველების დეტალის ჩამოქნაში, შეითვისა გარემოს, ფონის გადმოცემის სახარებისეული ხერხები.
+
+მაგალითად “შუშანიკის წამებაში” პირდაპირ გადმოცემული პეისაჟი არ არსებობს, გარდა იმ რამდენიმე სტრიქონისა (“ჟამსა ზაფხულისასა ცეცხლებრ შემწუელი იგი მხურვალებაი მზისაი, ქარნი ხორშაკნი და წყალნი მავნებელნი..”) , რომელთაც განსაკუთრებული სიამოვნებით იხსენიებს თითქმის ყველა მკვლევარი ამ რომანისა და რომლებიც, ჩემი აზრით, უფრო მეტეოროლოგიურ ცნობასა ჰგავს, ვიდრე პეიზაჟს, მაგრამ თითოეული ჩვენთაგანის წარმოდგენაში, ვისაც კი ეს ეს ნაწარმოები წაგვიკითხავს, უსათუოდ შექმნილია ხატი ბუნებისა, რომლის ფონზეც თამაშდება დრამატული ამბავი სიძულვილად გარდაქმნილი სიყვარულისა. პეიზაჟის ამეტყველების ასეთი ხერხი იაკობს უთუოდ “სახარებიდანა” აქვს ნასწავლი.
+
+“სახარების” პეიზაჟი მკაცრია, თითქოს ერთი ფერითაა დახატული, თუმცა ამის გამო ის მკაფიოობას არ კარგავს, პირიქით, ტექსტის მდინარებაში მეტად ცხადად გამოკრთება ხოლმე. ეს არის უდაბნო, ან ტრიალი მინდორი, პურის ყანა, სადაც თავთავებს გლეჯენ და, გამწარებულები, ხელის გულზე იფშვნიან ქრისტეს მშიერი მოწაფეები. მოულოდნელად გაიელვებს ხოლმე ზღვაც, რომელზედაც ზოგჯერ ქარიშხალი მძვინვარებს, ზოგჯერ კი სუფევს “დაყუდება დიდი”.
+
+“წამების” პეიზაჟს ერთი გაუთავებელი, ჩამოქუფრული შემოდგომის დღის ტონი ადევს, ამ ტონს გასაოცრად აცოცხლებს “ბგერითი პეიზაჟი”, დიახ, აქ ხმები ისმის საოცრად, შეიძლება იმიტომაც, რომ ამ სამყაროს ნაცრისფერი ქვის კედლები არტყია. Gგესმის სანთლების ტკაცუნი, მაშხალის შიშინი, სენაკაპანის ნაბიჯების ხმა ქვისიატაკზე, ხუცების გუნდის ფლარტუნი ვარსქენისაგან და პირიქით - შუშანიკისგან ვარსქენისაკენ. Gგესმის, როგორ იმსხვრევა ჭიქა და როგორ ეხეთქება კედელს ასტამი, რომლითაც ეს-ესაა შუშანიკს თვალი “დაუბუშტეს”. აქ ყოველნაირი ხმა ქმნის ნაწარმოების სახვითა და მუსიკალურ გამას: ქალების მოთქმა, გაცოფებული ვარსქენის ყივილი, შეშინებული ბერის შუაზე გამწყდარი სიტყვა, ნარბენი იაკობის გახშირებული სუნთქვა (ის ცურტავისკენ მორბოდა, რათა ყველასათვის დაესწრო და პირველს ენახა სახლიდან წამოსული დედოფალი) . თუ რატომ ჩქარობდა იაკობი, ამაზე ქვემოთ გვექნება ლაპარაკი.
+
+იაკობს ზომიერებისა და კონტრასტის საოცარი გრძნობა აქვს. ამ ნაცრისფერ ფონზე ერთადერთ კაშკაშა ფერს ვხედავ - ეს არის შუშანიკის მოსასხამი, რომელსაც ის საპყრობილესიაც კი არ იშორებს (როგორც ცანს, არც ისე ადვილია მისთვის დედოფლის დათმობა) და სწორედ ამ ფერის წყალობითაც ნაწარმოების ნაცრისფერ წყვდიადში შენიღბულ სხვა სახეთა შორის შუშანიკი განსაკუთრებული სიცხადით მოჩანს. დახვეწილ, შეკუმშულ ფრაზებში, თითქმნის პაროლის მნიშვნელობა რომ შეუძენიათ, ამ მდიდრულ მოსასხამივით ლივლივებს შუშანიკის დაუფარავი სევდა დედაფლობაზე.
+
+არის რაღაც არტისტული შუშანიკის სიტყვებსა და პოზაში და ეს მოწიწებას კი არ აღძრავს მის მიმართ, რასაც, ალბათ მიელტვოდა დედოფალი, არამედ სიბრალულის მწვავე, გულის დამთუთქველ გრძნობას, როგორც ყოველნაირი პათეტიკით შენიღბული იმწეობა. ამიტომაა, რომ ყველა ქვითინებს წამებული დედოფლის დანახვაზე. შეიძლება ითქვას, იაკობის დახატულსა და ზოგიერთი ჩვენი მეცნიერების მიერ “გამდიდრებულ” დედოფლის სახეთა შორის დიდი განსხვავებაა.
+
+აშკარაა, რომ შუშანიკს, როგორც პიროვნებას, არასახარბიელო თვისებებიც გააჩნდა, იმდენად ძლიერი, რომ სიტყვაძუნწი იაკობის მოთხრობაშიც კი გამოჟონა, რამაც მისი ლიტერატურული ორეულის პორტრეტი მეტად მკვეთრად და სისხლსავსედ წარმოაჩინა. ზოგიერთი მეცნიერების მიერ შექმნილმა შუშანიკის კულტმა ერთგვარად ხელი შეუშალა ამ მეტად საინტერესო პერსონაჟის ხასიათის საფუძვლიან ლიტერატურულ ანალიზს.
+
+შუშანიკს რომანში ორი ტექსტი აქვს, ერთი - აშკარა, წმინდანისათვის აუცილებელი და ამდენად სტერეოტიპული, მეორე კი, დაფარული, ადამიანური. ამ მხრივ საინტერესოა შუშანიკის სიტყვა ხუცების მიმართ. აქ ის თითქოს პიტიახშისაგან ელჩებად მოსულ ხუცებს ვარსქენთან აბარებს პასუხს, მაგრამ მისი სიტყვების ნამდვილი აზრი იმ ირონიული ღიმილით შეიცნობა, რომლითაც ამ სიტყვების უბიწობაა ტალახში შეზელილი. შუშანიკი აშკარად ხუცებსაც მიმართავს: რაც ამდენი ხნის განმავლობაში მიქადაგეთ, ტყუილი ყოფილა, ყოველ შემთხვევაში, თქვენი ქცევა ამას ამტკიცებს, თქვენი ღალატი.. მე კი არ მინდა თქვენისთანა ვიყო, ბოლომდე უნდა ვატარო ჩემი ჯვარიო. შუშანიკის ეს მონოლოგი იმითაც არის საინტერესო, რომ აქ პირველად ვხვდებით, რომ დედოფალი შემკრთალია. გი შეზარა იმ აჩრდილმა, რომელიც თავს წამოადგა მის საყვარელ ოჯახს, რელიგიას, და რომელიც, საბოლოო ჯამში, წარმმართველი აღმოჩნდა კიდეც ყოველივე ამის. ეს არის პოლიტიკა! მის თაობაზე განსაკუთრების საინტერესო მოსაზრებები აქვს გამოთქმული ნიკოლოზ ჯანაშიას.
+
+უნდა აღვნიშნო, როდესაც ვითვალისწინებთ იმდროინდელ მდგომარეობას საქარველოს ამ ოლქისას, ვრწმუნდებით, რომ ეს პირველი ქართული რომანი ამავე დროს პოლიტიკური რომანიცაა, სადაც დაუფარავად (როგორც ბრძოლის ველზე) დაპირისპირებულია ორი ძალა - სპარსეთი და საქართველო თავისი მომხრე სომხეთითურთ.
+
+შუშანიკი გრძნობს, რომ ყველა მისი წინააღმდეგია. ამიტომაა, რომ ყველაზე მკვახეთ იმას ელაპარაკება, ვინც მოჩვენებითათ კარგად ექცევა. იცის, რომ დათაფლული ღიმილის იქით იმალება ღალატი. დედოფალი ხვდება, რომ უღალატეს, არა, კი არ უღალატეს - გაწირეს! მართლაც, ფაქტიურად შუშანიკი ყველას გაწირული ჰყავს: ვარსქენს, ჯოჯიკსა და მის ცოლს, ხუცებს. მათ შორის ერთადერთია ვარსქენი, ვინც არ მალავს თავის ნამდვილ გრძნობას, მაგრამ რომელიღაც პოლიტიკური ორგანიზაციის, შეთქმულების აშკარა მონაწილე, “დაყენებული პირი” - შუშანიკი - აქ, მართლაც, ფანატიკურ სიმტკიცეს იჩენს.
+
+ამრიგად, რომანში ტრიალებს ტრაგედია, რომლის ნამდვილი ხარისხიც მხოლოდ ღრმა დაკვირვების მერე ხდება აშკარა. თავიდან თითქოს ყველაფერი გასაგებია: ყოველ შემთხვევაში, მთავარ გმირთა პოზიციების კონფიგურაცია ნათელია, აქ ერთი მეორის პირისპირ დგას მსხვეროლი და მისი ჯალათი. აგრამ თანდათანობით მსხვერპლი ხდება ჯალათი ჯალათისა, თუნდაც თავისი მორალური უპირატესობით, რისი მოსპობაც, გაქარწყლებაც ასე უნდა ვარსქენს. ტრაგედიის ბადეში ნელ-ნელა ეხვევიან ყველანი, თუმცა ერთი სიტყვაც კი არ არის თქმული სხვების თანამომაწილეობაზე. შეიძლება, იაკობს არც უნდოდა ამის თქმა, ვითარების ასე მასშტაბურად წარმოდგენა, ან არც კი ფიქრობდა, რომ თვითონაც ტრაგედიის უნებლიე ანდა (შეგნებული) მონაწილე იყო. ეს არის სიტყვის გასაოცარი ძალისხმიერება, სიტყვის ბატონობა სქემაზე, პოეზიის სიდიადე ისტორიასთან შედარებით (“პოეზია უფრო ფილოსოფიურია და სერიოზული, ვიდრე ისტორია”, - არისტოტელე, “პოეტიკა” , თარგმანი ბ. ბრეგვაძისა).
+
+იაკობი თითქოს ქვაში ჭრის ცოცხალი ადამიანების სახეებს, იმდენად ცოცხალს, რომ დღესაც, თხუთმეტი საუკუნის მერე, დიდი ინტერესით ვაკვირდებით მათ, რადგან ბოლომდე შეუცნობელნი არიან ჩვენთვის. ისინი იმოდენა სასიცოცხლო ენერგიით არიან დამუხტულნი, ისე სასიცოცხლოდ არიან “მომართულნი” დიდი შემოქმედის მიერ, რომ დღემდე არ დაკარგვია მათ ხმას ჟღერა, მათ თვალს - ცეცსლი და მატს მოქმედებას - მნიშვნელობა. შუშანიკი, რომელიც წარმოშობით სპარსელთა წინააღმდეგ მებრძოლთა ოჯახიდანაა, ეს ოჯახი კი ვახტან მეფესტანაა დაკავშირებული საერთო ინტერესების გამო, იმ პოლიტიკას იზიარებს, რასაც ატარებენ მამამისი, ბიძები და ძმები. ხოლო იაკობს თავისი თავისი გაზრდილი შუშანიკი დიდი ხანია ბრძოლისათვის გამზადებული ჰყავს.
+
+იაკობი ჯერჯერობით ჩუმად იცდის, როგორ განვითარდება სიტუაცია. იცდის, ვიდრე.. ვიდრე ნამდვილი ტრაგედია დატრიალდებოდეს. ამას, რასაკვირველია, არ წერს, მალავს კიდეც. მაგრამ დღეს, თხუთმეტი საუკუნის შემდეგ, ჩვენი ისტორიული მეცნიერების განვითარების წყალობით, შესაძლებელი გახდა, წაგვეკითხა მეორე ტექსტი, უფრო სწორად - გულისზრახვა იაკობისა, ვნებანი იაკობისა, “შინაგანი სახე” (დავიტ კაკაბაძის გამოთქმაა) იაკობისა, რომელმაც თავისი სულის მღელვარება ობიექტური თხრობის ნაცარში შეახვია, საიდანაც დღეს ჩაუმქრალმა ნაკვერჩხალმა გამოანათა.
+
+ეპისკოპოსი აფოცი სამღვდელოების იმ ჯგუფს ეკუთვნის, რომელიც ვარსქენს ემხრობა, რომელსაც ვარსქენი აშკარად რაღაცას დაჰპირდა. აფოცი არც მალავს ამას, მისი მცდელობა შუშანიკის შინ დასაბრუნებლად მკითხველის სამართლიან გაკვირვებს იწვევს. ჩვენს თვალწინ დაუნდობელი ბრძოლა მიმდინარეობს სამღვდელოების ორ ჯგუფს შორის. ერთ ჯგუფში არიან აფოცი და სხვა უსახელო ხუცესები, მეორეში კი - იაკობი, ეპისკოპოსები სამოელი და იოანე, აგრეთვე ის დიაკვანი, რომელიც შუშანიკის გამხნევებას ცდილობს, მაგრამ, ვარსქენისგან შეშინებული, სიტყვას ვერ ამთავრებს. მ ბრძოლის შედეგს ნაწარმოების ბოლოს ვხედავთ, სადაც მთავარეპისკოპოსად იხსენიება არა აფოცი, როგორც ეს მოსალოდნელი იყო, არამედ სამოელი. ეტყობა, ვახტანგის მომხრე პარტიამ გაიმარჯვა.
+
+ეროუზ დანემი წიგნში “გმირები და ერეტიკოსები” წერს, რომ ჟანა დარკი მისმა რწმენამ კი არა, ფრანგი სამღვდელოებისა და ინგლისელი მხედართმთავრების ინტრიგებმა აიყვანა კოცონზეო. იმ სამღვდელოების ინტრიგებმა, რომელმაც მერე წმინდანად შერაცხა ორლეანელი ქალწული. მაგრამ ესთავისთავად საგულისხმო სიტყვები იმიტო არ გამიხსენებია, თითქოს შუშანიკს (ისევე როგორც ჟანა დარკს) ბრმა, უმწეო მსხვერპლად, კრავად ვთვლიდე. შუშანიკის საქციელი არის გააზრებული ქმედება და ამიტომაც მისი სიმტკიცე, მისი ფანატიზმამდე მისული ერთგულება საქმისა უთუოდ პატივისცემის გრძნობას ბადებს. წმინდანებს, რა თქმა უნდა, ქმნიან, მაგრამ ამისთვის საფუძველიც უნდა არსებობდეს. ამ შემთხვევაში შუშანიკის სიმტკიცე, რომელიც შეურაცხყოფილი ქალის სიკერპიდან წარმოიშვა და განვითარდა, იყო საფუძველი მისი წმინდანობისა.
+
+ამრიგად,”წამების” სამყარო ორ ბანაკადაა გაყოფილი: ერთ მხარეზე დგანან ვარსქენი, ეპისკოპოსი აფოცი, ჯოჯიკი და მისი ცოლი. თუმცა მთელი რომანის მანძილზე შუშანიკის მაზლი და მისი მეუღლე შუშანიკის თანამგრძნობლებად მოჩანან, მაგრამ ისე მხურვალედ ევედრებიან შენდობას და პატიებას მომაკვდავ შუშანიკს, რომ უსათუოდ ეჭვი უნდა შეგვეპაროს მათი თანაგრძნობის გულწრფელობაში. მეორე ბანაკს შეადგენენ შუშანიკი, იაკობი, ეპისკოპოსი სამოელი და იოანე, თუმცა სწორედ ესენი არ შორდებიან მას საპყრობილეში, ხოლო სამოელი საჭმელსაც კი უგზავნის დედოფალს და ამის მიზეზსაც ქვემოთ მოგახსენებთ.
+
+ვარსქენი იმდენად სპარსეთის მეფის მომხრე არ არის, რამდენადაც ვახტანგის მოწინააღმდეგე. ეს დიდი ფეოდალი თავისი სუვერენის წინააღმდეგაა ამხედრებული, ანდა აოირებს ამხედრებას. ვახტანგ მეფის ზედმეტი სახელი “გორგასალი” “მგლისთავას” ნიშნავს, რაც ალბათ მარტო იმიტომ არ შეარქვეს, რომ მუზარადზე მგელი ეხატა: აქ მისი გამჭრიახობა და, თუ გნებავთ, სისასტიკეცაა განულისხმები, (ვარსქენის სინონიმიც რომანში მგელია: “და შემდგომად ორისა დღისა მოვიდა მგელი იგი ტაძრად..”) . გამჭრიახობის წყალობით ვახტანგი იღბლიანი (შედარებით!) მმართველი იყო (“ვახტანგ მეფე ღმერთს უყვარდაო”, - ამბობს ქართველი ხალხი) . ეს ჭკვიანი მეფე, რასაკვირველია, გულხელდაკრეფილი არ იჯდებოდა. ის ხაფანგისთვის პრმოს თხრიდა იქ, სადაც ყველაზე ადვილად გაებმებოდა ვარსქენი - მის ოჯახში!
+
+არა, ვარსქენს არ უნდა, შუშანიკი რომ მოკვდეს, თუმცა მალი-მალ კი დასძახის, მოკვდიო! ის კარგად იცნობს ვახტანგს, უკვე ხვდება მისი ჩანაფიქრის საბედისწერო აზრს. ისა და შუშანიკი ახლა ისე არიან დაჯაჭვულნი, როგორც არასოდეს. უკვე ხშირად კითხულობს მის ამბავს, პირველსავე თხოვნაზე (თითქოს ელოდება კიდეც ასეთ თხოვნას!) ხსნის ბორკილს, აშკარად თვალს ხუჭავს იმ ფაქტზე, რომ ეპისკოპოსი სამოელი შუშანიკს საჭმელს უგზავნის, თუმცა თვითონვე ბრძანა, შიმშილით მოკალითო. ეს, ეტყობა, სხვების გასაგონადაა თქმული, სინამდვილეში კი იქვე, რამდენიმე აბზაცის მერე ვრწმუნდებით, რომ ვარსქენს შუშანიკის სიკვდილი არ უნდა, არ უნდა იმიტომ, რომ ეშინია (თუ კარგად დავაკვირდებით, ვარსქენი კი არ კლავს შუშანიკს, შუშანიკი იკლავს თავს): შუშანიკს ციხეში რომ ჩასვამს, სამი კვირის მერე დაიბარებს მცველს, სწორედ იმას, ვისაც უბრძანა, შიმშილით მოჰკალიო და ჰკითხავს, შუშანიკი როგორ არისო. მცველი უპასუხებს: რა ვქნა, არაფერს ჭამს და მეშინია შიმშილით არ მოკვდესო. ახლა წარმოიდგინეთ მძვინვარე, ცოფიანი მგელი და ისიც წარმოიდგინეთ, რამდენად შესაძლებელია, რომ მის ბრძანებას არ ასრულებდნენ!
+
+მაგრამ პიტიახშის შიში ნელ-ნელა აუტანელი ხდება და, აი, ერთხელ გონებადაკარგული იყვირებს: “უტე, მოკუდეს!” და ამით თავის თავს გამოუტანს სიკვდილის განაჩენს, ანუ მსხვერპლი სჯის ჯალათს!
+
+იგივე დანემი სწერს: “ოპოზიციურად განწყობილი პოლიტიკური პირების დევნა, როგორც წესი, იწყება ბრალდებით, რომელიც მკვეთრად გამოჰყოფს, ანცალკავებს მათ სხვა მოქალაქეებისაგანო”. ვარსქენმა ვახტანგის ინტრიგის ერთი სვლა სწორად ამოხსნა - მის მოწინააღმდეგეებს სჭირდებათ დიდი დანაშაულებრივი ფაქტი: ვარსქენმა უნდა მოკლას შუშანიკი, ქმარმა უნდა მოკლას ცოლი და მთავარი ის არის, რომ უბრალო ქალი კი არა - დედოფალი უნდა მოკვდეს! ვახტანგს ისეთი კოცონი სჭირდება, რომელსაც ქვეყანა დაინახავს. ამიტომაც არ ანებებს იაკობი შუშანიკს, ქმარს დაუბრუნოს ძვირფასეულობა, რომელიც იგივე სადედოფლო ნიშნებია. მოითმინეო, ეუბნება, თუმცა მოსათმენი ნამდვილად აღარაფერი აქვს შუშანიკს.
+
+მოიცნო რა მოწინააღმდეგის ეს ჩანაფიქრი, ვარსქენმა სასწრაფოდ იაკობის ხელით (ასე უფრო კარგად მიუვა ამბავი ვახტანგს!) დაიბრუნა საქორწილო ნიშნები, ფაქტიურად, გაეყარა დედოფალს.
+
+აქ არის მეტად საინტერესო პასაჟი, რომელიც საკამათოდ ხდის ზოგიერთი მკვლევარის მოსაზრებას, თითქოს ვარსქენს მეორე ცოლი შეერთოს (ამას ყურადღება მიაქცია ა. ჯანაშიამ) . იაკობი რომ საქორწილო ნიშნებს მიუტანს, ვარსქენი მათ გულდაგულ დათვლის და დაათვალიერებს (“აღიხილა და იპოვა ყოველი გებულად”) და იტყვის ფრაზას, რომელიც უფრო გაბუტულსა და გულდაწყვეტილ ყრმას შეეფერება, ვიდრე გამძვინვარებულ მგელს: “მერმეცა იპოოს ვინმე, რომელმაც ესე შეიმკოს”. თუკი მას მეორე ცოლი ჰყავს, ვიღა უნდა იპოვნოს სხვა, რომელსაც ეს სამკაულები დამშვენდება? ნ. ჯანაშია წერს: “ტექსტის ანალიზი საშუალებას იძლევა დაბეჯითებით ითქვას, რომ ვარსქენს მეორე ცოლი, ყოველ შემთხვევაში შუშანიკის წამების პერიოდში, არ ჰყოლია” (იხ. ასახელებული ნარკვევით) .
+
+ამრიგად, შუშანიკი ვარსქენის ცოლი აღარ არის, ვარსქენი თითქოს განთავისუფლდა. აგრამ მან არ იცოდა, რომ ვახტანგის მოქნილ გონებას მეორე, ამ შემთხვევისათვის გათვალისწინებული სვლაც ჰქონდა მომზადებული: ქმრისაგან უარყოფილი დედოფალი წმინდანად უნდა გარდაქმნილიყო. ეს იქნებოდა იქნებოდა ტანჯვის გზა დედოფლობიდან წმინდანობამდე. ო, რა შემზარავი ხვედრი ელოდა მას, ვინც კი გაბედავდა ასეთი წმინდანის ხელყოფას!
+
+როდესა ეს სვლაც ნათელი გახდა ვარსქენისათვის, მან იგრძნო, რომ უკვე მახეში იყო გაბმული, რომ ოდნავი შეცდომაც კი სიკვდილის ფასად დაუჯდებოდა, ამიტომ როგორც ეს შეცდომა არ უნდა დაეშვა. ამისათვის გონებაცა და ღონეც მოსდევდა. მაგრამ ისეთი რამ უშლიდა ხელს, რასაც ვერაფრით მოერეოდა: მას შუშანიკი უყვარდა! უყვარდა მისი ოთხი შვილის დედა, ლამაზი ქალი. გაიხსენეთ, როგორ ეჭვიანობს ვარსქენი მაშინაც კი, როცა ნამდვილად გამძვინვარებულია; ვარსქენმა შუშანიკს შეუთვალა: შენ ნებით დაბრუნდი შინ, თორემ ვირზე შეგსვამდა დარუბანში ისე გაგაგზავნიო. შუშანიკმა უპასუხა, მაგას რა სჯობს, თუკი აქაურობას მომაშორებო. ვარსქენი ჩაფიქრდა: “ნუუკუე მთავართაგანსა ვისმე ეცოლოს” და ” მიერითგან აღარავის მიავლინა მისა” . შუშანიკი გრძნობს, თუ მოკვდება, ვარსქენიც დაემხობა. ამიტომ აირჩია სიკვდილის გზა. თანაც, მისთვის უთუოდ მომხიბლავია იდეა ერთად სიკვდილისა..
+
+ერთი შეხედვით უმწეო შუშანიკის ქმედება უფრო შეტევის ნიშნითაა აღბეჭდილი, ვიდრე დავდაცვისა. შუშანიკი უტევს ვარსქენს, გამწარებული ღრღნის სიბრალულისა თუ სათნოების თოკს, ტრადიციის ბორკილს, ყველაფერს, რაც კი ხელს უშლის გულიდან იგლეჯს შვილებს, როცა ისინი რჯულს იცვნიალ: “სახელიცა მათი სძაგდა სმენად”.
+
+“უფალი მიაგებს” ვარსქენს სამაგიეროსო, - ამბობს ის. ჩვენ დღეს უკვე ვიცით იმ “უფლის” სახელი (იმანაც იცოდა, ვინც ამ სიტყვებს ამბობდა და იმანაც, ვინც ამ სიტყვებს იწერდა!) . ღმერთი ხომ თავისი რჩეულის ხელით იძიებს შურს, ვახტანგი კი ღმერთის რჩეულია (“ღმერთს უყვარდა”!) . ისინი ვიცით, როგორ გადაუხადა “უფალმა” სამაგიერო ვარსქენს (ვახტანგ მეფემ ვარსქენი მოაკვლევინა 482 წ.) .
+
+დიდი სიძულვილი თუ დიდი სიყვარული ( სხვათა შორის, ამის გარჩევა ამ რომანში ჭირს და ეს არის ავტორის გენიალურობის ერთ-ერთი დამახასიათებელი ნიშანი) უცაბედი სინანულით ავსებს შუშანიკის სულს, თუმცა სწორედ ეს სინანულია, თუ ჯერ კიდევ მფეთქავი სიყვარული, მის ყოველ სიტყვასა თუ ქცევას უსაშველო უკიდურესობის იერს რომ აძლევს. “ოდეს ყოფილ არს აქამომდე, თუმცა მამათა და დედათა ერთად ეჭამა პური?!” - ყვირის ის და ჯოჯიკის ცოლს, რომელსაც ადრე დას ეძახდა, ღვინის ჭიქას შეამსხვრევს პირზე. ხლა ის გაღიზიანებულია იმიტომ, რომ სასიკვდილოდაა გამზადებული, მარტოა დარჩენილი. შუშანიკი მერე რამდენჯერმე დაიჩივლებს თავის სიმარტოვეზე. შიმარტოვემ კი მასზე გაცილებით ძლიერ არსებას ათქმევინა: “ღმერთო ჩემო, ღმერთო ჩემო, რაისათვის დამიტევენ მე?” (მათე, 27, 49).
+
+ამ შემთხვევაში, რასაკვირველია, შუშანიკი უსამართლოდ ექცევა რძალსა და მაზლსაც, მაგრამ ამ საქციელის გამართლება მაინც შეიძლება. გარდა ამისა, როგორც უკვე ვთქვი, შუშანიკის მარტვილობას, მართლაც, თეატრალური იერი დაჰკრავს: შუშანიკს აშკარად უყვარს ყურადღების მიქცევა სიტყვითა თუ ქცევით, ანდა თუნდაც: “მიეყრდნა ყურესა ერთსა და მწარითა ცრემლითა ტიროდა”. ისევ გავიხსენოთ თუნდაც მისი ძვირფასი მოსასხამი, რომელსაც საპყრობილეშიც არ იშორებს, როგორც სადედოფლო ინსიგნიას (როგორც ჩანს, არც ძვირფასეულობის მოშორება უნდა ყოფილიყო მისთვის ადვილი) ჯოჯიკმა და მისმა ცოლმა შუშანიკი ქმართან შესარიგებლად მოიყვანეს, ამიტომ უნდა ვიფიქროთ, რომ შეეცდებოდნენ ზედმეტად არ გაებრაზებინათ. ალბათ ყოველდღე - ჩვეულების მიხედვით - ერთად ჭამდნენ პურს და ახლაც ერთად დასხდნენ პურის საჭმელად. შუშანიკს კი ეს მოულოდნელად ეუცხოვა. რასაც გუშინ მნიშვნელობა არ ჰქონდა, დღეს სწორედ იმან შეიძინა მისთვის გადამწყვეტი მნიშვნელობა.
+
+შუშანიკის თვალი დღეს გაცილებით მეტს ხედავს, შუშანიკის ყურს დღეს გაცილებით მეტი ესმის, ვიდრე გუშინ. მთელი მისი არსება დაძაბულია და შემართულია, რადგან სასიკვდილოდაა გამზადებული და თუმცა ეს სიკვდილი, უფრო სწორად - ასეთი სიკვდილი მან თვითონვე აირჩია, თავისი ცხოვრების მოწოდებად აქცია, მისი ახალგაზრდა, ჯერ კიდევ სიცოცხლით სავეს ბუნება (ალბათ მისდაუნებურად) გამწარებით იბრძვის გადასარჩენად და ეს ბრძოლა თუნდაც საკუთარ თავთან (ბუნების ბრძოლა გონებასთან!) მეტად საინტერესო მხარეა ამ დიდი რომანისა.
+
+ამ ნაწარმოების ყველა პერსონაჟი ერთს ამბობს და მეორეს ფიქრობს-მეთქი. გაიხსენეთ თუნდაც სპარსეთის მეფის მსტოვარი, სპარსი მეთვალყურე ვარსქენისა. გაიხსენეთ მისი დათაფლული სიტყვები. თქვენ წარმოიდგინეთ, ეს მაზდეანი სპარსელი ქრისტიანობისათვის წამებული დედოფლისათვის ბორკილის ახსნასაც კი სთხოვს ვარსქენს. მაგრამ არც მისმა სიტყვამ უნდა მოგვატყუოს და არც ქცევამ. მას სხვა მისია აქვს დავალებული და ასრულებს კიდეც: საპიტიახშოს ხვალინდელ დღეს უნდა ჩაუყაროს საფუძველი, ანდა, უფრო სწორად - წყალი ჩააყენოს საპიტიახშოს ხვალინდელი დღის საძირკველში. Gგულუბრყვილობა იქნებოდა გვეფიქრა, რომ ვარსქენის შვილებს რჯული მისი მცდელობის გარეშე შეუცვალეს.
+
+ახლა მინდა თითქმის სიტყვასიტყვით მოგიყვანო შუშანიკისა და იაკობის დიალოგი, რომელიც ყველა დროის ლიტერატურის მიღწევად მიმაჩნია. აქ ყოველი ფრაზა თითქოს ადამიანის სულის უფსკრულიდანაა ამოსროლილი, რათა ერთი წამით ჩაისუნთქოს ამქვეყნიური ჰაერი და ისევ საიდუმლო წიაღს დაუბრუნდეს.
+
+ეს არის დიალოგი, რომელსაც შექსპირიც კი მოაწერდა ხელს:
+
+“და ვარქუ ნეტარსა შუშანიკს: “ღუაწლსა დიდზა შესვლად ხარ, დედოფალო, ეკრძალე სარწმუნოებასა ქრისტეისსა, ნუუკუე, მტერმან ვითარცა სრსვილმან საძოვარი პოოს შენ მათა”. ხოლო წმინდამან შუშანიკ მრქუა მე: “ხუცეს, და მეცა დიდსა ღუაწლსა განმზადებულ ვარ”. და მე ვარქუ მას: “ეგრეთ არს, მხნე იყავ, მოთმინე და სულგრძელ”, ხოლო მან მრქუა მე: “ჩემდა მარტოისა არიან ჭირნი ესე?”. ხოლო მე ვარქუ მას: “ჭირი შენი, ჭირი ჩუენი არს და სიხარული შენი, სიხარული ჩუენი არს. ჩუენი არა ხოლო თუ დედოფალი ოდენ იყავ, არამედ ჩუენ ყოველთა ვითარცა შვილთა გუხედავდ”.
+
+და ვარქუ მე სანატრელსა მას ხუაშიადადრე: “ვითარ გეგულების, მითხარ მე, რაითა უწყოდი და აღვწერო შრომაი შენი”. ხოლო მან მრქუა მე: “რაისა მკითხაბ ამას?” და მე “მიუგე და ვარქუ მას: “მტკიცედ სდგაა?”..
+
+როცა შუშანიკი გაიგებს, ვარსქენმა რჯული შეიცვალაო, შინიდან წავა: “სახლაკი ერთი მცირეი პოვა მახლობლად ეკლესიასა და შევიდა მუნ შინა სიმწრითა სავსეი”. მ დროს იაკობი სასახლეში არ არის, ეპისკოპოს აფოცს ახლავს. როგორც ჩანს, მას აფოცისგან დამალულად ატყობინებენ ამბავს, რადგან შეუძლებელია აფოცსაც, რომელიც იყო ეპისკოპოსი “სახლისაი მის პიტიახშისაი”, გაეგო ეს მეტად მნიშვნელოვანი ამბავი და სასწრაფოდ არ დაბრუნებულიყო სასახლეში.
+
+იაკობი კი ამბობს: “მე ვიჯმენ ადრე და მივაწიე დაბასა მასო”, აი, ახლა კი ნათელი გახდება, თუ რატომ ჩქარობდა ასე იაკობი, რატომ მოეშურებოდა ასე შუშანიკის სანახავად: ჯერ ერთი, უნდოდა, რომ აფოცისათვის დაესწრო, იმ ეპისკოპოსისათვის, რომელიც ვარსქენის ჩამოსვლისთანავე დედოფალთან წავა და შეეცდება რჯულგამოცვლილ ქმართან მის დაბრუნებს. მეორეც ( და რაც მთავარია! ) - ამდენი ხნის შემზადებული გეგმა ამოქმედდა, ზარი ჩამოირეკა, ამ წუთს იაკობი დიდი ხანია ელოდებოდა, აქამდე მხოლოდ ამისთვის იღვწოდა, თავის მოწაფე შუშანიკს ამისთვის ამზადებდა.
+
+და აი, იაკობი შუშანიკისკენ მიიჩქარის! საჭიროა, კიდევ ერთხელ შემოწმდეს, შეუძლია თუ არა დედოფალს აღთქმული სიმტკიცის გამოჩენა, საჭიროა, კიდევ ერთხელ.. არა, კი არ ანუგეშოს, არამედ შეახსენოს მოვალეობა.
+
+- “ღუაწლსა დიდსა შესვლად ხარ, დედოფალო, ეკრძალე სარწმუნოებასა ქრისტეისასა, ნუუკუე მტერმან ვითარცა სრსვილმან საძოვარი პოოს შენ მათა”.
+
+თითქოს კარიდანვე ეძახის ამ სიტყვებს, ჩქარობს, შორიდან მოვლის დრო არა აქვს. ან უკვე იცის, რაც უნდა მოხდეს., ანდა, რაც უნდა მოჰყვეს შუშანიკის სახლიდან წასვლას. იდი ხანია მთელი სასახლე ამაზე ჩურჩულებს, დიდი ხანია ვარსქენი შეთქმულებას ამზადებს, უკვე დიდი ხანია ამაოდ ებძვის შუშანიკი ქმარს “და უკეთურებისა მის სახისა ქმრისა მამისაისა მარადის გულს ეტყვიან და ევედრებიან ყოველთავე ლოცვის ყოფად მისთვის, რაითამცა ცვალა იგი ღმერთმან სახისა მისგან უგუნურებისა და უქმნამცა გონიერებასა ქრისტეისსა”.
+
+ამ ნაწარმოებს ჰყავს, მართალია, უჩინარი, მაგრამ ალბათ ყველაზე მნიშვნელოვანი გმირი. და თუ ნაწარმოებში მოქმედ პერსონაჟთა ხასიათებს მასთან მიმართებით განვიხილავთ, თუ მათ ქცევებს დავაკვირდებით, წყვდიადიდან ამოიზრდება მეტად ჭკვიანი, გამჭრიახი, ძლიერი და.. მრისხანე არსება - მეფე ვახტანგი! რომანის მოქმედი პირები თითქოს ვიღაც დიადის თვალთა არეში ტრიალებენ და გამუდმებით გრძნობენ მის დაჟინებულ მზერას, ამიტომ ამბობენ ერთს და ფიქრობენ მეორეს, სახლიდან გარბიან ანდა ემალებიან ვიღაცას, ან საკუთარ თავს, კლავენ უძვირფასეს არსებას, მაგრამ ცოცხლად ტოვებენ გამოაშკარავებულ მსტოვრებს.
+
+მოკლედ, ცურტაველი პიტიახშის სასახლეში ტრაგედია ტრიალებს, რომელიც დიდი ხანია მზადდებოდა, დიდი ხანია ჰყავდა მიჩენილი ვახტანგისგან შუშანიკს იაკობი, თუმცა დედოფლის გადმობირებას რა უნდოდა? მას ხომ ბავშობიდანვე ესმოდა შეთქმულთა ჩურჩული თუ მკერდში გამწარებული მჯიღის ბაგუნი. თვალწინ ედგა მამა-ბიძათა ფერმკრთალი (შიშისაგან თუ მღელვარებისგან) სახეები. ხლა ქართველთა დიდი მეფე, რომელსაც მისი “თესლი და ტომი” (ასე რომ უგინა ვარსქენმა!) თანაუგრძნობდა, დიდ შეთქმულებას ამზადებდა საერთო მტრის წინააღმდეგ და შუშანიკის სულიც უკვე მას ეკუთვნოდა, მასთან იყო.. დანარჩენი მოვლენები თუ ბედისწერამ დააჩქარა.
+
+- “ხუცეს, და მეცა დიდსა ღუაწლსა გამზადებულ ვარ”.
+
+ნარბენმა იაკობმა უკვე სული მოითქვა, შუშანიკის სიტყვებმა მთლად დაამშვიდა, მაგრამ ახლა მისთვის საინტერესოა, როგორ ესმის შუშანიკს, მის მოწაფეს ცნება-“ღვაწლი”, როგორც უმტკივნეულო, მომხიბლავი თეატრალური პოზა, თუ როგორც გავარვარებული შანთი და კვერთხი. ამიტომაც ნიადაგის მოსინჯვას იწყებს:
+
+“-ეგრეთ არს, მხნე იყავ, მოთმინე და სულგრძელ”.
+
+ეს თითქმის იმის თქმაა, რომ ფიზიკური წამებისათვის იყავი მზადო, რომლის დროსაც მეტი ვერაფერი დაგეხმარება, გარდა მოთმინებისა და რომლის დროსაც იგრძნობ, თუ მოგეჩვენება, რომ ყველამ მიგატოვა. ღადგან ტანჯვა დიადთა წილხვედრია, ამიტომაც სულგრძელიც უნდა იყო, თორემ ისე ძალიან გაგიჭირდება იმის ატანა, რისთვისაც გამზადებული ხარ, რადგან სწორედ მარტოობაა ამ ქვეყნად ყველაზე საშინელიო.
+
+- “ჩემდა მარტოისა არიან ჭირნი ესე”.
+
+შუშანიკი მიხვდა, საითც უმიზნებდა იაკობი, მაგრამ ფიზიკურ ტკივილზე ჯერ არაფერი უფიქრია (ვერც წარმოიდგინა!) იმის გაფიქრებამ შეზარა, რომ მართლაც მარტო იყო და, ეტყობა, ეს სიმარტოვე დიდი ხანია რაც დაიწყო. ჯერჯერობით დედოფალი იმაზე არ დაფიქრებულა, თუ რატომ სთხოვდნენ სულგრძელობას. სულგრძელობის თხოვნა ხომ იგივე პატიების თხოვნაა საკუთარი უმოქმედობისათვის, საკუთარი პასიურობისათვის, საკუთარი უმწეობისათვის. სულგრძელობა, რა თქმა უნდა, ყველაზე უფრო მიტოვებული კაცისაგანაა მოულოდნელი, მაგრამ უიმისოდ კი ეს ადამიანი ნამდვილად გატყდება, პირველივე წამების დროს დაიფშვნება წლობით ნაშენი სიმტკიცე.
+
+ამრიგად, შუშანიკი ჯერ ვერ მიხვდა, რომ სულგრძელობას სთხოვენ მას, ვისაც სიმარტოვეში ტანჯვა და სიკვდილი ელის.
+
+იაკობმა იგრძნო, რომ ქალი ჯერ გაბრუებული იყო იმ სითამამით, იმ მართლაც თამამი საქციელით, რაც ჩაედინა, ხოლო ამ საქციელის შედეგი კი ვერ წარმოედგინა.
+
+მართალია, იაკობი უამრავ აგიოგრაფიულ წიგნს უკითხავდა. უამრავ ამბავს უყვებოდა წმინდანების ცხოვრებასა და ტანჯვაზე, მაგრამ ერთია წაკითხულის მოსმენა და მეორე, როცა ეს ტანჯვა პირადად შენ გემუქრება. ადამიანის ბუნება ისეა მოწყობილი, რომ თავისთვის შეუძლებლად მიაჩნია ის უბედურება, რაც სხვასთან დაკავშირებით მომხიბვლელადაც კი ეჩვენება. იაკობმა ყველაფერი ეს იცის, ამიტომაც ინდობს დედოფალს. შუშანიკის ნათქვამი, მარტო ვარო, ჰაერში გამოკიდებული რომ არ დარჩეს, ისე, ზოგადად შეეკამათება ისეთი ფრაზებით, რომლებიც არაფერს ავალდებულებს მას და არც… არავის..
+
+“ჭირი შენი, ჭირი ჩუენი არს და სიხარული შენი , სიხარული ჩუენი არს”. და ამას მოჰყვება ფრაზა, რომელმაც უკვე აშკარად უნდა მიანიშნოს შუშანიკს, თუ რა ელის მას:
+
+“ჩუენი არა ხოლო თუ დედოფალი ოდენ იყავ, არამედ ჩუენ ყოველთა ვითარცა შვილთა გუხედევდ”.
+
+ეს ფრაზა თითქოს არაფერს ამბობს, თითქოს ეფერება და ეალერსება დედოფლის პატივმოყვარეობას, მაგრამ ის, ვინც ეს ფრაზა იმ სიტუაციაში მოისმინა, ალბათ შეაძრწუნა მისმა ფარულმა აზრმა: შენ იყავი და აღარა ხარ, შენ აღარასოდეს აღარ იქნები ჩვენი დედოფალი! თუმცა ასეთი კატეგორიული, განაჩენის მსგავსი დასკვნებისთვის შუშანიკს ჯერ ისეთი არაფერი გაუკეთებია, რამდენი ქალი გამოქცეულა ქმრის სახლიდან, მგრამ მერე მიბრუნებულა ისევ, იაკობმა შუშანიკს უკან დასახევი გზა მოუჭრა: შენ ვარდან მამიკონიანის ასული ხარ, დედოფალი, ასეთები უკან აღარ ბრუნდებიანო.
+
+შუშანიკი ახლა კი მიხვდა! მთელი სხეულით შეიგრძნო განსაცდელი ტკივილი. ეტყობა, სუნთქვა შეეკრა, რადგან დიალოგში მისი ფრაზა გამოტოვებულია, იაკობი კი, რადგან დაიცყო, ბოლომდე ამბობს სათქმელს:-“ვითარ გეგულების, მითხარ მე, რაითა უწყოდი და აღვწერო შრომაი შენი”. აი, დადგა ნეტარი წამი თავგანწირვისა, შენ ღმერთმა გარგუნა გააკეთო მისთვის სასიკეთო საქმე, მსგავსად იმ წმინდანებისა, რომელთა მოწამეობრივ ცხოვრებაზე ასე ქვითინებდი ხოლმე. ახლა შენზედაც შეიძლება დაიწეროს ასეთივე წიგნი და მე დავწერ მას, რმეთუ სულიერი მიძღვარი ვარ შენი.
+
+ეს არ იყო წაქეზება. დარწმუნებული ვარ(და ეს ტექსტშიც მკაფიოდ მოჩანს), იაკობს ძალიან უყვარდა თავისი გაზრდილი შუშანიკი და ალბათ დაუფიქრებლად შეეწირებოდა საქმეს მის ნაცვლად. მაგრამ ამ შემთხვევაში საქმე მარტო მსხვერპლად შეწირვაში არ იყო, აქ მსხვერპლის მნიშვნელობას ენიჭებოდა განსაკუთრებული როლი, დიდი საქმე დიდ მსხვერპლს მოითხოვდა. ჩვენ დღეს, თხუთმეტი საუკუნის მერე, ვიცით, თუ რა დიდი იყო იაკობი, მაგრამ მაშინ ის უბრალო ხუცესი იყო,-მეტი არაფერი.
+
+თუმცა განა თვითონ იაკობსაც გამუდმებით საფრთხე არ ემუქრებოდა? დააკვირდით ტექსტში მისი მოძრაობის რიტმს და მიხვდებით, რომ მან იცის, ყოველი ფეხის ნაბიჯზე მახეს შეიძლება გადააწყდეს:”ხოლო მე ვიჯმენ ადრე”… “და მე ვისწრაფდი გამოსვლად..” “წარვედ სწრაფით ვანამ ჩემდა”. ისე რამდენი გადაურჩა ნაადრევ სიკვდილს იმით, რომ მისმა თანამედროვეებმა მისი ფასი არ იცოდნენ…
+
+შუშანიკის ბუნებ წამით აჯანყდება, გაუძალიანდება ამ უსასტიკეს გადაწყვეტილებას. მან იცის, რომ წიგნი შენი ცხოვრების შესახებ მარტო შენი სისხლით იწერება. არა, -ყვირის მთელი მისი არსება, -მე სიკვდილი არ მინდა! მაინც ერევა თავსა და ნაძალადევი სიმშვიდით ამბობს:
+
+- “რაისა მკითხავ ამას?”
+
+ეს ხომ ბავშვური, გულუბრყვილო თამაშია საკუთარი მიუხვედრელობისა! ამავე დროს ერთგვარი გაბრძოლებაცაა, დროის გაყვანაა, გარდაუვალის ცოტათი იქით, თუნდაც რამდენიმე წამით, გადაწევაა.
+
+რა არისე ეს? - ფიქრობს იაკობი, - ნუთუ ამ ქალის სიმტკიცეს ბზარი გაუჩნდა? ამიტომ ცოტა შიშითაც კი ეკითხება:
+
+- “მტკიცედ სდგაა?”
+
+ეს არაჩვეულებრივად დაძაბული, ფსიქოლოგიური მომენტი ნამდვილი დიდოსტატის მიერაა აღნიშნული. აქ ადამიანის შიში და უმწეობა, ხელფეხშეკრული მსხვერპლის ფართხალია გადმოცემული. ე სარის ბუნების გაბრძოლება გონების წინააღმდეგ, რაზედაც ზემოთაც მოგახსენებდით. ტყუილად კი არ ამოიღო ეს ფრაზები ეკლესიის ფხიზელმა დარაჯმა ანტონმა ტექსტის მისეულ რედაქციაში(იხ. ნ. ჯანაშიას დასახელებული ნარკვევი).
+
+მაშ ასე: იაკობმა უთხრა სუშანიკს, უფრო სწორად - მიახვედრა, თუ რას მოითხოვდნენ მისგან. დედოფალმაც ეს მოთხოვნა ზუსტად გაიგო. ამ საუბრიდან რამდენიმე დღის მერე, როცა სიკვდილამდე ჯერ კიდევ ძალიან შორს არის(6 წელი), შუშანიკი იტყვის:
+
+“უფალო ღმერთო, შენ უწყი, ვითარმედ მე გულითად სიკუდილად მივალ”.
+
+ამ პატარა დიალოგზე ასე დაწვრილებით იმიტო კი არ შევჩერდი, რომ ის თავისი ლიტერატურული ღირსებით გამოირჩევა, არამედ იმის თქმა მინდოდა, რომ ეს რომანი თავიდან ბოლომდე ასეთი დიდიოსტატობით არის დაწერილი - მეთქი. ეს არის ჭეშმარიტი პოეტური პროზა, სადაც მაღალი ხელოვნების ენითაა გადმოცემული ადამიანთა ხასიათის ევოლუცია. ამიტომაც არ შეიძლება ვთქვათ, რომ იაკობი მხოლოდ ბიოგრაფია, თუმცა კი თვითონ ეუბნევა შუშანიკს, შენი ცხოვრება უნდა აღვწეროო. ის არა მარტო იმას წერს, რასაც ხედავს, არამედ უმთავრესად იმას, რაც უნდა რომ დაინახოს, ფაქტობრივ სიზუსტეს ცვლის პოეტური სიზუსტით და გრძნობს, რომ ეს მეორე გაცილებით უფრო ზუსტია და გამძლე, ვიდრე პირველი. იაკობი, უპირველეს ყოვლისა, პოეტია, ქმნის “მეორე სინამდვილეს”, ლიტერატურას.
+
+საკმარისია ერთი პაწაწინა ნიუანსი, კალმის ერთი მოსმა, რომ თვალწინ წარმოგვიდგეს მთელი საპიტიახშოს მორალური და ზნეობრივი ცხოვრების ატმოსფერო., რომელიც მაინცდამაინც სახარბიელო შთაბეჭდილებას არ ტოვებს. ეს არც არის გასაკვირი: დაპყრობილ ქვეყანაში მორალური თუ ზნეობრივი ნორმების დონე ყოველთვის დაბალია, ისევე როგორც, სხვათა შორის, დამპყრობელ ქვეყანაშიც. მცველი, რომელიც შუშანიკის გაზრდილია (“უბადრუკო, არა მისიგაზრდილი ხარა?”), როცა იაკობს შუშანიკთან შეუშვებს, მალულად ყურს უგდებს მათ საუბარს ( ეს არის სწოედ ცნობილი საუბარი იაკობისა და შუშანიკისა ვარსქენისათვის სადედოფლო ნიშნების დაბრუნების თაობაზე) და მაშინვე ვარსქენს ატყობინებს, ფაქტიურად გამზრდელს აბეზღებს: “და ჩუენდა ამას განვიზრახევდით, მოვიდა ყმაი ერთი და თქვა: “იაკობ მანდა არსა?” და მე ვარქუი, ვითარმედ “რაი გინებს?” და მან მრქუა: “უქესს პიტიახში”. ვისგან უნდა გაეგო ასე უცებ ვარსქენს იაკობის სამყოფელი, თუ არა იმ მცველისგან!
+
+მეორე შემთხვევაში მცველი ქრთამს იღებს იაკობისაგან. (“უქადე ჭურჭელი ერთი სამისოი”) და ისე უშვებს საკანში შუშანიკთან.
+
+ეს ხომ ასეა, მაგრამ თუნდაც ამ ორ პაწაწინა პროზაულ დეტალს თავისი ქვეტექსტი აქვს, არც ისინია ერთგანზომილებიანი, - მათ სიღრმეში კიდევ სხვა საიდუმლოა დანთქმული. მართლაც, განა საკვირველი არ არის, რომ იაკობი ასე ადვილად შედის შუშანიკთან, როცა ვარსქენს ნაბრძანები აქვს, არავინ შეუშვათო? მაშ, რატომ ხდება ასე? ლოგიკური იქნება, თუ ვიფიქრებთ, რომ ვარსქენიც, თავის მხრივ, მახეს აგებს, არც შეიძლებოდა, რომ ის გულხელდაკრეფილი მჯდარიყო. უშვებს რა შუშანიკთან იაკობს (რომელიც მისთვის აშკარად ვახთანგის კაცია) , საკუთარი მსტოვრების წყალობით (რომლებიც ყველა “ბედნიერებასთან” ერთად მექრთამეებიც არიან) , იგებს იმ საიდუმლოს, რაც ყველაზე უფრო აინტერესებს (გაიხსენეთ თუნდაც, შუშანიკისგან სადედოფლო ნიშნების დაბრუნების ამბავი) . როცა ვხედავთ, ვერაგი ვარსქენი იაკობს თავის სასარგებლოდ იყენებს. ეს შეიძლება იაკობმა არც კი იცის, ანდა უარესი - იცის, მაგრამ სხვა გზა არააქვს. ამიტომაცაა სწორედ, გამიდმებით რომ ეშინია რაღაცისა.
+
+უაღრესად დაძაბული, მღელვარე ამბავი რომანში დამორჩილებულია, ლომივითაა გამომწყვდეული რიტმულად მშვიდი სინტაქსის რკინის გალიაში. ამ რომანისთვის სრულიად უცხოა პათეტიკა, ამანაც აფიქრებინა ზოგიერთ მკვლევარს, რომ ის აგიოგრაფიულ ჟანრს არ ეკუთვნის. სასწაულები, რომელთაც შუშანიკი ახდენს, აშკარად ჩამატებულია ხალხური აგიოგრაფიის გავლენით, ანდა ჟანრის მოთხოვნილებისა და უბრალო ხალხის ესქატოლოგიური მისწრაფებების გათვალისწინებით. ავტორის დახვეწილი გემოვნება და ზომიერების გრძნობა იცავს ამ რომანს უამრავი ციტატებისაგან, სხვადასხვა თქმულებებისა და ლეგენდების ჩართვისაგან. აქ ვერ შეხვდებით მცირე დათმობასაც კი იმათთვის, ვისაც ნამდვილი პოეზია არ ესმის. გენიოსი თვითონ ზრდის თავიმ მკითხველსა თუ მსმენელს. როცა ბიზანტიური აგიოგრაფიისაგან სრულიად განსხვავებულ, თვისობრივად ახალ ქართულ აგიოგრაფიას ქმნიდა, იაკობი კიდევ ერთხელ ნათელს ხდიდა, გავლენა არა მარტო მსგავსებას, არამედ დაპირისპირებასაც რომ გულისხმობდა.
+
+ამ რომანს გარედან აგიოგრაფიის სიფრიფანა ყინულის ჯავშანი აქვს შემორტყმული, ხოლო შიგნიდან ამ ყინულს ასხივოსნებს და ანათებს ადამიანური ვნებების შუქი. შუშანიკსაც ხომ “შინაგან ძაძაი ემოსა და არავინ იცოდა ჩემსა გარეშე, ხოლო გარეგან კაცთა თუალსა ანტიოქიის პალეკარტი ემოსა”.
+
+ალბათ იშვიათად წაგვიკითხავს წიგნი ისეთ ტრაგიკულ სიყვარულზე, როგორიც მოთხრონილია ამ თხზულებაში. იშვიათად იმიტომ, რომ ეს არის სულის მხურვალე ქურაში სიძულვილად გარდაქმნილი სიყვარული და ჩვენ, მხოლოდ სიძულვილის მოწმენი, სწორედ მისი წყალობით ვგრძნობთ, ვხვდებით, თუ რა ძალით უყვარდათ ერთმანეთი ვარსქენსა და შუშანიკს. ესეც კიდევ ერთხელ ამტკიცებს, რომ ამ ნაწარმოებს არაფერი აკლია, სრულიად არის მოღწეული, რომ ეს საერთოდ ავტორის სტილია, უფრო სწორად - განსაკუთრებული უნარი: მოგიყვეს ერთი ამბავი და პარალელურად, ანდა უფრო ზუსტად - ამ ამბის მიღმა დაგანახოს მეორე, გაცილებით უფრო მძაფრი, ხმამახლა მოყოლილი ამბის კონტრასტული ცხოვრება.
+
+ო, რა საშინელი იყო ის დღე ვარსქენისათვის, როცა მოთმინებადაკარგულმა, გონებასგადამცდარმა შუშანკის პირველად ხელი შემოჰკრა.
+
+ვარსქენმა ღამე თეთრად გაათია “და ვითარცა ცისკარ ოდენ იყო, იკითხა და თქუა მსახურისა მიმართ მისისა, ვითარმედ: “წყლულებისა მისგან ვითარ არს”?
+
+ეს არის პირველი გამოფხიზლება, საკუთარ არსებაში მეორე, აქამდე უცნობი, დაუნდობელი და საზარელი არსების აღმოჩენა. სიყვარულის ბოლო სანთელი - სიბრალული ჯერ კიდევ კიაფობს, თუმცა ერთმანეთი ბოლომდე ეცოდებათ შუშანიკსა და ვარსქენს, საბრალოსა და საცოდავს დასძახიან ესთიმეორეს და ამ ფრაზებს სულჩადგმული არსებებივით აძევებს ეკლესიის საუფლოდან გამჭრიახი და ჭკვიანი ანტონი.
+
+მსახურმა ვარსქენს უპასუხა, ცუდად არისო. “მაშინ თვით შევიდა და იხილა იგი და დაუკვირდა დიდძალი იგი სიმსივნეი მისი”. გაუკვირდაო! - აი, ის, რასაც ვამბობდი, თითქოს ეს საშინელება მას კი არა, სხვას, სხვას ჩაედინოს, სხვას ძალით. ო, ეს სხვა, სხვა, ამქვეყნიური პატივმოყვარეობის ტალახიდან რომ არის შეთითხნილი და რომელიც უფრო ძლიერი ყოფილა, ვიდრე… ვიდრე თუნდაც სიყვარული! “და ამცნო მსახურსა მას და ჰრქუა: “ნუმცა ვინ შევალს ხილვად მისა”. “და თვით ნადირობად წარვიდა”. არა - გაიქცა, გაერიდა. საკუთარ თავს დაემალა!… ხოლო იმავე დილით შუშანიკი იტყვის: “ნუ სტირ ჩემთვის რამეთუ დასაბამ სიხარულისა იქმნა ჩემდა ღამეი ესე”.
+
+ქალის შეუმცდარმა ალღომ უკარნახა, ანიშნა, რომ ვარსქენს ისევ უყვარს, უყვარს და იტანჯება და, ამდენად, შეუძლია ჯოჯოხეთის ცეცხლი წაუკიდოს მას, აწამოს, რადგან ჯერაც კაცს არ მოუგონია წამება ამაზე უმაღლესი. ეს კი მისი, როგორც ქალის, გამარჯვებაა, ახლა უკვე ადვილია რწმენისთვის სიკვდილიც… კიდევ ერთხელ დავაკვირდეთ ტექსტს: შუშანიკი, იმათ ბედ-იღბალს, ვინც ადრე უყვარდა, ვისაც ახლა გულიდან იგლეჯს, ღმერთს აბარებს (“ღმერთმან მიგიტევენინ”) : შვილებს, ჯოჯიკს, ჯოჯიკის ცოლ-შვილს; ვარსქენს არა, ვარსქენს თავისთვის იტოვებს. ვარსქენთან ერთად კვდება!
+
+და აი, უსათუოდ უნდა დადგეს წამი, როცა ეს ორი დაპირისპირებული, ერთნაირად გააფთრებული არსება უნდა შეეჯახოს ერთმანეთს, რათა ორივე დაიღუპოს, და უცაბედად ტექსტიდან, როგორც ჭრილობიდან სისხლი, იფეთქებს სურათი, რომელიც მშვენებაა ქართული ერისა: “და ეგრეტ წმიდაი შუშანიკ თრევით მოითრია თიხათა შიგან და ეკალთა ზედა, ეკლესიით ვიდრე ტაძრამდე, ვითარცა მკუდარი მიეთრია. და ადგილდ - ადგილდ ქუე ძეძვი დაეფინა. და თვით ფეხნი დაიდგნის ძეძუსა ზედა, და კუბასტნი შუშანიკისნი და ხორცნი წულილწულილად დაებძარნეს ძეძუსა მას. და ეგრეტ მოიყვანეს იგი ტაძრად და უბრძანა შეკვრაი მისი და ცემაი, ბოროტებდა და იტყოდა: “აჰა ეგერა, არა გერგო შენ ეკლესიაი შენი და არცა ზურგნი ეგრე შენნი ქრისტიანენი, და უფალი იგი მათი”. და ვითარცა სცეს კუერთხითა სამას ოდენ, არარაი აღმოხდა პირსა მისსა ვაიებაი, არცა კუნესაი. მაშინღა ჰრქუა წმინდამან შუშანიკ ურჯულოსა ვარსქენს: “უბადოო, შენღა თავი თვისი არა შეიწყალე და განსდეგ ღმთისაგან, შენ მემცა შემიწყალეა?”
+
+ამ დროს რაღაც იდუმალი ძალისა და ასევე იდუმალი ასოციაციის წყალობით ჩვენს მეხსიერებაში გაიელვებს ვაჟას გენიალური სტრიქონები:
+
+მოჰყავდა ზვიადაური ხელშეკონილი გროვასა…
+
+ამ ნაწარმოებით არა მარტო იმის დადგენა შეგვიძლია, ქართული ლიტერატურა მანამდეც დიდი ხანია რომ არსებობდა, არამედ იმისაც, თუ რა მაღალ საფეხურზე იდგა სახელმწიპოებრივი ინსტიტუტე. ის მეტად დახვეწილი, რთული, ამავე დროს თითქოს უჩინარი ინტრიგა თუ ბრძოლა, ადამიანები, რომლებიც ამ ინტრიგასა თუ ბრძოლას წარმართავენ, აშკარად ადასტურებე იმ ფაქტს, რომ სახელმწიფოებრივი მართვა-გამგებლობის აპარატი უკვე დიდი ხანია, რაც გააზრებულად, გეგმაზომიერად მუშაობს.
+
+დიდი ივანე ჯავახიშვილის აზრით, ვახტანგმა რომ ვარსქენი მოაკვლევინა, “ეს სპარსეთის ბატონობის წინაარმდეგ ამბოხების წინამორბედი იყო. სწორედ ასეც ჩამოართვეს ეს ამბავი სომხებმაც, რომელთა შორის პირველი დამარცხების შემდგომაც სპარსეთისადმი უკმაყოფილება წინანდებურად რვიოდა და თვითონაც აუჯანყდნენ სასანელ მეფეს”. როდესაც აღნიშნავს ვახტანგისგან ვარსქენის მოკვლის ფაქტს, დიდი მეცნიერი სამართლიანად არ იზიარებს იმ მკვლევართა აზრს, ვისაც “მისი მოქმედებაც მხოლოდ და მხოლოდ სარწმუნოებრივ ბრძოლად დაუსახავთ”. ის ამტკიცებს, რომ ვახტანგის საფუძველი სარწმუნოება კი არა (რომლითაც შენიღბული იყო ეს აქტი) , არამედ პოლიტიკა იყო, ოღონდ დიდი მეცნიერი იმასაც ამბობს: “12 წლის შემდგომ როგორ შეეძლო ვახტანგს შუშანიკის სიკვდილი წამოეყენებინა ქართლის პიტიახშის დასჯის მიზეზად?”
+
+ვახტანგი მართლაც პოლიტიკოსი იყო, მისი მოქმედება მართლაც პოლიტიკით იყო განსაზღვრული და ამიტომაც მისთვის შეიძლებოდა არც ქონოდა გადამწყვეტი მნიშვნელობა იმას, თუ რამდენმა ხანმა გაიარა შუშანიკის სიკვდილის შემდეგ (სხავათა შორის, დღეს ისტორიულ მეცნიერებაში უკვე დადგენილია, რომ შუშანიკი გარდაიცვალა 476 წელს, ხოლო ვარსქენი ვახტანდმა მოაკვლევინა 482 წელს), ფაქტიურად, გაუვლია ექვს წელს, თუმცა, ვიმეორებთ, ამ ფაქტს, ჩემი აზრით, ვახტანგისათვის არავითარი მნიშვნელობა არ უნდა ჰქონოდა: მას სჭირდებოდა თავისი ქმედების პოლიტიკური და არა იურიდიული გამართლება. ვახტანგისათვის მთავარი იყო, თავისი ბრძოლისთვის მიეცა სამართლიანობისათვის ბრძოლის იერი.
+
+“ქართველი ერის ისტორიაში” დიდი მეცდნიერი იზიარებს ვახტანგ მეფის ღალატით მოკვლის ვერსიას 502 წლის შემოდგომაზე. ივანე ჯავახიშვილი წერს: “ბრძოლა, რომელშიაც ვახტანგ გორგასალი მოკლულ იქნა, მართლაც პოლიტიკურ ნიადაგზე ყოფილა აღმოცენებული. და თვით მეფე იმდენად ბრძოლას არ შესწირვია მსხვერპლად, რამდენადაც ღალატს” და დასძენს: “გამოურკვეველი რჩება მხოლოდ, ერთპიროვნული იყო ეს ბოროტმოქმედება, თუ შეთქმულების შედეგს წარმოადგენდა”.
+
+რასაკვირველია, ძალიან დიდი სითამამეა ამის განცხადება ჩემგან, მაგრამ ღრმად ვარ დარწმუნებული, რომ რაღაც საიდუმლო კავშირი არსებობს ამ სამ სიკვდილს შორის:
+
+476 წელს - შუშანიკი,
+
+482 წელს - ვარსქენი,
+
+502 წელს - ვახტანგ გორგასალი,
+
+ეს არის ორმხრივი, ფარული (ისტორიისთვისაც კი!) ბრძოლის შედეგი. თანაც არავითარ შემთხვევაში არ შეიძლება მხედველობიდან გამოგვრჩეს ვარსქენის გამაზდეანებული მემკვიდრენი. იმ დროსაც არა მარტო ბრძოლის ველზე იბრძოდნენ, არამედ უფრო ცხარე, მე ვიტყოდი, უფრო სისხლიანი ბრძოლა ისტორიის კულისებში მიმდინარეობდა. ეს იყო ბრძოლის ყველაზე გააფთრებული, ყველაზე დაუნდობელი და ამავე დროს ყველაზე ბრძოლასთან შედარებით ყველაზე მნიშვნელოვანი ბრძოლა - იდეოლოგიური ბრძოლა!
+
+იმ ასპარეზზე, სადაც ერთმანეთს ხვდებოდა, ხვდებოდა კი არა - ეხეთქებოდა ორი რელიგია, ორი მრწამსი და, რაც მთავარია, ორი პოლიტიკური პოზიცია - დამპყრობლისა და დაპყრობილისა, გამარჯვებულისა და შეთქმულისა, ყველაზე ნაღდი და ნაცადი იარაღი ( ეს არაერთი მაგალითით დასტურდება ისტორიაში)მოსასხამის ქვეშ დამალული დანაა, ანდა მოწამლული ისარი, რომლითაც აქილევსივით მოკლეს (გაიხსენეთ იღლიაში გარღვეული აბჯარი!) მძლეთგამძლე გმირი, ვახტანგ მეფე, მართლაც, აქილევსის მსგავსი აღნაგობისა და ძალის პატრონი.
+
+“შუშანიკის წამება” თავისთავად დიდად მნიშვნელოვანი იქნებოდა ჩვენთვის, როგორც პირველი, ჩვენამდე მოღწეული ქართული მწერლობის ფაქტი, მაგრამ რამდენად მნიშვნელოვანია ის ამბავიც, რომ ეს არის დიდი რომანი, ფუძე ქართული მწერლობის დიადი შენობისა, დიდი გაკვეთილი ოსტატობისა, ბოლომდე ამოუხსნელი გამოცანა, რომელიც ასე დარჩება სულ, როგორც ყველა ჭეშმარიტი ქმნილება ხელოვნებისა, რათა მრავალი და მრავალი თაობა გააოცოს და მოხიბლოს მომავალშიც
+
+`
+            },
+
+
+
+];
+
+
+ // ცვლადების განახლება ძიებისთვის
+let currentResultIndex = -1;
+let searchResults = [];
+let searchPhrase = "";
+
+// ლექსიკონის პოპაპი
+const popup = document.getElementById("dictionaryPopup");
+
+// ფუნქცია ქართულ სიტყვებზე ძირის (სტემის) პოვნისთვის
+function getGeorgianStem(word) {
+    const cleanWord = word.replace(/[.,!?;:"]/g, '').trim();
+    const endings = [
+        'ები', 'ებმა', 'ებს', 'ებით', 'ებად', 'ებო',
+        'ი', 'მა', 'ს', 'ით', 'ად', 'ო', 'თ', 'ში',
+        'ზე', 'თან', 'დან', 'კენ', 'მდე'
+    ];
+
+    let stem = cleanWord;
+    for (const ending of endings) {
+        if (cleanWord.endsWith(ending) && cleanWord.length > ending.length + 2) {
+            stem = cleanWord.substring(0, cleanWord.length - ending.length);
+            break;
+        }
+    }
+    return stem;
+}
+
+// ფუნქცია: შემოწმდეს, არის თუ არა სიტყვის ძირი ლექსიკონში
+function isWordStemInDictionary(word, dictionary) {
+    const stem = getGeorgianStem(word);
+    for (const dictWord in dictionary) {
+        const dictStem = getGeorgianStem(dictWord);
+        if (stem === dictStem && stem.length > 2) {
+            return true;
+        }
+    }
+    return dictionary[word] !== undefined;
+}
+
+// ფუნქცია ტექსტის დამუშავებისთვის, ძიებითა და მის გარეშე
+function processText(text) {
+    const parts = text.split(/(<[^>]+>)/);
+    searchResults = [];
+
+    const processedParts = parts.map(part => {
+        if (part.startsWith('<')) return part;
+
+        let resultText = part;
+
+        if (searchPhrase) {
+            const phraseRegex = new RegExp(escapeRegExp(searchPhrase), 'gi');
+            let match;
+            while ((match = phraseRegex.exec(part.toLowerCase())) !== null) {
+                searchResults.push({
+                    position: match.index,
+                    text: part.substr(match.index, searchPhrase.length)
+                });
+            }
+
+            resultText = part.replace(phraseRegex, match => {
+                const cleanMatch = match.replace(/[.,!?;:"]/g, '').trim();
+                return `<mark class="word" onclick="showWordPopup('${cleanMatch}', event)">${match}</mark>`;
+            });
+        }
+
+        const words = resultText.split(/(<mark[^>]*>.*?<\/mark>)|(\s+)/);
+
+        return words.map(word => {
+            if (!word || word.trim() === '' || word.startsWith('<mark')) {
+                return word || '';
+            }
+
+            const cleanWord = word.replace(/[.,!?;:"]/g, '').trim();
+            const isInDict = dictionary[cleanWord] !== undefined;
+
+            if (isInDict) {
+                return `<span class="word" onclick="showWordPopup('${cleanWord}', event)"><b>${word}</b></span>`;
+            } else {
+                return `<span class="word" onclick="showWordPopup('${cleanWord}', event)">${word}</span>`;
+            }
+        }).join('');
+    });
+
+    return processedParts.join('');
+}
+
+// რეგულარული გამოსახულების სიმბოლოების ესკეიპი
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// პოპაპის გამოძახება სიტყვაზე დაკლიკებისას
+function showWordPopup(word, event) {
+    event.stopPropagation();
+    const cleanWord = word.replace(/[.,!?;:"]/g, '').trim();
+    const definition = dictionary[cleanWord];
+
+    if (definition) {
+        popup.innerHTML = `
+            <span class="dictionary-popup-word">${cleanWord}</span>
+            ${definition}
+        `;
+    } else {
+        const encodedWord = encodeURIComponent(cleanWord);
+        const wikiDictUrl = `https://www.nplg.gov.ge/wikidict/index.php?search=${encodedWord}&go=%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98`;
+        const generalDictUrl = `http://www.nplg.gov.ge/greenstone3/library/collection/lexikonebi/search/TextQuery?qs=1&rt=rd&s1.level=Sec&startPage=1&s1.query=${encodedWord}&s1.index=TI`;
+
+        popup.innerHTML = `
+            <span class="dictionary-popup-word" style="font-size: 8pt;">${cleanWord}</span>
+            <div style="font-size: 8pt;">
+                <a href="${wikiDictUrl}" target="_blank">ვიკი-ლექსიკონში</a><br>
+                <a href="${generalDictUrl}" target="_blank">სრულ ლექსიკონთა ბაზაში</a>
+            </div>
+        `;
+    }
+
+    const rect = event.target.getBoundingClientRect();
+    popup.style.left = `${rect.left + window.pageXOffset}px`;
+    popup.style.top = `${rect.bottom + window.pageYOffset + 10}px`;
+    popup.style.display = "block";
+}
+
+// ძიების შესრულება
+function performSearch(searchInput) {
+    resetSearch();
+    searchPhrase = searchInput.toLowerCase().trim();
+    
+    if (!searchPhrase) return;
+    
+    let found = false;
+    
+    chapters.forEach((chapter, index) => {
+        if (chapter.content.toLowerCase().includes(searchPhrase)) {
+            found = true;
+            const button = document.querySelectorAll('.chapter-nav .button')[index];
+            button.classList.add('highlight');
+        }
+    });
+    
+    if (!found) {
+        const encodedSearch = encodeURIComponent(searchPhrase);
+        const lexiconUrl = `https://www.nplg.gov.ge/greenstone3/library/collection/lexikonebi/search/TextQuery?qs=1&rt=rd&s1.level=Sec&s1.startPage=1&s1.query=${encodedSearch}&s1.index=TI`;
+const wikidictUrl = `https://www.nplg.gov.ge/wikidict/index.php/${encodedSearch}`;
+        const saskoloUrl = `http://www.nplg.gov.ge/saskolo/index.php?a=srch&id_srch=38a3723eb25a8a09209751e6fabc9d34&p=1&visualtheme=gw_brand&q=${encodedSearch}`;
+        const gwdictUrl = `http://www.nplg.gov.ge/gwdict/index.php?a=srch&id_srch=67d94860c628603f97a2a270a3af680b&p=1&visualtheme=gw_brand&q=${encodedSearch}`;
+        const nplgUrl = `https://www.nplg.gov.ge/index.php?m=135&kw=${encodedSearch}&category=website&search_category%5B%5D=dictionaries&filter_submit=%E1%83%AB%E1%83%98%E1%83%94%E1%83%91%E1%83%90`;
+        
+        document.getElementById('resultCount').innerHTML = `ფრაზა ვერ მოიძებნა, <a href="${wikidictUrl}" target="_blank">ვიკი-ლექსიკონში</a> | <a href="${lexiconUrl}" target="_blank">ლექსიკონებში</a> | <a href="${saskoloUrl}" target="_blank">სასკოლო ლექსიკონები</a> | <a href="${gwdictUrl}" target="_blank">ლექსიკონები</a> | <a href="${nplgUrl}" target="_blank">NPLG</a>`;
+        return;
+    }
+    
+    for (let i = 0; i < chapters.length; i++) {
+        if (chapters[i].content.toLowerCase().includes(searchPhrase)) {
+            changeChapter(i);
+            break;
+        }
+    }
+    
+    updateResultCount();
+}
+
+// ძიების შედეგების გასუფთავება
+function resetSearch() {
+    searchResults = [];
+    currentResultIndex = -1;
+    searchPhrase = "";
+
+    document.querySelectorAll('.chapter-nav .button').forEach(btn => btn.classList.remove('highlight'));
+
+    const content = document.getElementById('content');
+    content.innerHTML = processText(chapters[getCurrentChapterIndex()].content);
+
+    document.getElementById('resultCount').textContent = "";
+}
+
+// აქტიური თავის ინდექსის გამოთვლა
+function getCurrentChapterIndex() {
+    const activeButton = document.querySelector('.chapter-nav .button.active');
+    const buttons = document.querySelectorAll('.chapter-nav .button');
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i] === activeButton) return i;
+    }
+    return 0;
+}
+
+// თავების ღილაკების შექმნა
+function createChapterButtons() {
+    const navigation = document.getElementById('chapterNavigation');
+    navigation.innerHTML = '';
+
+    chapters.forEach((chapter, index) => {
+        const button = document.createElement('button');
+        button.textContent = chapter.title;
+        button.className = 'button';
+        button.onclick = () => changeChapter(index);
+        if (index === 0) button.classList.add('active');
+        navigation.appendChild(button);
+    });
+}
+
+// თავის შეცვლა და ტექსტის ჩატვირთვა
+function changeChapter(index) {
+    const buttons = document.querySelectorAll('.chapter-nav .button');
+    buttons.forEach((btn, i) => btn.classList.toggle('active', i === index));
+
+    const content = document.getElementById('content');
+    content.innerHTML = processText(chapters[index].content);
+
+    setTimeout(() => {
+        const firstMark = content.querySelector('mark');
+        if (firstMark) {
+            firstMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 100);
+
+    updateResultCount();
+}
+
+// შედეგების რაოდენობის განახლება
+function updateResultCount() {
+    const marks = document.querySelectorAll('mark');
+    const resultCount = document.getElementById('resultCount');
+
+    if (marks.length > 0) {
+        resultCount.textContent = `ნაპოვნია ${marks.length} შედეგი`;
+    } else if (searchPhrase) {
+   resultCount.innerHTML = '<a href="http://www.nplg.gov.ge/greenstone3/library/collection/lexikonebi/page/about" target="_blank">ფრაზა "' + searchValue + '" ვერ მოიძებნა ამ თავში</a>';
+    } else {
+        resultCount.textContent = "";
+    }
+}
+
+// ღილაკების მომსმენები
+document.getElementById('searchInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') performSearch(e.target.value);
+});
+
+document.getElementById('prevResult').addEventListener('click', () => {
+    const marks = document.querySelectorAll('mark');
+    if (marks.length === 0) return;
+
+    const visible = [...marks].filter(mark => mark.getBoundingClientRect().top < window.innerHeight / 2);
+    if (visible.length > 1) {
+        visible[visible.length - 2].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        marks[marks.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+document.getElementById('nextResult').addEventListener('click', () => {
+    const marks = document.querySelectorAll('mark');
+    if (marks.length === 0) return;
+
+    const visible = [...marks].filter(mark => mark.getBoundingClientRect().top > window.innerHeight / 2);
+    if (visible.length > 0) {
+        visible[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+// პოპაპის დახურვა გარეთ დაკლიკებისას
+document.addEventListener('click', (event) => {
+    if (!event.target.classList.contains('word')) {
+        popup.style.display = "none";
+    }
+});
+
+// ტექსტის ზომის ცვლა
+document.getElementById('fontSize').addEventListener('change', (e) => {
+    document.getElementById('content').style.fontSize = `${e.target.value}pt`;
+});
+
+// ტექტსის გასწორების ღილაკები
+document.getElementById('alignLeft').addEventListener('click', () => {
+    document.getElementById('content').className = 'text-content left';
+    document.getElementById('alignLeft').classList.add('active');
+    document.getElementById('alignJustify').classList.remove('active');
+});
+
+document.getElementById('alignJustify').addEventListener('click', () => {
+    document.getElementById('content').className = 'text-content justify';
+    document.getElementById('alignJustify').classList.add('active');
+    document.getElementById('alignLeft').classList.remove('active');
+});
+
+// ინიციალიზაცია
+createChapterButtons();
+changeChapter(0);
+
+    </script>
+</body>
+</html>

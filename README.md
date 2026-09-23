@@ -1,72 +1,103 @@
-# Litera 
+# Litera
 
-**A digital study platform for Georgian literature - built for National Exam preparation.**
+**A reader for Georgian curriculum literature: the original text, a modern-Georgian rendering beside it, and archaic words glossed in place.**
 
-> 🚧 Currently in development - idea stage.
-
----
-
-## Overview
-
-Litera is a study companion for Georgian high school students (მე-12 კლასელები) preparing for the National Exams. It will cover most of the difficult parts of the official literature curriculum and turn dense, exam-critical texts into structured study material - summaries, character analyses, thematic breakdowns, and practice questions, all aligned to how the exam actually tests.
+> Status: deploy-ready. Auth includes password reset; rate limits, CI, and ops hooks are in place. Clear content licences before a public launch — see `CONTENT_LICENSING.md`.
 
 ---
 
-## Planned Features
+## What it does
 
-### 📖 Text Coverage
-- **ვეფხისტყაოსანი** — canto-by-canto breakdown
-- **Hagiographic works** - შუშანიკის წამება, აბო თბილელის წამება და ა.შ.
-- **Modern authors** - ილია ჭავჭავაძე, აკაკი წერეთელი, გალაკტიონ ტაბიძე და ა.შ.
-- All texts on the official exam syllabus
+| Area | State |
+| --- | --- |
+| `ვეფხისტყაოსანი` reader | Working — per chapter, original strophes beside the modern rendering, positional glosses |
+| `შუშანიკის წამება` reader | Working — 20 sections, two columns, NPLG glossary by word match |
+| Library (`/literature`) | Working — imported works with provenance and modernisation percentage |
+| Aphorisms | Working — numbered for citation |
+| Accounts | Working — register, log in, log out, password reset (SMTP) |
+| Contact form | Working — stored in DB; read with `flask messages` |
 
-### 🧠 Study Tools
-- **Summaries** - chapter/canto-level breakdowns in plain modern Georgian
-- **Character profiles** - motivations, arcs, relationships, and exam-relevant quotes
-- **Poetic form guides** - rhyme schemes, stylistic devices
-- **Hagiography module** - structure, theology, and literary function of martyrdom narratives
-- **Exam essay templates** - outlines for common essay prompts, with sample answers
+Deliberately **not** in the product: exam banks, essay templates, character-analysis mockups, AI assistant.
 
+## Tech
 
-### 📝 Exam Preparation
-- Practice essay prompts modeled after past ეროვნული გამოცდა formats
-- Annotated sample answers with examiner-style commentary
-- Quote lookup - search by keyword, get source, context, and analysis
-- AI study assistant for curriculum-aligned explanations
-
----
-
-## Who It's For
-
-| User | Use case |
-|---|---|
-| 12th graders | Final exam prep, structured review |
-| Students catching up | Missed class, need to cover ground fast |
-| Anyone struggling with classical Georgian | Plain-language explanations of archaic texts |
+| Layer | Choice |
+| --- | --- |
+| Backend | Python 3.11+, Flask 3, Flask-SQLAlchemy |
+| Auth | Flask-Login, scrypt password hashes, timed reset tokens |
+| Forms | Flask-WTF (CSRF) |
+| Limits | Flask-Limiter (`5/min` login, `3/hour` contact + reset) |
+| Database | PostgreSQL in production, SQLite locally; Alembic migrations |
+| Frontend | Jinja, Tailwind → `static/dist/app.css`, vanilla JS |
+| Serving | gunicorn via `wsgi.py` |
 
 ---
 
-## Tech Stack
+## Running locally
 
-- **Backend** - Python / Flask
-- **Database** - PostgreSQL
-- **Frontend** - TBD
+```bash
+git clone https://github.com/G10rga/Litera.git
+cd Litera
+
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements-dev.txt
+
+cp .env.example .env               # set SECRET_KEY for anything beyond toy use
+flask --app app init-db            # or: flask --app app db upgrade
+python db_loaders/load_literature.py --all
+
+flask --app app run --debug
+```
+
+Open <http://127.0.0.1:5000>.
+
+### Stylesheet
+
+`static/dist/app.css` is committed. After changing template classes:
+
+```bash
+npm install
+npm run build:css
+```
 
 ---
 
-## Status
+## Deploying
 
-This project is in the early planning and scaffolding phase. Nothing is built yet.
+See **`OPS.md`** for secrets, Postgres, backups, Sentry, and uptime.
 
-- [ ] Project scaffold
-- [ ] Database schema (texts, characters, themes, questions)
-- [ ] Content structure and data format
-- [ ] First text: ვეფხისტყაოსანი
-- [ ] Core study pages (summary, characters, themes)
-- [ ] Exam question bank
-- [ ] AI study assistant
-- [ ] Frontend design
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `FLASK_CONFIG` or `APP_ENV` | yes | `production` |
+| `SECRET_KEY` | yes | `python -c "import secrets; print(secrets.token_hex(32))"` |
+| `DATABASE_URL` | yes | `postgres://` rewritten to `postgresql+psycopg://` |
+| `MAIL_*` | for password reset | See `.env.example` (Resend / Postmark / SES) |
+| `CONTACT_EMAIL` | no | Shown on contact / legal pages |
+| `SENTRY_DSN` | no | Enables Sentry |
+| `DB_POOL_SIZE` | no | Default `5` in production |
+
+```bash
+pip install -r requirements.txt
+flask --app app db upgrade
+gunicorn wsgi:application
+```
+
+The `Procfile` runs `db upgrade` on release. Import texts once against production with `requirements-dev.txt`.
+
+`/healthz` returns `{"status":"ok"}`. Account deletion: `flask delete-user email@example.com --yes`.
 
 ---
 
-*Built for Georgian students, by someone who remembers how hard exam season is. @G1orgaa*
+## Design tokens
+
+Marketing/auth pages use the crimson Tailwind palette. Long-form readers use the `.reader` parchment theme (`--parchment`, `--ink`, `--accent`). Those reader tokens are also registered in `tailwind.config.js` so the split is deliberate, not accidental.
+
+## Licences
+
+- **Code** — see `LICENSE`
+- **Content** — see `CONTENT_LICENSING.md` (public-domain originals vs modern renderings / glosses)
+
+---
+
+*Built for Georgian students. @G10rga*

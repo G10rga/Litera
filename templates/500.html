@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Something went wrong — Litera{% endblock %}
+{% block meta_description %}An error occurred while loading this page.{% endblock %}
+{% block progress_bar %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 flex items-center justify-center px-margin-mobile py-section-gap">
+  <div class="max-w-lg text-center">
+    <p class="font-label-caps text-label-caps uppercase tracking-widest text-outline mb-4">Error 500</p>
+    <h1 class="font-display-lg text-display-lg-mobile text-primary mb-4">Something broke at our end</h1>
+    <p class="font-body-md text-on-surface-variant mb-10">
+      The error has been logged. Reloading often works; if it does not, tell us what you were reading
+      and it will be looked at.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-caps text-label-caps uppercase hover:bg-crimson-dark transition-colors" href="{{ url_for('index') }}">Home</a>
+      <a class="border border-primary text-primary px-6 py-3 rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-colors" href="{{ url_for('contact') }}">Report it</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

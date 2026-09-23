@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}შუშანიკის წამება{% if chapter %} — თავი {{ chapter }}{% endif %} — Litera{% endblock %}
+{% block meta_description %}შუშანიკის წამება: the original text beside a modern-Georgian rendering, with archaic words glossed in place.{% endblock %}
+
+{% block content %}
+<div class="reader flex-1">
+
+  <header class="reader-toolbar">
+    <h1 lang="ka">შუშანიკის წამება</h1>
+
+    {% if chapters %}
+      <label class="sr-only" for="chapter-select">თავი</label>
+      <select data-chapter-select id="chapter-select">
+        {% for item in chapters %}
+          <option value="{{ url_for('shushaniki.reader', chapter=item.number) }}"
+                  {% if item.number == chapter %}selected{% endif %}>
+            თავი {{ item.number }}{% if not item.modernised %} (დასამუშავებელი){% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    {% endif %}
+
+    <span class="spacer"></span>
+
+    {% if prev_chapter %}
+      <a class="reader-nav-link" href="{{ url_for('shushaniki.reader', chapter=prev_chapter) }}" rel="prev" aria-label="წინა თავი">←</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">←</span>
+    {% endif %}
+    {% if next_chapter %}
+      <a class="reader-nav-link" href="{{ url_for('shushaniki.reader', chapter=next_chapter) }}" rel="next" aria-label="შემდეგი თავი">→</a>
+    {% else %}
+      <span aria-disabled="true" class="reader-nav-link disabled">→</span>
+    {% endif %}
+  </header>
+
+  <main class="reader-full">
+
+  {% if empty %}
+    <div class="notice" lang="ka">
+      ამ ნაწარმოების ტექსტი ჯერ არ არის დამატებული.
+    </div>
+  {% else %}
+
+    <div class="reader-columns wide-gap">
+
+      <section>
+        <h2 class="reader-col-title" lang="ka">ორიგინალი</h2>
+        {% for para in paragraphs %}
+          <p class="para indented" lang="ka">{{ para.html | safe }}</p>
+        {% else %}
+          <div class="notice" lang="ka">ამ თავში ტექსტი არ არის.</div>
+        {% endfor %}
+      </section>
+
+      <div class="reader-rule" aria-hidden="true"></div>
+
+      <section>
+        <h2 class="reader-col-title" lang="ka">განახლებული ტექსტი</h2>
+        {% if modern_missing %}
+          <div class="notice" lang="ka">
+            ამ თავის განახლებული ტექსტი ბაზაში ჯერ არ არის.
+          </div>
+        {% else %}
+          {% for para in modern_paragraphs %}
+            <p class="para indented" lang="ka">{{ para }}</p>
+          {% endfor %}
+        {% endif %}
+      </section>
+
+    </div>
+
+    <footer class="reader-provenance" lang="ka">
+      თავი {{ chapter }} ·
+      {{ paragraphs | length }} აბზაცი ·
+      {{ gloss_hits }} განმარტებული სიტყვა ·
+      ლექსიკონი: {{ gloss_total }} ჩანაწერი ·
+      წყარო: NPLG
+    </footer>
+
+  {% endif %}
+
+  </main>
+
+</div>
+{% endblock %}
