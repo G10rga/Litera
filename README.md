@@ -2,7 +2,7 @@
 
 **A reader for Georgian curriculum literature: the original text, a modern-Georgian rendering beside it, and archaic words glossed in place.**
 
-> Status: deploy-ready. Auth includes password reset; rate limits, CI, and ops hooks are in place. Clear content licences before a public launch — see `CONTENT_LICENSING.md`.
+> Status: NOT deploy-ready. Auth includes password reset; rate limits, CI, and ops hooks are in place. Clear content licences before a public launch — see `CONTENT_LICENSING.md`.
 
 ---
 
