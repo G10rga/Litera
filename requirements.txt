@@ -13,4 +13,4 @@ bleach==6.4.0
 itsdangerous==2.2.0
 sentry-sdk[flask]>=2.71.0
 psycopg[binary]>=3.3.6
-pandas>=3.0.6
+pandas>=3.1.0
